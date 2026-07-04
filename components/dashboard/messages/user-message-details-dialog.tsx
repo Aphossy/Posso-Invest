@@ -1,6 +1,6 @@
 "use client"
 
-import { IKIMINA_MESSAGE_SERVICE_LABELS } from "@/constants/message-services"
+import { POSSO_MESSAGE_SERVICE_LABELS } from "@/constants/message-services"
 import type { Message } from "@/db/schemas/message-schema"
 import { format } from "date-fns"
 import { Calendar, Mail, MessageSquare, Phone, Tag } from "lucide-react"
@@ -46,7 +46,7 @@ const getPriorityBadgeColor = (priority: string) => {
   return colors[priority] || colors.medium
 }
 
-const serviceLabels: Record<string, string> = IKIMINA_MESSAGE_SERVICE_LABELS
+const serviceLabels: Record<string, string> = POSSO_MESSAGE_SERVICE_LABELS
 
 export function UserMessageDetailsDialog({
   message,

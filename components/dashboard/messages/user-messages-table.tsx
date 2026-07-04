@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { IKIMINA_MESSAGE_SERVICE_LABELS } from "@/constants/message-services"
+import { POSSO_MESSAGE_SERVICE_LABELS } from "@/constants/message-services"
 import type { Message } from "@/db/schemas/message-schema"
 import type { ColumnDef } from "@tanstack/react-table"
 import { formatDistanceToNow } from "date-fns"
@@ -45,7 +45,7 @@ const getPriorityBadgeColor = (priority: string) => {
   return colors[priority] || colors.medium
 }
 
-const serviceLabels: Record<string, string> = IKIMINA_MESSAGE_SERVICE_LABELS
+const serviceLabels: Record<string, string> = POSSO_MESSAGE_SERVICE_LABELS
 
 export function UserMessagesTable({
   messages,
