@@ -126,9 +126,7 @@ export default function OrganizationInvitationEmail({
             </Text>
 
             <Text style={footerText}>
-              <Link href={organisationWebsite} style={link}>
-                {organisationWebsite}
-              </Link>
+              Thank you for helping grow the community.
             </Text>
             <Text style={copyrightText}>
               © {new Date().getFullYear()} {organisationName}.{" "}
@@ -148,7 +146,7 @@ OrganizationInvitationEmail.PreviewProps = {
   expiresAt: "Mar 11, 2026, 6:00 PM",
   invitationUrl:
     "https://possocapital.vercel.app/accept-invitation?invitationId=abc",
-  loginUrl: "https://possocapital.vercel.app/login",
+  loginUrl: "https://possocapital.vercel.app/",
   supportEmail: "possowiba01@gmail.com",
   recipientEmail: "invitee@example.com",
 } satisfies OrganizationInvitationEmailProps
