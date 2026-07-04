@@ -1,7 +1,6 @@
 // components\dashboard\admin\users\user-stats-cards.tsx
 "use client"
 
-import { useMemo } from "react"
 import { Activity, TrendingUp, Users } from "lucide-react"
 
 import type { AdminUser } from "@/types/admin-users"
@@ -20,9 +19,10 @@ interface UserStatsCardsProps {
 }
 
 export function UserStatsCards({ users, loading }: UserStatsCardsProps) {
-  if (loading) {
-    return <UserStatsCardsSkeleton />
-  }
+  const weekAgo = new Date()
+  weekAgo.setDate(weekAgo.getDate() - 7)
+  const monthAgo = new Date()
+  monthAgo.setDate(monthAgo.getDate() - 30)
 
   const totalUsers = users.length
   const adminUsers = users.filter((u) => u.role === "admin").length
@@ -30,24 +30,14 @@ export function UserStatsCards({ users, loading }: UserStatsCardsProps) {
   const secretaryUsers = users.filter((u) => u.role === "secretary").length
   const presidentUsers = users.filter((u) => u.role === "president").length
   const memberUsers = users.filter((u) => u.role === "member").length
+  const recentUsers = users.filter((u) => new Date(u.createdAt) > weekAgo).length
+  const recentMonthUsers = users.filter(
+    (u) => new Date(u.createdAt) > monthAgo
+  ).length
 
-  // Recent registrations (users created in last 7 days)
-  const { recentUsers, recentMonthUsers } = useMemo(() => {
-    const weekAgo = new Date()
-    weekAgo.setDate(weekAgo.getDate() - 7)
-    const monthAgo = new Date()
-    monthAgo.setDate(monthAgo.getDate() - 30)
-    const recentUsersCount = users.filter(
-      (u) => new Date(u.createdAt) > weekAgo
-    ).length
-    const recentMonthUsersCount = users.filter(
-      (u) => new Date(u.createdAt) > monthAgo
-    ).length
-    return {
-      recentUsers: recentUsersCount,
-      recentMonthUsers: recentMonthUsersCount,
-    }
-  }, [users])
+  if (loading) {
+    return <UserStatsCardsSkeleton />
+  }
 
   const stats = [
     {

@@ -1,0 +1,4 @@
+$ oxlint --quiet
+
+Found 280 warnings and 0 errors.
+Finished in 5.2s on 740 files with 47 rules using 8 threads.
