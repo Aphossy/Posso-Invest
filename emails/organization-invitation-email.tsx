@@ -170,7 +170,7 @@ const container = {
 }
 
 const brandHeader = {
-  backgroundColor: "#165598",
+  backgroundColor: "#004225",
   textAlign: "center" as const,
   padding: "24px 20px 20px",
 }
@@ -251,7 +251,7 @@ const buttonWrapCompact = {
 }
 
 const button = {
-  backgroundColor: "#165598",
+  backgroundColor: "#004225",
   color: "#ffffff",
   borderRadius: "6px",
   textDecoration: "none",
@@ -263,8 +263,8 @@ const button = {
 
 const secondaryButton = {
   backgroundColor: "#ffffff",
-  color: "#165598",
-  border: "1px solid #165598",
+  color: "#004225",
+  border: "1px solid #004225",
   borderRadius: "6px",
   textDecoration: "none",
   fontSize: "15px",
@@ -312,6 +312,6 @@ const copyrightText = {
 }
 
 const link = {
-  color: "#165598",
+  color: "#004225",
   textDecoration: "underline",
 }

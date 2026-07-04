@@ -169,7 +169,7 @@ const container = {
 }
 
 const header = {
-  backgroundColor: "#7c3aed",
+  backgroundColor: "#004225",
   textAlign: "center" as const,
   padding: "24px 20px 18px",
 }
@@ -207,14 +207,14 @@ const paragraph = {
 
 const overdueBox = {
   backgroundColor: "#faf5ff",
-  border: "2px solid #7c3aed",
+  border: "2px solid #004225",
   borderRadius: "8px",
   padding: "16px 20px",
   marginBottom: "18px",
 }
 
 const overdueTitle = {
-  color: "#5b21b6",
+  color: "#004225",
   fontSize: "13px",
   fontWeight: "700",
   textTransform: "uppercase" as const,
@@ -260,7 +260,7 @@ const overdueValueRed = {
 }
 
 const overdueValueTotal = {
-  color: "#7c3aed",
+  color: "#004225",
   fontSize: "18px",
   fontWeight: "700",
   padding: "10px 0 4px",
@@ -281,7 +281,7 @@ const buttonSection = {
 }
 
 const urgentButton = {
-  backgroundColor: "#7c3aed",
+  backgroundColor: "#004225",
   color: "#ffffff",
   borderRadius: "8px",
   padding: "13px 28px",
@@ -309,7 +309,7 @@ const refText = {
 }
 
 const link = {
-  color: "#7c3aed",
+  color: "#004225",
   textDecoration: "underline",
 }
 

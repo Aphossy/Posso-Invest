@@ -140,7 +140,7 @@ const container = {
 }
 
 const header = {
-  backgroundColor: "#111827",
+  backgroundColor: "#004225",
   textAlign: "center" as const,
   padding: "24px 20px 18px",
 }
@@ -213,6 +213,6 @@ const smallText = {
 }
 
 const link = {
-  color: "#165598",
+  color: "#004225",
   textDecoration: "underline",
 }

@@ -223,7 +223,7 @@ const sectionTitle = {
   margin: "0 0 8px",
 }
 const detailsTable = { width: "100%" }
-const link = { color: "#2563eb", textDecoration: "none" }
+const link = { color: "#004225", textDecoration: "none" }
 const labelCell = { width: "40%", color: "#6b7280", padding: "6px 0" }
 const valueCell = { color: "#111827", padding: "6px 0" }
 const unpaidBox = { marginTop: "14px" }
@@ -231,7 +231,7 @@ const memberRow = { color: "#374151", fontSize: "14px", margin: "6px 0" }
 const actionText = { color: "#6b7280", fontSize: "13px", margin: "12px 0 18px" }
 const buttonSection = { textAlign: "center" as const, margin: "18px 0" }
 const primaryButton = {
-  backgroundColor: "#2563eb",
+  backgroundColor: "#004225",
   color: "#ffffff",
   padding: "12px 18px",
   borderRadius: "8px",

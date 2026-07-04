@@ -40,7 +40,7 @@ export const VerificationEmail = ({
   userName,
   location,
 }: VerificationEmailProps) => {
-  const previewText = `Your TrustLink Group verification code is ${code}`
+  const previewText = `Your POSSO VENTURES verification code is ${code}`
 
   const supportEmail =
     process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "possowiba01@gmail.com"
@@ -169,8 +169,8 @@ const container = {
 const logoSection = {
   padding: "20px 40px 0",
   textAlign: "center" as const,
-  backgroundColor: "#2563eb",
-  backgroundImage: "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)",
+  backgroundColor: "#004225",
+  backgroundImage: "linear-gradient(135deg, #004225 0%, #007952 100%)",
 }
 
 const logo = {
@@ -180,8 +180,8 @@ const logo = {
 
 const headerSection = {
   textAlign: "center" as const,
-  backgroundColor: "#2563eb",
-  backgroundImage: "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)",
+  backgroundColor: "#004225",
+  backgroundImage: "linear-gradient(135deg, #004225 0%, #007952 100%)",
   padding: "30px 20px 24px",
 }
 
@@ -214,7 +214,7 @@ const greeting = {
 }
 
 const codeContainer = {
-  background: "linear-gradient(to right, #165598, #3182ce)",
+  background: "linear-gradient(to right, #004225, #007952)",
   borderRadius: "8px",
   margin: "24px 0",
   padding: "24px",
@@ -241,7 +241,7 @@ const deviceInfo = {
 const deviceInfoText = {
   fontSize: "14px",
   lineHeight: "1.4",
-  color: "#165598",
+  color: "#004225",
   fontWeight: "600",
   margin: "0 0 8px",
 }
@@ -268,13 +268,13 @@ const footer = {
 const signature = {
   fontSize: "14px",
   lineHeight: "1.5",
-  color: "#165598",
+  color: "#004225",
   fontWeight: "600",
   margin: "30px 0 10px 0",
 }
 
 const link = {
-  color: "#165598",
+  color: "#004225",
   textDecoration: "underline",
 }
 

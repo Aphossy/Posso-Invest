@@ -194,7 +194,7 @@ const container = {
 }
 
 const brandHeader = {
-  backgroundColor: "#165598",
+  backgroundColor: "#004225",
   textAlign: "center" as const,
   padding: "24px 20px 20px",
 }
@@ -293,7 +293,7 @@ const buttonSection = {
 }
 
 const button = {
-  backgroundColor: "#165598",
+  backgroundColor: "#004225",
   color: "#ffffff",
   textDecoration: "none",
   borderRadius: "6px",
@@ -335,7 +335,7 @@ const copyrightText = {
 }
 
 const link = {
-  color: "#165598",
+  color: "#004225",
   textDecoration: "underline",
 }
 

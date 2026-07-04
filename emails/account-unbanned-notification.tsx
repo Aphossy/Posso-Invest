@@ -269,7 +269,7 @@ const primaryButton = {
 }
 
 const secondaryButton = {
-  backgroundColor: "#165598",
+  backgroundColor: "#004225",
   color: "#ffffff",
   textDecoration: "none",
   borderRadius: "6px",
@@ -303,7 +303,7 @@ const copyrightText = {
 }
 
 const link = {
-  color: "#165598",
+  color: "#004225",
   textDecoration: "underline",
 }
 

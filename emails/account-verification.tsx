@@ -55,7 +55,7 @@ export const AccountVerificationEmail = ({
             <Text style={greeting}>Dear {userName},</Text>
             <Text style={paragraph}>
               Thank you for creating your {organisationName}  account! We're excited
-              to have you join a professional Ikimina focused on transparent
+              to have you join Posso Ventures focused on transparent
               saving, responsible lending, and building a modern dental clinic.
             </Text>
 

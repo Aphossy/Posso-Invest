@@ -236,7 +236,7 @@ const container = {
 }
 
 const header = {
-  backgroundColor: "#165598",
+  backgroundColor: "#004225",
   textAlign: "center" as const,
   padding: "24px 20px 18px",
 }
@@ -274,7 +274,7 @@ const paragraph = {
 
 const scoreBox = {
   backgroundColor: "#f3f4f6",
-  border: "2px solid #165598",
+  border: "2px solid #004225",
   borderRadius: "8px",
   padding: "20px",
   textAlign: "center" as const,
@@ -291,7 +291,7 @@ const scoreLabel = {
 }
 
 const scoreValue = {
-  color: "#165598",
+  color: "#004225",
   fontSize: "36px",
   fontWeight: "700",
   margin: "0 0 8px",
@@ -304,7 +304,7 @@ const scoreSubtext = {
 }
 
 const sectionTitle = {
-  color: "#165598",
+  color: "#004225",
   fontSize: "13px",
   fontWeight: "700",
   textTransform: "uppercase" as const,
@@ -395,7 +395,7 @@ const buttonSection = {
 }
 
 const primaryButton = {
-  backgroundColor: "#165598",
+  backgroundColor: "#004225",
   color: "#ffffff",
   borderRadius: "8px",
   padding: "12px 24px",
@@ -417,7 +417,7 @@ const smallText = {
 }
 
 const link = {
-  color: "#165598",
+  color: "#004225",
   textDecoration: "underline",
 }
 

@@ -277,7 +277,7 @@ const container = {
 }
 
 const header = {
-  backgroundColor: "#165598",
+  backgroundColor: "#004225",
   textAlign: "center" as const,
   padding: "24px 20px 18px",
 }
@@ -314,7 +314,7 @@ const paragraph = {
 }
 
 const sectionTitle = {
-  color: "#165598",
+  color: "#004225",
   fontSize: "13px",
   fontWeight: "700",
   textTransform: "uppercase" as const,
@@ -554,7 +554,7 @@ const buttonSection = {
 }
 
 const primaryButton = {
-  backgroundColor: "#165598",
+  backgroundColor: "#004225",
   color: "#ffffff",
   borderRadius: "8px",
   padding: "12px 24px",
@@ -576,7 +576,7 @@ const smallText = {
 }
 
 const link = {
-  color: "#165598",
+  color: "#004225",
   textDecoration: "underline",
 }
 

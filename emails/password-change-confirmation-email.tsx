@@ -28,12 +28,12 @@ export default function PasswordChangeConfirmationEmail({
   userName,
 }: PasswordChangeConfirmationEmailProps) {
   const supportEmail =
-    process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "trustlinkgrouprw@gmail.com"
+    process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "possowiba01@gmail.com"
 
   return (
     <Html lang="en">
       <Head />
-      <Preview>Your TrustLink Group password has been changed</Preview>
+      <Preview>Your Posso Ventures password has been changed</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={logoSection}>
@@ -41,7 +41,7 @@ export default function PasswordChangeConfirmationEmail({
               src={`${organisationLogo}`}
               width="60"
               height="60"
-              alt="TrustLink Group"
+              alt="Posso Ventures"
               style={logo}
             />
           </Section>
@@ -51,7 +51,7 @@ export default function PasswordChangeConfirmationEmail({
           <Section style={contentWrapper}>
             <Text style={heroText}>Hi {userName},</Text>
             <Text style={text}>
-              This email confirms that your TrustLink Group account password has
+              This email confirms that your Posso Ventures account password has
               been successfully changed.
             </Text>
             <Text style={text}>
@@ -74,7 +74,7 @@ export default function PasswordChangeConfirmationEmail({
             <Section style={securitySection}>
               <Text style={sectionTitle}>Security Tips:</Text>
               <Text style={text}>
-                • Use a strong, unique password for your TrustLink Group account
+                • Use a strong, unique password for your Posso Ventures account
                 <br />• Enable two-factor authentication for added security
                 <br />• Never share your password with anyone
                 <br />• Log out of shared or public computers
@@ -84,7 +84,7 @@ export default function PasswordChangeConfirmationEmail({
 
           {/* Footer */}
           <Section style={footer}>
-            <Text style={footerDetailText}>{organisationName} - Ikimina</Text>
+            <Text style={footerDetailText}>{organisationName}</Text>
             <Text style={footerDetailText}>
               Email:{" "}
               <Link
@@ -134,8 +134,8 @@ const container = {
 const logoSection = {
   padding: "20px 40px 0",
   textAlign: "center" as const,
-  backgroundColor: "#2563eb",
-  backgroundImage: "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)",
+  backgroundColor: "#004225",
+  backgroundImage: "linear-gradient(135deg, #004225 0%, #007952 100%)",
 }
 
 const logo = {
@@ -145,8 +145,8 @@ const logo = {
 
 const headerSection = {
   textAlign: "center" as const,
-  backgroundColor: "#2563eb",
-  backgroundImage: "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)",
+  backgroundColor: "#004225",
+  backgroundImage: "linear-gradient(135deg, #004225 0%, #007952 100%)",
   padding: "30px 20px 24px",
 }
 
@@ -175,7 +175,7 @@ const text = {
 }
 
 const link = {
-  color: "#165598",
+  color: "#004225",
   textDecoration: "underline",
 }
 

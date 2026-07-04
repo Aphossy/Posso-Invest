@@ -214,8 +214,8 @@ const logo = {
 }
 
 const welcomeBanner = {
-  backgroundColor: "#165598",
-  background: "linear-gradient(135deg, #165598 0%, #28bcd6 100%)",
+  backgroundColor: "#004225",
+  background: "linear-gradient(135deg, #004225 0%, #007952 100%)",
   padding: "40px 20px",
   textAlign: "center" as const,
 }
@@ -257,7 +257,7 @@ const text = {
 }
 
 const tagline = {
-  color: "#165598",
+  color: "#004225",
   fontSize: "18px",
   textAlign: "center" as const,
   margin: "25px 0",
@@ -339,13 +339,13 @@ const securityText = {
 }
 
 const securityLink = {
-  color: "#165598",
+  color: "#004225",
   fontWeight: "600",
   textDecoration: "underline",
 }
 
 const primaryButton = {
-  backgroundColor: "#165598",
+  backgroundColor: "#004225",
   borderRadius: "8px",
   color: "#ffffff",
   fontSize: "16px",

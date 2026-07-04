@@ -173,7 +173,7 @@ const heading = {
   letterSpacing: "-0.5px",
   lineHeight: "1.3",
   fontWeight: "700",
-  color: "#165598",
+  color: "#004225",
   textAlign: "center" as const,
   padding: "0 0 20px",
 }
@@ -187,21 +187,21 @@ const paragraph = {
 
 const alertContainer = {
   backgroundColor: "#f0f9ff",
-  borderLeft: "4px solid #165598",
+  borderLeft: "4px solid #004225",
   borderRadius: "4px",
   padding: "16px",
   margin: "24px 0",
 }
 
 const link = {
-  color: "#165598",
+  color: "#004225",
   textDecoration: "underline",
 }
 
 const alertHeading = {
   fontSize: "16px",
   fontWeight: "600",
-  color: "#165598",
+  color: "#004225",
   margin: "0 0 8px",
 }
 
@@ -223,7 +223,7 @@ const deviceInfo = {
 const deviceInfoText = {
   fontSize: "14px",
   lineHeight: "1.4",
-  color: "#165598",
+  color: "#004225",
   fontWeight: "600",
   margin: "0 0 8px",
 }
@@ -249,7 +249,7 @@ const actionContainer = {
 }
 
 const actionButton = {
-  backgroundColor: "#165598",
+  backgroundColor: "#004225",
   borderRadius: "4px",
   color: "#ffffff",
   fontSize: "14px",
@@ -275,7 +275,7 @@ const footer = {
 const signature = {
   fontSize: "14px",
   lineHeight: "1.5",
-  color: "#165598",
+  color: "#004225",
   fontWeight: "600",
   margin: "30px 0 10px 0",
 }

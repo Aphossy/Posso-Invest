@@ -44,7 +44,7 @@ export default function UnverifiedAccountEmail({
   supportEmail,
 }: UnverifiedAccountEmailProps) {
   const previewText =
-    "Verify your email to access your TrustLink Group Ikimina dashboard."
+    "Verify your email to access your Posso Ventures dashboard."
 
   return (
     <Html lang="en">
@@ -57,7 +57,7 @@ export default function UnverifiedAccountEmail({
               src={`${organisationLogo}`}
               width="60"
               height="60"
-              alt="TrustLink Group"
+              alt="Posso Ventures"
               style={logo}
             />
           </Section>
@@ -69,7 +69,7 @@ export default function UnverifiedAccountEmail({
             <Text style={text}>Hello {userName},</Text>
 
             <Text style={text}>
-              We detected a login attempt to your TrustLink Group account, but
+              We detected a login attempt to your Posso Ventures account, but
               your email address hasn't been verified yet. For security reasons,
               you need to verify your email before you can access your account.
             </Text>
@@ -202,8 +202,8 @@ const container = {
 const logoSection = {
   padding: "20px 40px 0",
   textAlign: "center" as const,
-  backgroundColor: "#2563eb",
-  backgroundImage: "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)",
+  backgroundColor: "#004225",
+  backgroundImage: "linear-gradient(135deg, #004225 0%, #007952 100%)",
 }
 
 const logo = {
@@ -214,8 +214,8 @@ const logo = {
 
 const headerSection = {
   textAlign: "center" as const,
-  backgroundColor: "#2563eb",
-  backgroundImage: "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)",
+  backgroundColor: "#004225",
+  backgroundImage: "linear-gradient(135deg, #004225 0%, #007952 100%)",
   padding: "30px 20px 24px",
 }
 
@@ -266,7 +266,7 @@ const buttonSection = {
 }
 
 const button = {
-  backgroundColor: "#165598",
+  backgroundColor: "#004225",
   borderRadius: "8px",
   color: "#ffffff",
   fontSize: "16px",
@@ -286,7 +286,7 @@ const smallText = {
 }
 
 const link = {
-  color: "#165598",
+  color: "#004225",
   textDecoration: "underline",
 }
 

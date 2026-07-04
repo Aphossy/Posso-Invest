@@ -33,7 +33,7 @@ export default function PasswordResetEmail({
   return (
     <Html lang="en">
       <Head />
-      <Preview>Reset your TrustLink Group password</Preview>
+      <Preview>Reset your Posso Ventures password</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={logoSection}>
@@ -135,8 +135,8 @@ const container = {
 const logoSection = {
   padding: "20px 40px 0",
   textAlign: "center" as const,
-  backgroundColor: "#2563eb",
-  backgroundImage: "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)",
+  backgroundColor: "#004225",
+  backgroundImage: "linear-gradient(135deg, #004225 0%, #007952 100%)",
 }
 
 const logo = {
@@ -146,8 +146,8 @@ const logo = {
 
 const headerSection = {
   textAlign: "center" as const,
-  backgroundColor: "#2563eb",
-  backgroundImage: "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)",
+  backgroundColor: "#004225",
+  backgroundImage: "linear-gradient(135deg, #004225 0%, #007952 100%)",
   padding: "30px 20px 24px",
 }
 
@@ -181,7 +181,7 @@ const buttonContainer = {
 }
 
 const button = {
-  backgroundColor: "#165598",
+  backgroundColor: "#004225",
   borderRadius: "3px",
   color: "#fff",
   fontSize: "16px",
@@ -205,7 +205,7 @@ const footerText = {
 }
 
 const footerLink = {
-  color: "#165598",
+  color: "#004225",
   fontSize: "12px",
   textDecoration: "underline",
 }
