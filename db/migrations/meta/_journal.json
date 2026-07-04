@@ -1,0 +1,181 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1768769447260,
+      "tag": "20260118205047_foamy_speed",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1769010432355,
+      "tag": "20260121154712_regular_lucky_pierre",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1769016350917,
+      "tag": "20260121172550_romantic_daimon_hellstrom",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1769029729867,
+      "tag": "20260121210849_smiling_miek",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1769103764617,
+      "tag": "20260122174243_conscious_misty_knight",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1769192079449,
+      "tag": "20260123181439_worthless_ezekiel_stane",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1775359058160,
+      "tag": "20260405031738_rainy_firestar",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1775359184731,
+      "tag": "20260405031944_huge_doctor_strange",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1775413824896,
+      "tag": "20260405183024_wealthy_cable",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1775415464544,
+      "tag": "20260405185744_cultured_colossus",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1775416478589,
+      "tag": "20260405191438_dizzy_human_fly",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1775417820807,
+      "tag": "20260405193700_talented_nuke",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1775627275331,
+      "tag": "20260408054755_harsh_naoko",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1775872980248,
+      "tag": "20260411020300_flawless_skin",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1775914295695,
+      "tag": "20260411133135_rich_aqueduct",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1775914842564,
+      "tag": "20260411134042_past_maverick",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1776095540195,
+      "tag": "20260413155220_handy_scalphunter",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1777299365718,
+      "tag": "20260427141605_redundant_demogoblin",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1777651717225,
+      "tag": "20260501160837_salty_doctor_octopus",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1779010923128,
+      "tag": "20260517094203_useful_vargas",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1779467864453,
+      "tag": "20260522163744_young_jane_foster",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1779471047410,
+      "tag": "20260522173047_eminent_maverick",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1779516590538,
+      "tag": "20260523060950_square_the_liberteens",
+      "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1780976898959,
+      "tag": "20260609034818_striped_sister_grimm",
+      "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1780979437036,
+      "tag": "20260609043036_lean_speed_demon",
+      "breakpoints": true
+    }
+  ]
+}

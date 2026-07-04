@@ -1,0 +1,64 @@
+
+
+/* Custom styles for Swiper pagination */
+.swiper-pagination-bullet {
+    width: 10px !important;
+    height: 10px !important;
+    background: rgba(255, 255, 255, 0.4) !important;
+    opacity: 1 !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  .swiper-pagination-bullet-active {
+    background: #ffffff !important;
+    width: 20px !important;
+    border-radius: 5px !important;
+  }
+  
+  /* Custom pagination for the stacked cards */
+  .ccustom-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    
+  }
+  
+  .ccustom-pagination .swiper-pagination-bullet {
+    width: 8px !important;
+    height: 8px !important;
+    background: rgba(255, 255, 255, 0.4) !important;
+    opacity: 1 !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer;
+  }
+  
+  .custom-pagination .swiper-pagination-bullet-active {
+    background: #1CABE2 !important;
+    width: 24px !important;
+    border-radius: 4px !important;
+  }
+  
+  /* Improve focus styles for better accessibility */
+  :focus-visible {
+    outline: 2px solid #11922f !important;
+    outline-offset: 2px !important;
+  }
+  
+  /* Animation for background elements */
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  
+  .floating {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  

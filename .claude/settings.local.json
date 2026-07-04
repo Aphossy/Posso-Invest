@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Users/user/OneDrive/Desktop/Maintenance/posso-ventures -type f -name *contribution*)",
+      "Bash(find /c/Users/user/OneDrive/Desktop/Maintenance/posso-ventures -type f -name *calendar*)",
+      "Bash(ls -la \"/c/Users/user/OneDrive/Desktop/Maintenance/posso-ventures/app/\\(dashboard\\)/user/contributions/\")",
+      "Bash(ls -la \"/c/Users/user/OneDrive/Desktop/Maintenance/posso-ventures/app/\\(dashboard\\)/user/\")",
+      "Bash(ls -la \"/c/Users/user/OneDrive/Desktop/Maintenance/posso-ventures/app/\\(dashboard\\)/user/contributions/calendar/\")",
+      "Bash(ls -la \"/c/Users/user/OneDrive/Desktop/Maintenance/posso-ventures/app/\\(dashboard\\)/user/loans/\")",
+      "Bash(npx tsc:*)",
+      "Bash(bun run:*)",
+      "Bash(node -e ':*)",
+      "Bash(node_modules/.bin/tsc --noEmit)",
+      "Bash(npm run:*)",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(./node_modules/.bin/tsc --noEmit)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); deps={**d.get\\('dependencies',{}\\), **d.get\\('devDependencies',{}\\)}; [print\\(k,v\\) for k,v in deps.items\\(\\) if any\\(x in k for x in ['three','fiber','rapier','meshline','drei','@react-three']\\)]\")",
+      "Bash(grep -A 5 -B 5 \"contribution.*window\\\\|window.*contribution\" \"C:\\\\Users\\\\user\\\\OneDrive\\\\Desktop\\\\Maintenance\\\\/components/dashboard/contributions/\"*.tsx)",
+      "Bash(./node_modules/.bin/tsc --noEmit --skipLibCheck)",
+      "Bash(ls \"C:\\\\Users\\\\user\\\\OneDrive\\\\Desktop\\\\Maintenance\\\\\\\\emails\\\\contribution-window\"* \"C:\\\\Users\\\\user\\\\OneDrive\\\\Desktop\\\\Maintenance\\\\\\\\emails\\\\contribution-deadline\"*)",
+      "WebFetch(domain:www.inngest.com)",
+      "Bash(node -e \"const i = require\\('./node_modules/inngest'\\); console.log\\(Object.keys\\(i\\).filter\\(k => k.match\\(/[A-Z]|event|schema|middleware/i\\)\\).sort\\(\\).join\\('\\\\n'\\)\\)\")",
+      "Bash(node -e \"const { Middleware } = require\\('./node_modules/inngest'\\); console.log\\(typeof Middleware, Middleware.toString\\(\\).slice\\(0, 200\\)\\)\")",
+      "Bash(xargs grep:*)",
+      "Bash(bun x *)",
+      "Bash(xargs tail *)",
+      "Bash(npx --yes tsx --version)",
+      "Bash(node_modules/.bin/tsc --noEmit --pretty)",
+      "Bash(grep -E \"\\\\.\\(tsx|ts|sql\\)$\")",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\user\\\\OneDrive\\\\Desktop\\\\Maintenance\\\\\" -Directory)",
+      "Bash(Select-Object Name)",
+      "Bash(node_modules/.bin/drizzle-kit generate *)",
+      "Bash(node_modules/.bin/drizzle-kit migrate *)",
+      "Bash(node_modules/.bin/drizzle-kit push *)",
+      "Bash(taskkill /F /IM node.exe /T)",
+      "Bash(grep -E \"\\\\.tsx$\")"
+    ]
+  }
+}

@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrustLink Group - Brand Identity</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:    #0B1F3A;
+    --navy2:   #162E52;
+    --gold:    #C9992A;
+    --gold2:   #E8B84B;
+    --gold3:   #F5D98A;
+    --cream:   #F7F3EC;
+    --cream2:  #EDE7DA;
+    --white:   #FFFFFF;
+    --ink:     #1A1A2E;
+    --muted:   #6B7280;
+    --light:   #9CA3AF;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'DM Sans',sans-serif;
+    background:#F0EBE2;
+    color:var(--ink);
+    padding:48px 24px;
+  }
+  .page-title {
+    font-family:'Cormorant Garamond',serif;
+    font-size:42px;
+    font-weight:600;
+    color:var(--navy);
+    letter-spacing:-0.02em;
+    text-align:center;
+    margin-bottom:6px;
+  }
+  .page-sub {
+    font-family:'DM Sans',sans-serif;
+    font-size:13px;
+    font-weight:400;
+    color:var(--muted);
+    text-align:center;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    margin-bottom:64px;
+  }
+  .section {
+    max-width:960px;
+    margin:0 auto 72px;
+  }
+  .section-label {
+    font-family:'DM Mono',monospace;
+    font-size:10px;
+    font-weight:500;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:24px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .section-label::after {
+    content:'';
+    flex:1;
+    height:1px;
+    background:linear-gradient(90deg,var(--gold2),transparent);
+    opacity:0.4;
+  }
+
+  /* ── LOGO SECTION ── */
+  .logo-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:2px;
+  }
+  .logo-card {
+    padding:48px 36px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+    border-radius:2px;
+  }
+  .logo-card.light  { background:var(--white); }
+  .logo-card.cream  { background:var(--cream); }
+  .logo-card.dark   { background:var(--navy); }
+
+  /* The actual SVG logo mark */
+  .logo-mark svg { display:block; }
+  .logo-lockup {
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .logo-text-block { line-height:1; }
+  .logo-name {
+    font-family:'Cormorant Garamond',serif;
+    font-weight:700;
+    font-size:28px;
+    letter-spacing:0.02em;
+  }
+  .logo-tagline {
+    font-family:'DM Sans',sans-serif;
+    font-weight:300;
+    font-size:9px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    margin-top:4px;
+  }
+  .logo-card.light  .logo-name    { color:var(--navy); }
+  .logo-card.light  .logo-tagline { color:var(--gold); }
+  .logo-card.cream  .logo-name    { color:var(--navy); }
+  .logo-card.cream  .logo-tagline { color:var(--gold); }
+  .logo-card.dark   .logo-name    { color:var(--white); }
+  .logo-card.dark   .logo-tagline { color:var(--gold2); }
+
+  .logo-variant-label {
+    font-size:10px;
+    font-family:'DM Mono',monospace;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+  }
+  .logo-card.light  .logo-variant-label { color:var(--light); }
+  .logo-card.cream  .logo-variant-label { color:var(--light); }
+  .logo-card.dark   .logo-variant-label { color:rgba(255,255,255,0.3); }
+
+  /* ── COLOR PALETTE ── */
+  .palette-grid {
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:12px;
+  }
+  .swatch {
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .swatch-color {
+    height:80px;
+  }
+  .swatch-info {
+    padding:10px 10px 12px;
+    background:var(--white);
+  }
+  .swatch-name {
+    font-size:11px;
+    font-weight:600;
+    color:var(--navy);
+    display:block;
+    margin-bottom:2px;
+  }
+  .swatch-hex {
+    font-family:'DM Mono',monospace;
+    font-size:10px;
+    color:var(--muted);
+  }
+  .swatch-role {
+    font-size:9px;
+    color:var(--light);
+    margin-top:3px;
+    display:block;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .type-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:2px;
+  }
+  .type-card {
+    background:var(--white);
+    padding:36px 40px;
+  }
+  .type-label {
+    font-family:'DM Mono',monospace;
+    font-size:9px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:20px;
+  }
+  .type-display {
+    font-family:'Cormorant Garamond',serif;
+    font-size:52px;
+    font-weight:600;
+    color:var(--navy);
+    line-height:1;
+    letter-spacing:-0.02em;
+    margin-bottom:16px;
+  }
+  .type-display-sub {
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.6;
+    margin-bottom:20px;
+  }
+  .type-specimen-row {
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    border-top:1px solid var(--cream2);
+    padding-top:20px;
+  }
+  .type-specimen-item {
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+  }
+  .type-specimen-size {
+    font-family:'DM Mono',monospace;
+    font-size:9px;
+    color:var(--light);
+    width:52px;
+    flex-shrink:0;
+  }
+  .ts-h1 { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:700; color:var(--navy); line-height:1.1; }
+  .ts-h2 { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:var(--navy); line-height:1.2; }
+  .ts-h3 { font-family:'DM Sans',sans-serif; font-size:15px; font-weight:600; color:var(--navy); letter-spacing:0.01em; }
+  .ts-body { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:400; color:var(--ink); line-height:1.65; }
+  .ts-small { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:400; color:var(--muted); letter-spacing:0.04em; }
+  .ts-label { font-family:'DM Mono',monospace; font-size:10px; font-weight:500; color:var(--gold); letter-spacing:0.18em; text-transform:uppercase; }
+
+  /* ── LETTERHEAD ── */
+  .letterhead-wrap {
+    background:var(--white);
+    box-shadow:0 4px 40px rgba(11,31,58,0.12);
+    border-radius:2px;
+    overflow:hidden;
+    max-width:680px;
+    margin:0 auto;
+  }
+  .lh-header {
+    background:var(--navy);
+    padding:32px 48px 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .lh-header-logo {
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .lh-name { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:700; color:var(--white); letter-spacing:0.02em; }
+  .lh-sub  { font-family:'DM Sans',sans-serif; font-size:8px; font-weight:300; color:var(--gold2); letter-spacing:0.22em; text-transform:uppercase; margin-top:3px; }
+  .lh-contact-block { text-align:right; }
+  .lh-contact-line { font-family:'DM Sans',sans-serif; font-size:10px; color:rgba(255,255,255,0.5); line-height:1.9; }
+
+  .lh-gold-stripe {
+    height:4px;
+    background:linear-gradient(90deg, var(--gold), var(--gold2), var(--gold3), var(--gold2));
+  }
+
+  .lh-body {
+    padding:44px 48px 36px;
+  }
+  .lh-date-ref {
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:32px;
+  }
+  .lh-label-val { display:flex; flex-direction:column; gap:3px; }
+  .lh-field-label { font-family:'DM Mono',monospace; font-size:9px; color:var(--gold); letter-spacing:0.18em; text-transform:uppercase; }
+  .lh-field-val   { font-size:12px; color:var(--navy); font-weight:500; }
+
+  .lh-recipient { margin-bottom:28px; }
+  .lh-recipient-name { font-size:13px; font-weight:600; color:var(--navy); }
+  .lh-recipient-addr { font-size:12px; color:var(--muted); line-height:1.8; margin-top:2px; }
+
+  .lh-subject-row {
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:24px;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--cream2);
+  }
+  .lh-subject-tag {
+    background:var(--navy);
+    color:var(--gold2);
+    font-family:'DM Mono',monospace;
+    font-size:9px;
+    font-weight:500;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    padding:3px 8px;
+    border-radius:2px;
+    flex-shrink:0;
+  }
+  .lh-subject-text { font-size:13px; font-weight:600; color:var(--navy); }
+
+  .lh-body-text { font-size:12px; color:#3D3D4E; line-height:1.85; }
+  .lh-body-text p { margin-bottom:14px; }
+  .lh-body-text p:last-child { margin-bottom:0; }
+
+  .lh-signature-block {
+    margin-top:32px;
+    padding-top:24px;
+    border-top:1px solid var(--cream2);
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+  }
+  .lh-sig-left { display:flex; flex-direction:column; gap:4px; }
+  .lh-sig-line { width:140px; height:1px; background:var(--cream2); margin-bottom:6px; }
+  .lh-sig-name { font-size:12px; font-weight:600; color:var(--navy); }
+  .lh-sig-title { font-size:10px; color:var(--muted); }
+
+  .lh-footer {
+    background:var(--cream);
+    padding:14px 48px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-top:1px solid var(--cream2);
+  }
+  .lh-footer-text { font-size:9px; color:var(--light); font-family:'DM Mono',monospace; letter-spacing:0.1em; }
+  .lh-footer-dot { width:3px; height:3px; border-radius:50%; background:var(--gold); opacity:0.5; }
+
+  /* ── BUSINESS CARD ── */
+  .card-showcase {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:32px;
+    align-items:start;
+  }
+  .bcard {
+    width:100%;
+    aspect-ratio:1.75 / 1;
+    border-radius:6px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 8px 32px rgba(11,31,58,0.2);
+  }
+  /* Front */
+  .bcard-front {
+    background:var(--navy);
+    padding:28px 30px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    height:100%;
+  }
+  .bcard-corner-mark {
+    position:absolute;
+    top:0; right:0;
+    width:80px; height:80px;
+    background:var(--gold);
+    opacity:0.07;
+    border-radius:0 0 0 80px;
+  }
+  .bcard-bottom-stripe {
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height:3px;
+    background:linear-gradient(90deg, var(--gold), var(--gold2));
+  }
+  .bcard-logo-row {
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .bcard-name-block .bcard-org { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:700; color:var(--white); letter-spacing:0.02em; line-height:1; }
+  .bcard-name-block .bcard-type { font-size:7px; font-weight:300; color:var(--gold2); letter-spacing:0.2em; text-transform:uppercase; margin-top:3px; }
+  .bcard-member-info { }
+  .bcard-member-name { font-family:'Cormorant Garamond',serif; font-size:15px; font-weight:600; color:var(--white); }
+  .bcard-member-role { font-size:8px; color:var(--gold2); letter-spacing:0.15em; text-transform:uppercase; margin-top:2px; font-weight:300; }
+
+  /* Back */
+  .bcard-back {
+    background:var(--cream);
+    padding:24px 28px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    height:100%;
+  }
+  .bcard-back-top { display:flex; align-items:flex-start; justify-content:space-between; }
+  .bcard-back-accent {
+    position:absolute;
+    top:0; left:0;
+    width:4px;
+    height:100%;
+    background:linear-gradient(180deg,var(--gold),var(--gold2));
+  }
+  .bcard-contact-list { display:flex; flex-direction:column; gap:6px; margin-left:12px; }
+  .bcard-contact-item { display:flex; align-items:center; gap:8px; }
+  .bcard-contact-dot { width:4px; height:4px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+  .bcard-contact-text { font-size:9px; color:var(--navy); font-weight:400; }
+  .bcard-back-id {
+    font-family:'DM Mono',monospace;
+    font-size:8px;
+    color:var(--light);
+    letter-spacing:0.1em;
+    margin-left:12px;
+  }
+  .bcard-back-logo {
+    display:flex;
+    align-items:center;
+    gap:7px;
+    opacity:0.3;
+  }
+  .bcard-back-logo span { font-family:'Cormorant Garamond',serif; font-size:12px; font-weight:700; color:var(--navy); }
+
+  .card-label {
+    font-family:'DM Mono',monospace;
+    font-size:10px;
+    color:var(--muted);
+    text-align:center;
+    margin-top:12px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+  }
+
+  /* ── USAGE GUIDE ── */
+  .usage-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:2px;
+  }
+  .usage-card {
+    background:var(--white);
+    padding:28px 28px 32px;
+  }
+  .usage-icon {
+    width:36px; height:36px;
+    margin-bottom:16px;
+  }
+  .usage-title {
+    font-family:'Cormorant Garamond',serif;
+    font-size:18px;
+    font-weight:600;
+    color:var(--navy);
+    margin-bottom:8px;
+  }
+  .usage-text {
+    font-size:12px;
+    color:var(--muted);
+    line-height:1.7;
+  }
+  .usage-do { color:#166534; background:#DCFCE7; padding:2px 7px; border-radius:2px; font-size:10px; font-weight:600; letter-spacing:0.08em; margin-right:4px; }
+  .usage-dont { color:#991B1B; background:#FEE2E2; padding:2px 7px; border-radius:2px; font-size:10px; font-weight:600; letter-spacing:0.08em; margin-right:4px; }
+  .usage-rule { font-size:11px; color:var(--muted); margin-top:8px; line-height:1.6; }
+</style>
+</head>
+<body>
+
+<p class="page-title">TrustLink Group</p>
+<p class="page-sub">Brand Identity System - Version 1.0 · January 2026</p>
+
+<!-- ═══════════ LOGO ═══════════ -->
+<div class="section">
+  <div class="section-label">01 - Logo System</div>
+  <div class="logo-grid">
+
+    <!-- Light bg -->
+    <div class="logo-card light">
+      <div class="logo-lockup">
+        <div class="logo-mark">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <!-- Chain-link / connection mark with tooth detail -->
+            <circle cx="22" cy="22" r="21" stroke="#0B1F3A" stroke-width="1.2" fill="none" opacity="0.08"/>
+            <!-- Left link -->
+            <rect x="5" y="16" width="18" height="12" rx="6" fill="none" stroke="#0B1F3A" stroke-width="2.2"/>
+            <!-- Right link -->
+            <rect x="21" y="16" width="18" height="12" rx="6" fill="none" stroke="#C9992A" stroke-width="2.2"/>
+            <!-- Center overlap fill -->
+            <rect x="20" y="18" width="4" height="8" fill="#F7F3EC"/>
+            <!-- Center dot -->
+            <circle cx="22" cy="22" r="2.2" fill="#C9992A"/>
+            <!-- Top subtle arc -->
+            <path d="M15 12 Q22 7 29 12" stroke="#0B1F3A" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.25"/>
+            <path d="M15 32 Q22 37 29 32" stroke="#C9992A" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="logo-text-block">
+          <div class="logo-name">TrustLink</div>
+          <div class="logo-tagline">Group · Ikimina</div>
+        </div>
+      </div>
+      <div class="logo-variant-label">On White</div>
+    </div>
+
+    <!-- Cream bg -->
+    <div class="logo-card cream">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        <!-- Stacked / icon-only -->
+        <svg width="52" height="52" viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="22" r="21" stroke="#0B1F3A" stroke-width="1.2" fill="none" opacity="0.08"/>
+          <rect x="5" y="16" width="18" height="12" rx="6" fill="none" stroke="#0B1F3A" stroke-width="2.2"/>
+          <rect x="21" y="16" width="18" height="12" rx="6" fill="none" stroke="#C9992A" stroke-width="2.2"/>
+          <rect x="20" y="18" width="4" height="8" fill="#EDE7DA"/>
+          <circle cx="22" cy="22" r="2.2" fill="#C9992A"/>
+          <path d="M15 12 Q22 7 29 12" stroke="#0B1F3A" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.25"/>
+          <path d="M15 32 Q22 37 29 32" stroke="#C9992A" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.4"/>
+        </svg>
+        <div style="text-align:center;">
+          <div class="logo-name" style="font-size:24px;">TrustLink</div>
+          <div class="logo-tagline" style="text-align:center;">Group · Ikimina</div>
+        </div>
+      </div>
+      <div class="logo-variant-label">Stacked / Icon-first</div>
+    </div>
+
+    <!-- Dark bg -->
+    <div class="logo-card dark">
+      <div class="logo-lockup">
+        <div class="logo-mark">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <circle cx="22" cy="22" r="21" stroke="#FFFFFF" stroke-width="1.2" fill="none" opacity="0.08"/>
+            <rect x="5" y="16" width="18" height="12" rx="6" fill="none" stroke="#FFFFFF" stroke-width="2.2"/>
+            <rect x="21" y="16" width="18" height="12" rx="6" fill="none" stroke="#E8B84B" stroke-width="2.2"/>
+            <rect x="20" y="18" width="4" height="8" fill="#0B1F3A"/>
+            <circle cx="22" cy="22" r="2.2" fill="#E8B84B"/>
+            <path d="M15 12 Q22 7 29 12" stroke="#FFFFFF" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.2"/>
+            <path d="M15 32 Q22 37 29 32" stroke="#E8B84B" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="logo-text-block">
+          <div class="logo-name">TrustLink</div>
+          <div class="logo-tagline">Group · Ikimina</div>
+        </div>
+      </div>
+      <div class="logo-variant-label">On Dark / Reversed</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════ COLOR PALETTE ═══════════ -->
+<div class="section">
+  <div class="section-label">02 - Color Palette</div>
+  <div class="palette-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#0B1F3A;"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">Navy Deep</span>
+        <span class="swatch-hex">#0B1F3A</span>
+        <span class="swatch-role">Primary</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#162E52;"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">Navy Mid</span>
+        <span class="swatch-hex">#162E52</span>
+        <span class="swatch-role">Secondary</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#C9992A;"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">Gold Core</span>
+        <span class="swatch-hex">#C9992A</span>
+        <span class="swatch-role">Accent</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#E8B84B;"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">Gold Light</span>
+        <span class="swatch-hex">#E8B84B</span>
+        <span class="swatch-role">Highlight</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F7F3EC;"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">Cream Warm</span>
+        <span class="swatch-hex">#F7F3EC</span>
+        <span class="swatch-role">Background</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#FFFFFF; border:1px solid #E5E7EB;"></div>
+      <div class="swatch-info">
+        <span class="swatch-name">Pure White</span>
+        <span class="swatch-hex">#FFFFFF</span>
+        <span class="swatch-role">Surface</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TYPOGRAPHY ═══════════ -->
+<div class="section">
+  <div class="section-label">03 - Typography</div>
+  <div class="type-grid">
+    <div class="type-card">
+      <div class="type-label">Display - Cormorant Garamond</div>
+      <div class="type-display">Aa</div>
+      <div class="type-display-sub">Used for headings, the wordmark, and all formal document titles. Brings dignity and warmth.</div>
+      <div class="type-specimen-row">
+        <div class="type-specimen-item"><span class="type-specimen-size">32 / 700</span><span class="ts-h1">Heading One</span></div>
+        <div class="type-specimen-item"><span class="type-specimen-size">22 / 600</span><span class="ts-h2">Heading Two</span></div>
+        <div class="type-specimen-item"><span class="type-specimen-size">italic</span><span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--navy);">Savings &amp; Investment</span></div>
+      </div>
+    </div>
+    <div class="type-card">
+      <div class="type-label">Body - DM Sans + DM Mono</div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;margin-bottom:16px;">Aa</div>
+      <div class="type-display-sub">DM Sans for all body copy and UI. DM Mono for codes, IDs, labels, and data.</div>
+      <div class="type-specimen-row">
+        <div class="type-specimen-item"><span class="type-specimen-size">15 / 600</span><span class="ts-h3">Subheading</span></div>
+        <div class="type-specimen-item"><span class="type-specimen-size">13 / 400</span><span class="ts-body">Body text, regular weight</span></div>
+        <div class="type-specimen-item"><span class="type-specimen-size">11 / 400</span><span class="ts-small">Caption and supporting text</span></div>
+        <div class="type-specimen-item"><span class="type-specimen-size">mono</span><span class="ts-label">ID · Reference · Code</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ LETTERHEAD ═══════════ -->
+<div class="section">
+  <div class="section-label">04 - Official Letterhead</div>
+  <div class="letterhead-wrap">
+
+    <div class="lh-header">
+      <div class="lh-header-logo">
+        <svg width="38" height="38" viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="22" r="21" stroke="#FFFFFF" stroke-width="1.2" fill="none" opacity="0.1"/>
+          <rect x="5" y="16" width="18" height="12" rx="6" fill="none" stroke="#FFFFFF" stroke-width="2.2"/>
+          <rect x="21" y="16" width="18" height="12" rx="6" fill="none" stroke="#E8B84B" stroke-width="2.2"/>
+          <rect x="20" y="18" width="4" height="8" fill="#0B1F3A"/>
+          <circle cx="22" cy="22" r="2.2" fill="#E8B84B"/>
+        </svg>
+        <div>
+          <div class="lh-name">TrustLink Group</div>
+          <div class="lh-sub">Ikimina · Savings &amp; Investment</div>
+        </div>
+      </div>
+      <div class="lh-contact-block">
+        <div class="lh-contact-line">Nyamata Sector, Bugesera District</div>
+        <div class="lh-contact-line">Republic of Rwanda</div>
+        <div class="lh-contact-line">Est. January 2026</div>
+      </div>
+    </div>
+
+    <div class="lh-gold-stripe"></div>
+
+    <div class="lh-body">
+      <div class="lh-date-ref">
+        <div class="lh-label-val">
+          <span class="lh-field-label">Date</span>
+          <span class="lh-field-val">January 10, 2026</span>
+        </div>
+        <div class="lh-label-val" style="text-align:right;">
+          <span class="lh-field-label">Reference</span>
+          <span class="lh-field-val" style="font-family:'DM Mono',monospace;font-size:11px;">TLG-2026-001</span>
+        </div>
+      </div>
+
+      <div class="lh-recipient">
+        <div class="lh-recipient-name">The Branch Manager</div>
+        <div class="lh-recipient-addr">Equity Bank Rwanda<br>Nyamata Branch, Bugesera District</div>
+      </div>
+
+      <div class="lh-subject-row">
+        <span class="lh-subject-tag">Re</span>
+        <span class="lh-subject-text">Application for Ikimina Group Bank Account - TrustLink Group</span>
+      </div>
+
+      <div class="lh-body-text">
+        <p>Dear Sir / Madam,</p>
+        <p>We, the undersigned founding members of TrustLink Group Ikimina, hereby formally apply for the opening of a group bank account with Equity Bank Rwanda in accordance with our duly adopted Constitution (Version 1.0, January 10, 2026).</p>
+        <p>TrustLink Group is a savings and investment group (Ikimina) comprising eight (8) founding members, all Dental Therapy graduates of the University of Rwanda (Class of 2025). Enclosed herewith are all required supporting documents including our Bank Account Opening Resolution, Group Constitution, member profiles, specimen signatures, and certified identity documents.</p>
+        <p>We kindly request your assistance in processing this application at your earliest convenience. Please do not hesitate to contact our President or Secretary for any additional information required.</p>
+      </div>
+
+      <div class="lh-signature-block">
+        <div class="lh-sig-left">
+          <div class="lh-sig-line"></div>
+          <div class="lh-sig-name">MANIRIHO JEAN PAUL</div>
+          <div class="lh-sig-title">President · TrustLink Group</div>
+        </div>
+        <div class="lh-sig-left">
+          <div class="lh-sig-line"></div>
+          <div class="lh-sig-name">ISHIMWE JEAN BAPTISTE</div>
+          <div class="lh-sig-title">Secretary · TrustLink Group</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lh-footer">
+      <span class="lh-footer-text">TrustLink Group Ikimina</span>
+      <div class="lh-footer-dot"></div>
+      <span class="lh-footer-text">Nyamata · Bugesera · Rwanda</span>
+      <div class="lh-footer-dot"></div>
+      <span class="lh-footer-text">Est. 2026</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════ BUSINESS CARD ═══════════ -->
+<div class="section">
+  <div class="section-label">05 - Business Card</div>
+  <div class="card-showcase">
+
+    <!-- Front -->
+    <div>
+      <div class="bcard" style="min-height:180px;">
+        <div class="bcard-front">
+          <div class="bcard-corner-mark"></div>
+          <div class="bcard-logo-row">
+            <svg width="28" height="28" viewBox="0 0 44 44" fill="none">
+              <rect x="5" y="16" width="18" height="12" rx="6" fill="none" stroke="#FFFFFF" stroke-width="2.5"/>
+              <rect x="21" y="16" width="18" height="12" rx="6" fill="none" stroke="#E8B84B" stroke-width="2.5"/>
+              <rect x="20" y="18" width="4" height="8" fill="#0B1F3A"/>
+              <circle cx="22" cy="22" r="2.5" fill="#E8B84B"/>
+            </svg>
+            <div class="bcard-name-block">
+              <div class="bcard-org">TrustLink</div>
+              <div class="bcard-type">Group · Ikimina</div>
+            </div>
+          </div>
+          <div class="bcard-member-info">
+            <div class="bcard-member-name">MANIRIHO Jean Paul</div>
+            <div class="bcard-member-role">President</div>
+          </div>
+        </div>
+        <div class="bcard-bottom-stripe"></div>
+      </div>
+      <div class="card-label">Front</div>
+    </div>
+
+    <!-- Back -->
+    <div>
+      <div class="bcard" style="min-height:180px;">
+        <div class="bcard-back">
+          <div class="bcard-back-accent"></div>
+          <div class="bcard-back-top">
+            <div></div>
+            <div class="bcard-back-logo">
+              <svg width="20" height="20" viewBox="0 0 44 44" fill="none">
+                <rect x="5" y="16" width="18" height="12" rx="6" fill="none" stroke="#0B1F3A" stroke-width="2.5"/>
+                <rect x="21" y="16" width="18" height="12" rx="6" fill="none" stroke="#C9992A" stroke-width="2.5"/>
+                <rect x="20" y="18" width="4" height="8" fill="#F7F3EC"/>
+                <circle cx="22" cy="22" r="2.5" fill="#C9992A"/>
+              </svg>
+              <span>TrustLink</span>
+            </div>
+          </div>
+          <div class="bcard-contact-list">
+            <div class="bcard-contact-item">
+              <div class="bcard-contact-dot"></div>
+              <span class="bcard-contact-text">+250 785 251 067</span>
+            </div>
+            <div class="bcard-contact-item">
+              <div class="bcard-contact-dot"></div>
+              <span class="bcard-contact-text">manirihojpaul11@gmail.com</span>
+            </div>
+            <div class="bcard-contact-item">
+              <div class="bcard-contact-dot"></div>
+              <span class="bcard-contact-text">Nyamata Sector, Bugesera, Rwanda</span>
+            </div>
+          </div>
+          <div class="bcard-back-id">ID: 1200080089752022</div>
+        </div>
+        <div class="bcard-bottom-stripe"></div>
+      </div>
+      <div class="card-label">Back</div>
+    </div>
+
+  </div>
+
+  <!-- Second member card example -->
+  <div style="margin-top:24px;">
+    <div class="section-label" style="font-size:9px;margin-bottom:16px;">Member variant - Secretary</div>
+    <div style="max-width:320px;">
+      <div class="bcard" style="min-height:180px;">
+        <div class="bcard-front">
+          <div class="bcard-corner-mark"></div>
+          <div class="bcard-logo-row">
+            <svg width="28" height="28" viewBox="0 0 44 44" fill="none">
+              <rect x="5" y="16" width="18" height="12" rx="6" fill="none" stroke="#FFFFFF" stroke-width="2.5"/>
+              <rect x="21" y="16" width="18" height="12" rx="6" fill="none" stroke="#E8B84B" stroke-width="2.5"/>
+              <rect x="20" y="18" width="4" height="8" fill="#0B1F3A"/>
+              <circle cx="22" cy="22" r="2.5" fill="#E8B84B"/>
+            </svg>
+            <div class="bcard-name-block">
+              <div class="bcard-org">TrustLink</div>
+              <div class="bcard-type">Group · Ikimina</div>
+            </div>
+          </div>
+          <div class="bcard-member-info">
+            <div class="bcard-member-name">ISHIMWE Jean Baptiste</div>
+            <div class="bcard-member-role">Secretary</div>
+          </div>
+        </div>
+        <div class="bcard-bottom-stripe"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ USAGE RULES ═══════════ -->
+<div class="section">
+  <div class="section-label">06 - Brand Usage Guidelines</div>
+  <div class="usage-grid">
+    <div class="usage-card">
+      <svg class="usage-icon" viewBox="0 0 36 36" fill="none">
+        <rect x="4" y="4" width="28" height="28" rx="4" stroke="#C9992A" stroke-width="1.5"/>
+        <path d="M11 18l5 5 9-9" stroke="#0B1F3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="usage-title">Logo Use</div>
+      <div class="usage-rule"><span class="usage-do">DO</span> Use the navy version on white/cream backgrounds</div>
+      <div class="usage-rule"><span class="usage-do">DO</span> Use the reversed version on dark backgrounds</div>
+      <div class="usage-rule"><span class="usage-dont">DON'T</span> Stretch, recolor, or separate the icon from wordmark</div>
+      <div class="usage-rule"><span class="usage-dont">DON'T</span> Place on busy or patterned backgrounds</div>
+    </div>
+    <div class="usage-card">
+      <svg class="usage-icon" viewBox="0 0 36 36" fill="none">
+        <circle cx="18" cy="18" r="14" stroke="#C9992A" stroke-width="1.5"/>
+        <path d="M18 10v8l5 3" stroke="#0B1F3A" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <div class="usage-title">Color Rules</div>
+      <div class="usage-rule"><span class="usage-do">DO</span> Pair Navy Deep with Gold Core as primary combination</div>
+      <div class="usage-rule"><span class="usage-do">DO</span> Use Cream Warm as the default page/document background</div>
+      <div class="usage-rule"><span class="usage-dont">DON'T</span> Use Gold Core on white without navy context</div>
+      <div class="usage-rule"><span class="usage-dont">DON'T</span> Use more than 3 colors in any single document</div>
+    </div>
+    <div class="usage-card">
+      <svg class="usage-icon" viewBox="0 0 36 36" fill="none">
+        <rect x="6" y="8" width="24" height="3" rx="1.5" fill="#0B1F3A" opacity="0.2"/>
+        <rect x="6" y="15" width="18" height="2" rx="1" fill="#0B1F3A" opacity="0.15"/>
+        <rect x="6" y="21" width="20" height="2" rx="1" fill="#0B1F3A" opacity="0.15"/>
+        <rect x="6" y="8" width="8" height="3" rx="1.5" fill="#C9992A"/>
+      </svg>
+      <div class="usage-title">Typography</div>
+      <div class="usage-rule"><span class="usage-do">DO</span> Use Cormorant Garamond for all headings and titles</div>
+      <div class="usage-rule"><span class="usage-do">DO</span> Use DM Mono for IDs, references, and data fields</div>
+      <div class="usage-rule"><span class="usage-dont">DON'T</span> Mix more than two font families in one document</div>
+      <div class="usage-rule"><span class="usage-dont">DON'T</span> Use Cormorant Garamond at sizes below 14px</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
