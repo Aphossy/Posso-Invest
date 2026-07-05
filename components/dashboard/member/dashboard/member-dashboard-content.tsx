@@ -318,7 +318,7 @@ export function MemberDashboardContent() {
             {greeting}, {firstName}!
           </h2>
           <p className="text-muted-foreground">
-            Here&apos;s your Ikimina snapshot for TrustLink Group.
+            Here&apos;s your Contribution snapshot for Posso Ventures.
           </p>
         </div>
 

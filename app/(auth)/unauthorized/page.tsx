@@ -336,7 +336,7 @@ export default function UnauthorizedPage() {
           name="subject"
           value={formData.subject}
           onChange={(event) => updateField("subject", event.target.value)}
-          placeholder="Request access to TrustLink Group…"
+          placeholder="Request access to Posso Ventures…"
         />
         {errors.subject && (
           <p className="text-xs text-destructive">{errors.subject}</p>
@@ -384,7 +384,7 @@ export default function UnauthorizedPage() {
         <CardHeader className="space-y-2">
           <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
             <Lock className="h-4 w-4" />
-            TrustLink Group Access
+            Posso Ventures Access
           </div>
           <CardTitle className="text-2xl">{copy.title}</CardTitle>
           <CardDescription>{copy.description}</CardDescription>

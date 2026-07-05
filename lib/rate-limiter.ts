@@ -27,11 +27,24 @@ export interface RateLimitHeaders {
   "Retry-After"?: string
 }
 
-// Create Redis instance
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-})
+// Create Redis instance (guarded)
+const UPSTASH_URL = process.env.UPSTASH_REDIS_REST_URL
+const UPSTASH_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN
+let redis: Redis | null = null
+let upstashAvailable = false
+
+if (UPSTASH_URL && UPSTASH_TOKEN) {
+  try {
+    redis = new Redis({ url: UPSTASH_URL, token: UPSTASH_TOKEN })
+    upstashAvailable = true
+  } catch (err) {
+    console.warn("Upstash Redis initialization failed, falling back to no-op rate limiter", err)
+    redis = null
+    upstashAvailable = false
+  }
+} else {
+  console.warn("UPSTASH_REDIS_REST_URL or UPSTASH_REDIS_REST_TOKEN not set — rate limiting disabled")
+}
 
 export async function rateLimit(
   key: string,
@@ -61,6 +74,18 @@ export async function rateLimit(
     .join("")
 
   const identifier = `${key}:${hash}`
+
+  // If Upstash is not available, return a permissive result so
+  // feature routes continue to work instead of throwing errors.
+  if (!upstashAvailable || !redis) {
+    const resetDate = new Date(Date.now() + duration * 1000)
+    return {
+      success: true,
+      limit,
+      remaining: limit,
+      reset: resetDate,
+    }
+  }
 
   // Choose the appropriate limiter algorithm
   let limiter
@@ -154,6 +179,17 @@ export async function multiRateLimit(
     .join("")
 
   const identifier = `${key}:${hash}`
+
+  // If Upstash is not available, always succeed quickly
+  if (!upstashAvailable || !redis) {
+    const resetDate = new Date(Date.now() + (limits[limits.length - 1]?.duration ?? 60) * 1000)
+    return {
+      success: true,
+      limit: limits[limits.length - 1]?.limit ?? 0,
+      remaining: limits[limits.length - 1]?.limit ?? 0,
+      reset: resetDate,
+    }
+  }
 
   // Check each rate limit sequentially
   for (let i = 0; i < limits.length; i++) {

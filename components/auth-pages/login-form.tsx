@@ -161,7 +161,6 @@ export default function LoginPageComponent({ error }: LoginPageComponentProps) {
   const [otpCode, setOtpCode] = useState(Array(6).fill(""))
   const [isResending, setIsResending] = useState(false)
   const [resendCooldown, setResendCooldown] = useState(0)
-  const [isRedirecting, setIsRedirecting] = useState(false)
   const hasRequestedOneTap = useRef(false)
 
   const { data: session } = authClient.useSession()
@@ -199,25 +198,15 @@ export default function LoginPageComponent({ error }: LoginPageComponentProps) {
   }, [resendCooldown])
 
   useEffect(() => {
-    if (!session?.user || isRedirecting) return
-    setIsRedirecting(true)
+    if (!session?.user) return
     const redirectUrl = redirectFrom
       ? `/redirect?from=${encodeURIComponent(redirectFrom)}`
       : "/redirect"
     void router.replace(redirectUrl as Route)
-  }, [session?.user, redirectFrom, isRedirecting, router])
+  }, [session?.user, redirectFrom, router])
 
-  if (session?.user && isRedirecting) {
-    return (
-      <div className="flex min-h-screen items-center justify-center px-4">
-        <div className="flex items-center gap-3 rounded-xl border border-border bg-background px-5 py-4 shadow-sm">
-          <Loader className="h-5 w-5" />
-          <div className="text-sm font-medium text-foreground">
-            Signing you in…
-          </div>
-        </div>
-      </div>
-    )
+  if (session?.user) {
+    return null
   }
 
   const updateField = (field: keyof AuthFormData, value: string | boolean) => {

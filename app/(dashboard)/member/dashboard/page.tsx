@@ -7,7 +7,7 @@ import { MemberDashboardContent } from "@/components/dashboard/member/dashboard/
 export const metadata: Metadata = {
   title: "Member Dashboard",
   description:
-    "Track savings, meetings, loans, and your Ikimina status in your TrustLink Group dashboard.",
+    "Track savings, meetings, loans, and your Contribution status in your Posso Ventures dashboard.",
 }
 
 export default function MemberDashboardPage() {
