@@ -161,7 +161,7 @@ function CardTexture({ name, role, memberId, joinDate }: CardData) {
         anchorX="center"
         anchorY="middle"
         letterSpacing={0.14}>
-        TRUSTLINK GROUP
+        POSSO VENTURES
       </Text>
 
       <Text
@@ -260,7 +260,7 @@ function CardTexture({ name, role, memberId, joinDate }: CardData) {
         color="#96b8d4"
         anchorX="center"
         anchorY="middle">
-        Ikimina - Savings & Investment Group
+        Posso Ventures - Savings & Investment Group
       </Text>
       <Text
         position={[0, -1.18, 0.003]}
@@ -269,7 +269,7 @@ function CardTexture({ name, role, memberId, joinDate }: CardData) {
         anchorX="center"
         anchorY="middle"
         letterSpacing={0.07}>
-        BUGESERA · RWANDA
+        KIGALI · RWANDA
       </Text>
     </>
   )

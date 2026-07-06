@@ -7,7 +7,7 @@ import { MemberCardPageContent } from "@/components/dashboard/member/card/member
 export const metadata: Metadata = {
   title: "My Member Card",
   description:
-    "View your interactive TrustLink Group membership card with physics-based 3D lanyard.",
+    "View your interactive Posso Ventures membership card with physics-based 3D lanyard.",
 }
 
 export default function MemberCardPage() {
