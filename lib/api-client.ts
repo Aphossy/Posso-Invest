@@ -1,7 +1,7 @@
 // lib/api-client.ts (Fixed to return plain JSON)
 import { ApiErrorException } from "@/types/api"
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || ""
+const API_BASE_URL = ""
 interface RequestOptions extends RequestInit {
   params?: Record<string, string | number | boolean | undefined>
 }
@@ -40,6 +40,7 @@ class ApiClient {
         // Prevent browser/edge/CDN caching so mutations reflect immediately
         cache: isGet ? "no-store" : undefined,
         ...fetchOptions,
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           "Cache-Control": "no-cache",
