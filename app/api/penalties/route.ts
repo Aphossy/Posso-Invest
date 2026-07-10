@@ -256,6 +256,7 @@ export async function POST(request: Request) {
 
   const created = await penaltyOperations.create({
     id: crypto.randomUUID(),
+    organizationId: activeOrganizationId || "unknown-org",
     contributionId: parsed.data.contributionId ?? null,
     memberId: parsed.data.memberId,
     issuedBy: user.id,

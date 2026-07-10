@@ -4,7 +4,7 @@ import { SecretaryActionsView } from "@/components/dashboard/action-items/secret
 
 export const metadata: Metadata = {
   title: "Actions",
-  description: "Actions page for TrustLink Group.",
+  description: "Actions page for 10/10 Ventures.",
 }
 
 export default function ActionsPage() {

@@ -1,4 +1,3 @@
-import { headers } from "next/headers"
 import { NextResponse } from "next/server"
 import { db } from "@/db/connection"
 import { contributionOperations } from "@/db/operations/contribution-operations"
@@ -12,7 +11,6 @@ import {
   createBulkNotifications,
   type NotificationPayload,
 } from "@/utils/notification-utils"
-import { extractRoleValue } from "@/utils/role-utils"
 import { render } from "@react-email/components"
 import { and, eq, inArray } from "drizzle-orm"
 import { z } from "zod"
@@ -21,7 +19,7 @@ import {
   DOMAIN_NOTIFICATION_TYPE,
   NOTIFICATION_ACTION,
 } from "@/types/notifications"
-import { auth } from "@/lib/auth"
+import { getSessionUserCached } from "@/lib/get-session-cached"
 import sendEmail from "@/lib/send-email"
 
 const updateSchema = z.object({
@@ -33,43 +31,6 @@ const updateSchema = z.object({
 })
 
 const penaltyNotificationRoles = ["admin", "president"] as const
-
-async function getSessionInfo() {
-  const headersList = await headers()
-  const session = await auth.api.getSession({ headers: headersList })
-  const sessionUser = session?.user || null
-  const activeOrganizationId = session?.session?.activeOrganizationId
-
-  let role: string | null = null
-
-  if (sessionUser?.id && activeOrganizationId) {
-    try {
-      const rows = await db
-        .select({ role: member.role })
-        .from(member)
-        .where(
-          and(
-            eq(member.organizationId, activeOrganizationId),
-            eq(member.userId, sessionUser.id)
-          )
-        )
-        .limit(1)
-      role = rows[0]?.role ?? null
-    } catch {}
-  }
-
-  if (!role) {
-    try {
-      const orgApi = (auth.api as any).organization
-      const roleResponse = orgApi?.getActiveMemberRole
-        ? await orgApi.getActiveMemberRole({ headers: headersList })
-        : null
-      role = extractRoleValue(roleResponse)
-    } catch {}
-  }
-
-  return { user: sessionUser, role, activeOrganizationId }
-}
 
 async function getPenaltyNotificationRecipients(
   activeOrganizationId?: string | null
@@ -120,7 +81,7 @@ export async function GET(
   _req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { user, role } = await getSessionInfo()
+  const { user, role } = await getSessionUserCached()
   if (!user)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
 
@@ -140,7 +101,7 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { user, role, activeOrganizationId } = await getSessionInfo()
+  const { user, role, activeOrganizationId } = await getSessionUserCached()
   if (!user)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   if (!["admin", "treasurer"].includes(role ?? ""))
@@ -388,7 +349,7 @@ export async function DELETE(
   _req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { user, role } = await getSessionInfo()
+  const { user, role } = await getSessionUserCached()
   if (!user)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   if (role !== "admin")

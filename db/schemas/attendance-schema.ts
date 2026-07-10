@@ -10,6 +10,7 @@ import {
 import { createInsertSchema, createSelectSchema } from "drizzle-zod"
 import type { z } from "zod"
 
+import { organization } from "./auth-schema"
 import { user } from "./auth-schema"
 import { meeting } from "./meeting-schema"
 
@@ -24,6 +25,9 @@ export const attendance = pgTable(
   "attendance",
   {
     id: text("id").primaryKey(),
+    organizationId: text("organization_id")
+      .notNull()
+      .references(() => organization.id, { onDelete: "cascade" }),
     meetingId: text("meeting_id")
       .notNull()
       .references(() => meeting.id, { onDelete: "cascade" }),
@@ -43,6 +47,7 @@ export const attendance = pgTable(
       .notNull(),
   },
   (table) => ({
+    organizationIdIdx: index("attendance_organization_id_idx").on(table.organizationId),
     meetingIdx: index("attendance_meeting_id_idx").on(table.meetingId),
     memberIdx: index("attendance_member_id_idx").on(table.memberId),
     statusIdx: index("attendance_status_idx").on(table.status),

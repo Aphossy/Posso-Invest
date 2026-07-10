@@ -174,6 +174,7 @@ export async function PUT(
       // Create penalty if it doesn't exist yet
       await penaltyOperations.create({
         id: crypto.randomUUID(),
+        organizationId: sessionInfo.activeOrganizationId || "unknown-org",
         contributionId: contribId,
         memberId: existing.memberId,
         issuedBy: user.id,

@@ -229,6 +229,7 @@ const AUTO_LATE_PENALTY_MARKER = "auto:late_contribution"
  * the period, so reruns / retries never double-charge.
  */
 async function applyLatePenalties(
+  organizationId: string,
   period: string,
   label: string,
   overdueMembers: MemberRow[]
@@ -246,6 +247,7 @@ async function applyLatePenalties(
 
     await penaltyOperations.create({
       id: generateUUID(),
+      organizationId,
       memberId: m.userId,
       amount: String(PENALTY_AMOUNT),
       currency: CURRENCY,
@@ -1033,7 +1035,7 @@ export const contributionDeadlinePassedNotifier = inngest.createFunction(
     // Persist the penalty before any "penalty applied" messaging goes out, so
     // the emails and notifications below reflect real ledger state.
     const penaltiesCreated = await step.run("apply-late-penalties", () =>
-      applyLatePenalties(period, label, overdueMembers)
+      applyLatePenalties(orgId, period, label, overdueMembers)
     )
 
     logger.info("Late penalties applied", { period, penaltiesCreated })

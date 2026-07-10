@@ -31,9 +31,19 @@ import { RecordMeetingForm } from "@/components/dashboard/meetings/record-meetin
 
 interface RecordMeetingTriggerProps {
   onSuccess?: () => void
+  buttonLabel?: string
+  dialogTitle?: string
+  dialogDescription?: string
+  submitLabel?: string
 }
 
-export function RecordMeetingTrigger({ onSuccess }: RecordMeetingTriggerProps) {
+export function RecordMeetingTrigger({
+  onSuccess,
+  buttonLabel = "Create Meeting",
+  dialogTitle = "Create Meeting",
+  dialogDescription = "Add a new meeting so it becomes selectable when recording minutes.",
+  submitLabel = "Create Meeting",
+}: RecordMeetingTriggerProps) {
   const formId = "record-meeting-form"
   const router = useRouter()
   const isDesktop = useMediaQuery("(min-width: 768px)")
@@ -49,7 +59,7 @@ export function RecordMeetingTrigger({ onSuccess }: RecordMeetingTriggerProps) {
   const trigger = (
     <Button>
       <Plus className="h-4 w-4" />
-      Create Meeting
+      {buttonLabel}
     </Button>
   )
 
@@ -59,10 +69,8 @@ export function RecordMeetingTrigger({ onSuccess }: RecordMeetingTriggerProps) {
         <DialogTrigger asChild>{trigger}</DialogTrigger>
         <DialogContent className="flex max-h-[90vh] flex-col overflow-hidden p-0 sm:max-w-3xl">
           <DialogHeader className="shrink-0 px-6 pt-6 pr-14">
-            <DialogTitle>Create Meeting</DialogTitle>
-            <DialogDescription>
-              Add a new meeting so it becomes selectable when recording minutes.
-            </DialogDescription>
+            <DialogTitle>{dialogTitle}</DialogTitle>
+            <DialogDescription>{dialogDescription}</DialogDescription>
           </DialogHeader>
           <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-4">
             <RecordMeetingForm
@@ -85,7 +93,7 @@ export function RecordMeetingTrigger({ onSuccess }: RecordMeetingTriggerProps) {
                   Creating...
                 </>
               ) : (
-                "Create Meeting"
+                submitLabel
               )}
             </Button>
           </DialogFooter>
@@ -99,10 +107,8 @@ export function RecordMeetingTrigger({ onSuccess }: RecordMeetingTriggerProps) {
       <DrawerTrigger asChild>{trigger}</DrawerTrigger>
       <DrawerContent className="flex max-h-[92vh] flex-col">
         <DrawerHeader className="shrink-0">
-          <DrawerTitle>Create Meeting</DrawerTitle>
-          <DrawerDescription>
-            Add a new meeting so it becomes selectable when recording minutes.
-          </DrawerDescription>
+          <DrawerTitle>{dialogTitle}</DrawerTitle>
+          <DrawerDescription>{dialogDescription}</DrawerDescription>
         </DrawerHeader>
         <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-2">
           <RecordMeetingForm
@@ -120,7 +126,7 @@ export function RecordMeetingTrigger({ onSuccess }: RecordMeetingTriggerProps) {
                 Creating...
               </>
             ) : (
-              "Create Meeting"
+              submitLabel
             )}
           </Button>
           <DrawerClose asChild>

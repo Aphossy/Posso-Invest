@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import { Loader2, Search, Users } from "lucide-react"
+import { isMemberOrLeadershipRole } from "@/utils/role-utils"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
@@ -68,22 +69,11 @@ interface AttendanceFormProps {
 
 const hasStrictMemberRole = (rawRole: unknown): boolean => {
   if (Array.isArray(rawRole)) {
-    const normalized = rawRole
-      .map((value) =>
-        typeof value === "string" ? value.trim().toLowerCase() : null
-      )
-      .filter((value): value is string => Boolean(value))
-
-    return normalized.length === 1 && normalized[0] === "member"
+    return rawRole.some((value) => isMemberOrLeadershipRole(String(value)))
   }
 
   if (typeof rawRole === "string") {
-    const parts = rawRole
-      .split(",")
-      .map((part) => part.trim().toLowerCase())
-      .filter(Boolean)
-
-    return parts.length === 1 && parts[0] === "member"
+    return isMemberOrLeadershipRole(rawRole)
   }
 
   return false

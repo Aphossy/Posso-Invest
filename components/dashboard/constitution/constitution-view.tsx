@@ -37,31 +37,31 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 // ─── Static data ────────────────────────────────────────────────────────────
 
 const docMeta = [
-  { label: "Group Name", value: "TrustLink Group", icon: BookOpen },
+  { label: "Group Name", value: "10/10 Ventures", icon: BookOpen },
   {
     label: "Type",
-    value: "Ikimina - Savings & Investment Group",
+    value: "10/10 Ventures - Savings & Investment Group",
     icon: Building2,
   },
-  { label: "Established", value: "January 10, 2026", icon: Calendar },
+  { label: "Established", value: "August 01, 2026", icon: Calendar },
   {
     label: "Address",
-    value: "Nyamata Sector, Bugesera District, Rwanda",
+    value: "Kacyiru Sector, Gasabo District, Rwanda",
     icon: MapPin,
   },
   { label: "Founding Members", value: "Eleven (11)", icon: Users },
-  { label: "Version", value: "Version 1.0 - January 2026", icon: ScrollText },
+  { label: "Version", value: "Version 1.0 - August 2026", icon: ScrollText },
 ]
 
 const keyTerms = [
   {
     label: "Monthly Contribution",
-    value: "80,000",
+    value: "100,000",
     icon: Wallet,
   },
   {
     label: "Payment Window",
-    value: "25th → 6th of following month",
+    value: "01st → 05th of following month",
     icon: Calendar,
   },
   { label: "Late Penalty", value: "10% of contribution amount", icon: Scale },
@@ -94,33 +94,34 @@ const articles = [
     title: "Name of the Group",
     icon: BookOpen,
     summary:
-      "The official name is TRUSTLINK GROUP - also the future joint dental clinic name.",
+      "The official name is 10/10 VENTURES - also the future joint dental clinic name.",
     content: [
-      'The official name of the group is TRUSTLINK GROUP, hereinafter referred to as "the Group" or "the Ikimina."',
-      "The TrustLink Group name shall also serve as the name of the joint dental clinic that members intend to establish collectively in the future.",
+      'The official name of the group is 10/10 VENTURES, hereinafter referred to as "the Group" or "the Ikimina."',
+      "The 10/10 Ventures name shall also serve as the name of the joint dental clinic that members intend to establish collectively in the future.",
     ],
   },
-  {
-    num: 2,
-    title: "Nature and Legal Status",
-    icon: Scale,
-    summary:
-      "Voluntary Ikimina by UR Dental Therapy graduates (Class of 2025), transitioning to a registered cooperative.",
-    content: [
-      "TrustLink Group is a voluntary savings and investment group (Ikimina) established by Dental Therapy graduates of the University of Rwanda (Class of 2025).",
-      "The Group shall initially operate as an informal savings group under this mutually agreed Constitution while legal registration is being completed.",
-      "Upon registration, the Group shall transition to a formally recognized association under Rwandan law, and subsequently to a cooperative registered with the Rwanda Cooperative Agency (RCA) for joint clinic ownership.",
-      "The Group is non-partisan, non-discriminatory, and non-profit in nature at the savings level.",
-    ],
-  },
+ {
+  num: 2,
+  title: "Nature and Legal Status",
+  icon: Scale,
+  summary:
+    "A voluntary savings, investment, and business development group operating under the laws of Rwanda and progressing toward formal legal registration.",
+  content: [
+    "10/10 Ventures is a voluntary savings, investment, and business development group established by committed members who share a common vision of achieving financial independence through disciplined savings, collective investment, and entrepreneurship.",
+    "The Group shall initially operate as an informal savings and investment initiative governed by this Constitution while pursuing formal legal registration under the applicable laws and regulations of the Republic of Rwanda.",
+    "Upon registration, 10/10 Ventures shall operate as a legally recognized organization with the authority to conduct business activities, enter into contracts, own assets, open and manage financial accounts, and establish strategic partnerships.",
+    "The Group shall operate in accordance with the principles of transparency, accountability, integrity, professionalism, inclusiveness, and responsible financial management.",
+    "10/10 Ventures shall remain non-partisan, non-discriminatory, and committed to promoting sustainable economic development, entrepreneurship, and long-term prosperity for all members.",
+  ],
+},
   {
     num: 3,
     title: "Registered Office and Jurisdiction",
     icon: MapPin,
     summary:
-      "Principal address in Nyamata Sector, Bugesera District. Operates under Rwandan law.",
+      "Principal address in Kacyiru Sector, Gasabo District. Operates under Rwandan law.",
     content: [
-      "The principal registered address of TrustLink Group shall be in Nyamata Sector, Bugesera District, Rwanda.",
+      "The principal registered address of 10/10 Ventures shall be in Kacyiru Sector, Gasabo District, Rwanda.",
       "The Group operates under the laws and regulations of the Republic of Rwanda.",
       "Any legal correspondence shall be directed to the Secretary at the registered contact address.",
     ],
@@ -142,7 +143,7 @@ const articles = [
     summary:
       "Promote financial discipline, unity, and sustainable investment through saving and collective decision-making.",
     content: [
-      "To promote financial discipline, unity, professional collaboration, and sustainable investment among Dental Therapy graduates of the University of Rwanda (Class of 2025) through regular saving, collective decision-making, and responsible fund management.",
+      "To promote financial discipline, unity, and sustainable investment through saving and collective decision-making.",
     ],
   },
   {
@@ -166,12 +167,12 @@ const articles = [
     title: "Membership",
     icon: Users,
     summary:
-      "Open to UR Dental Therapy graduates (Class of 2025). New members require 2/3 approval. Equal rights for all 8 founding members.",
+      "Open to committed individuals from different sectors who share a common vision. New members require 2/3 approval. Equal rights for all 10 founding members.",
     sections: [
       {
         title: "7.1 Eligibility",
         items: [
-          "Membership shall be open to Dental Therapy graduates of the University of Rwanda (Class of 2025) who voluntarily wish to join and who are approved by the existing membership.",
+          "Membership shall be open to any individual who demonstrates a commitment to the Group's objectives, adheres to its Constitution, and is willing to contribute financially and actively participate in Group activities.",
           "Prospective members must submit a formal written application letter to the Secretary.",
           "Admission of any new member shall require approval by at least two-thirds (2/3) of existing members at a duly constituted meeting.",
         ],
@@ -213,13 +214,13 @@ const articles = [
     title: "Savings and Contributions",
     icon: Wallet,
     summary:
-      "80,000 RWF/month. Payment window 25th–6th. Late penalty: 10%. Meeting fee: 10,000 RWF.",
+      "100,000 RWF/month. Payment window 01st–05th. Late penalty: 10%. Meeting fee: 10,000 RWF.",
     sections: [
       {
         title: "8.1 Monthly Contributions",
         items: [
-          "Each registered member slot shall contribute between 80,000 RWF and 160,000 RWF per month.",
-          "The minimum contribution is 80,000 RWF and the maximum is 160,000 RWF per registered slot per month.",
+          "Each registered member slot shall contribute between 100,000 RWF and 200,000 RWF per month.",
+          "The minimum contribution is 100,000 RWF and the maximum is 200,000 RWF per registered slot per month.",
           "Contributions shall be made between the 25th of the current month and the 6th of the following month.",
           "Contributions shall be deposited directly to the Group's official Equity Bank Rwanda account.",
         ],
@@ -468,9 +469,9 @@ const articles = [
     title: "Adoption and Entry into Force",
     icon: CheckCircle2,
     summary:
-      "Adopted January 10, 2026 at the Inaugural Meeting. Enters into force upon all member signatures and notarization.",
+      "Adopted August 01, 2026 at the Inaugural Meeting. Enters into force upon all member signatures and notarization.",
     content: [
-      "This Constitution was adopted on January 10, 2026, at a duly convened Inaugural Meeting of TrustLink Group held in Nyamata Sector, Bugesera District, Republic of Rwanda.",
+      "This Constitution was adopted on August 01, 2026, at a duly convened Inaugural Meeting of TrustLink Group held in Nyamata Sector, Bugesera District, Republic of Rwanda.",
       "This Constitution enters into force immediately upon signing by all founding members and certification by a duly authorized Notary of the Republic of Rwanda.",
     ],
     numbered: true,
@@ -480,29 +481,29 @@ const articles = [
 const leadership = [
   {
     position: "President",
-    name: "MANIRIHO JEAN PAUL",
-    phone: "0785 251 067",
+    name: " President Name",
+    phone: "0785 xxx xxx",
     responsibilities:
       "Chairs meetings, represents the Group externally, casts deciding vote in case of a tie.",
   },
   {
     position: "Secretary",
-    name: "NZIZA OSCAR",
-    phone: "0782 035 102",
+    name: "Secretary Name",
+    phone: "0782 xxx xxx",
     responsibilities:
       "Keeps records, prepares minutes, manages correspondence and communications.",
   },
   {
     position: "Treasurer",
-    name: "HIRWA WICLIF",
-    phone: "0787 575 201",
+    name: "Treasurer Name",
+    phone: "0787 xxx xxx",
     responsibilities:
       "Manages funds, maintains accounts, prepares and presents financial reports.",
   },
   {
     position: "Advisor",
-    name: "ISHIMWE JEAN BAPTISTE",
-    phone: "0785 577 189",
+    name: "Advisor Name",
+    phone: "0785 xxx xxx",
     responsibilities:
       "Provides guidance and support to the leadership team, helps resolve disputes, and ensures adherence to the Constitution.",
   },
@@ -587,8 +588,8 @@ export function ConstitutionView() {
             <h1 className="text-2xl font-semibold">Constitution & Policies</h1>
           </div>
           <p className="text-sm text-muted-foreground">
-            The supreme governing document of TrustLink Group Ikimina - Version
-            1.0, adopted January 10, 2026.
+            The supreme governing document of 10/10 Ventures - Version
+            1.0, adopted August 1, 2026.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -598,8 +599,8 @@ export function ConstitutionView() {
           </Button>
           <Button size="sm" asChild>
             <a
-              href="/doc/TrustLink%20Constitution.pdf"
-              download="TrustLink-Constitution.pdf">
+              href="/doc/Possoventures-Constitution.pdf"
+              download="Possoventures-Constitution.pdf">
               <Download className="h-4 w-4" />
               Download PDF
             </a>
@@ -658,17 +659,18 @@ export function ConstitutionView() {
               <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">
                 Preamble
               </p>
-              <p className="text-sm leading-relaxed text-muted-foreground italic">
-                &ldquo;We, the founding members of TrustLink Group, being Dental
-                Therapy graduates of the University of Rwanda (Class of 2025),
-                united by a shared vision of financial growth, professional
-                collaboration, and collective investment, hereby establish this
-                Constitution to govern our savings and investment group - the
-                Ikimina. We commit ourselves to the principles of transparency,
-                accountability, mutual trust, and financial discipline. This
-                Constitution shall serve as the supreme governing instrument of
-                TrustLink Group, binding upon all members from the date of
-                adoption.&rdquo;
+           <p className="text-sm leading-relaxed text-muted-foreground italic">
+              &ldquo;We, the founding members of 10/10 Ventures, united by a shared
+              vision of financial growth, disciplined saving, and collective
+              investment, hereby establish this Constitution to govern our
+              savings and investment group. We commit ourselves to the
+              principles of transparency, accountability, mutual trust, and
+              financial discipline as we build lasting businesses — a Bakery,
+              an Avocado Farm, Mushroom Cultivation, a Beetroot and Grape
+              Winery, and a Healthcare Clinic — for the benefit of all members
+              and the wider community of Kigali, Rwanda. This Constitution
+              shall serve as the supreme governing instrument of 10/10
+              Ventures, binding upon all members from the date of adoption.&rdquo;
               </p>
             </CardContent>
           </Card>
@@ -682,14 +684,15 @@ export function ConstitutionView() {
                   Vision
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-sm text-muted-foreground">
-                To become a strong, transparent, and legally recognized
-                professional Ikimina that enables members to save, invest, and
-                jointly establish a modern dental clinic serving the Rwandan
-                community.
-              </CardContent>
+            <CardContent className="text-sm text-muted-foreground">
+              To become Rwanda's leading member-owned savings and investment group,
+              empowering individuals to achieve financial independence through
+              disciplined savings, sustainable investments, entrepreneurship, and the
+              creation of long-term shared wealth that benefits members and the wider
+              community.
+            </CardContent>
             </Card>
-            <Card>
+           <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="flex items-center gap-2 text-sm font-semibold">
                   <CheckCircle2 className="h-4 w-4 text-emerald-500" />
@@ -697,10 +700,11 @@ export function ConstitutionView() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground">
-                To promote financial discipline, unity, professional
-                collaboration, and sustainable investment among Dental Therapy
-                graduates through regular saving, collective decision-making,
-                and responsible fund management.
+                To unite committed members in building financial security through
+                regular savings, transparent governance, responsible fund management,
+                collective investment, and innovative business ventures that generate
+                sustainable income, create employment opportunities, and contribute to
+                Rwanda's socio-economic development.
               </CardContent>
             </Card>
           </div>
@@ -768,17 +772,17 @@ export function ConstitutionView() {
                 </div>
                 <div>
                   <p className="text-sm font-medium">
-                    Adopted January 10, 2026
+                    Adopted August 1, 2026
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    Nyamata Sector, Bugesera District, Republic of Rwanda
+                    Kacyiru Sector, Gasabo District, Republic of Rwanda
                   </p>
                 </div>
               </div>
               <Button variant="outline" size="sm" asChild>
                 <a
-                  href="/doc/TrustLink%20Constitution.pdf"
-                  download="TrustLink-Constitution.pdf">
+                  href="/doc/Possoventures-Constitution.pdf"
+                  download="Possoventures-Constitution.pdf">
                   <Download className="h-4 w-4" />
                   Download Full PDF
                 </a>
@@ -882,7 +886,7 @@ export function ConstitutionView() {
                 Leadership Committee
               </CardTitle>
               <p className="text-sm text-muted-foreground">
-                Elected January 10, 2026. Mandate: January 10, 2026 - January
+                Elected August 1, 2026. Mandate: August 01, 2026 - August
                 10, 2027 (Article 10).
               </p>
             </CardHeader>

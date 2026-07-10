@@ -7,7 +7,7 @@ import { PresidentHealthContent } from "@/components/dashboard/president/health/
 export const metadata: Metadata = {
   title: "Group Health",
   description:
-    "Real-time health and risk indicators for TrustLink Group - contributions, loans, members, and governance.",
+    "Real-time health and risk indicators for 10/10 Ventures - contributions, loans, members, and governance.",
 }
 
 export default function PresidentHealthPage() {

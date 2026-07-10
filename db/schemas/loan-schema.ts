@@ -14,6 +14,7 @@ import {
 import { createInsertSchema, createSelectSchema } from "drizzle-zod"
 import type { z } from "zod"
 
+import { organization } from "./auth-schema"
 import { user } from "./auth-schema"
 
 export const loanStatusEnum = pgEnum("loan_status", [
@@ -30,6 +31,9 @@ export const loan = pgTable(
   "loan",
   {
     id: text("id").primaryKey(),
+    organizationId: text("organization_id")
+      .notNull()
+      .references(() => organization.id, { onDelete: "cascade" }),
     memberId: text("member_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
@@ -77,6 +81,7 @@ export const loan = pgTable(
       .notNull(),
   },
   (table) => ({
+    organizationIdIdx: index("loan_organization_id_idx").on(table.organizationId),
     memberIdIdx: index("loan_member_id_idx").on(table.memberId),
     statusIdx: index("loan_status_idx").on(table.status),
     requestedAtIdx: index("loan_requested_at_idx").on(table.requestedAt),

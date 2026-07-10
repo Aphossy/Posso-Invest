@@ -50,6 +50,7 @@ export const attendanceOperations = {
     filters?: {
       meetingId?: string
       memberId?: string
+      organizationId?: string
       status?: string | string[]
       recordedBy?: string
       checkedInFrom?: Date
@@ -63,6 +64,8 @@ export const attendanceOperations = {
       conditions.push(eq(attendance.meetingId, filters.meetingId))
     if (filters.memberId)
       conditions.push(eq(attendance.memberId, filters.memberId))
+    if (filters.organizationId)
+      conditions.push(eq(attendance.organizationId, filters.organizationId))
     const statusFilters = normalizeEnumFilter(
       filters.status,
       attendanceStatusOptions
@@ -96,6 +99,7 @@ export const attendanceOperations = {
     filters?: {
       meetingId?: string
       memberId?: string
+      organizationId?: string
       status?: string | string[]
       recordedBy?: string
     }
@@ -107,6 +111,8 @@ export const attendanceOperations = {
       conditions.push(eq(attendance.meetingId, filters.meetingId))
     if (filters.memberId)
       conditions.push(eq(attendance.memberId, filters.memberId))
+    if (filters.organizationId)
+      conditions.push(eq(attendance.organizationId, filters.organizationId))
     const statusFilters = normalizeEnumFilter(
       filters.status,
       attendanceStatusOptions

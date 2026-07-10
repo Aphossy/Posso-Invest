@@ -5,7 +5,7 @@ import SecretaryLettersPage from "@/components/dashboard/secretary/documents/sec
 export const metadata: Metadata = {
   title: "Letters & Approvals",
   description:
-    "Manage TrustLink Group correspondence, approval letters, legal documents, and formal letters",
+    "Manage 10/10 Ventures correspondence, approval letters, legal documents, and formal letters",
 }
 
 export default function DocumentsLettersPage() {

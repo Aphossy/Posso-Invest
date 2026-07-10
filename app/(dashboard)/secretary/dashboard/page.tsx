@@ -7,7 +7,7 @@ import { SecretaryDashboardContent } from "@/components/dashboard/secretary/dash
 export const metadata: Metadata = {
   title: "Secretary Dashboard",
   description:
-    "Manage meetings, minutes, action items, and communications for TrustLink Group.",
+    "Manage meetings, minutes, action items, and communications for 10/10 Venture.",
 }
 
 export default function SecretaryDashboardPage() {

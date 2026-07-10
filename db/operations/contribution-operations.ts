@@ -50,6 +50,7 @@ export const contributionOperations = {
     sortOrder?: "asc" | "desc"
     filters?: {
       memberId?: string
+      organizationId?: string
       status?: string | string[]
       period?: string
       recordedBy?: string
@@ -62,6 +63,8 @@ export const contributionOperations = {
     const conditions = []
     if (filters.memberId)
       conditions.push(eq(contribution.memberId, filters.memberId))
+    if (filters.organizationId)
+      conditions.push(eq(contribution.organizationId, filters.organizationId))
     const statusFilters = normalizeEnumFilter(
       filters.status,
       contributionStatusOptions
@@ -96,6 +99,7 @@ export const contributionOperations = {
   }: {
     filters?: {
       memberId?: string
+      organizationId?: string
       status?: string | string[]
       period?: string
       recordedBy?: string
@@ -106,6 +110,8 @@ export const contributionOperations = {
     const conditions = []
     if (filters.memberId)
       conditions.push(eq(contribution.memberId, filters.memberId))
+    if (filters.organizationId)
+      conditions.push(eq(contribution.organizationId, filters.organizationId))
     const statusFilters = normalizeEnumFilter(
       filters.status,
       contributionStatusOptions

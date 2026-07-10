@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { normalizeRoleValue } from "@/utils/role-utils"
+import { isMemberOrLeadershipRole } from "@/utils/role-utils"
 import { AlertCircle, Plus } from "lucide-react"
 import { toast } from "sonner"
 import { z } from "zod"
@@ -85,22 +85,11 @@ type FormErrors = Partial<Record<keyof FormValues, string>>
 
 function hasStrictMemberRole(rawRole: unknown): boolean {
   if (Array.isArray(rawRole)) {
-    const normalized = rawRole
-      .map((value) =>
-        typeof value === "string" ? normalizeRoleValue(value) : null
-      )
-      .filter((value): value is string => Boolean(value))
-
-    return normalized.length === 1 && normalized[0] === "member"
+    return rawRole.some((value) => isMemberOrLeadershipRole(String(value)))
   }
 
   if (typeof rawRole === "string") {
-    const parts = rawRole
-      .split(",")
-      .map((part) => normalizeRoleValue(part))
-      .filter((value): value is string => Boolean(value))
-
-    return parts.length === 1 && parts[0] === "member"
+    return isMemberOrLeadershipRole(rawRole)
   }
 
   return false

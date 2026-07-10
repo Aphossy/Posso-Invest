@@ -13,6 +13,7 @@ import {
 import { createInsertSchema, createSelectSchema } from "drizzle-zod"
 import type { z } from "zod"
 
+import { organization } from "./auth-schema"
 import { user } from "./auth-schema"
 
 type ContributionAttachment = {
@@ -44,6 +45,9 @@ export const contribution = pgTable(
   "contribution",
   {
     id: text("id").primaryKey(),
+    organizationId: text("organization_id")
+      .notNull()
+      .references(() => organization.id, { onDelete: "cascade" }),
     memberId: text("member_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
@@ -81,6 +85,7 @@ export const contribution = pgTable(
       .notNull(),
   },
   (table) => ({
+    organizationIdIdx: index("contribution_organization_id_idx").on(table.organizationId),
     memberIdIdx: index("contribution_member_id_idx").on(table.memberId),
     statusIdx: index("contribution_status_idx").on(table.status),
     periodIdx: index("contribution_period_idx").on(table.period),

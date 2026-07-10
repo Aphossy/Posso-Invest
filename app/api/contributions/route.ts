@@ -405,6 +405,7 @@ export async function POST(request: Request) {
     if (!existing) {
       await penaltyOperations.create({
         id: crypto.randomUUID(),
+        organizationId: activeOrganizationId || "unknown-org",
         contributionId: created.id,
         memberId: created.memberId,
         issuedBy: user.id,

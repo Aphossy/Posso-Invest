@@ -45,6 +45,7 @@ export const loanOperations = {
     sortOrder?: "asc" | "desc"
     filters?: {
       memberId?: string
+      organizationId?: string
       status?: string | string[]
       requestedFrom?: Date
       requestedTo?: Date
@@ -54,6 +55,8 @@ export const loanOperations = {
 
     const conditions = []
     if (filters.memberId) conditions.push(eq(loan.memberId, filters.memberId))
+    if (filters.organizationId)
+      conditions.push(eq(loan.organizationId, filters.organizationId))
     const statusFilters = normalizeEnumFilter(filters.status, loanStatusOptions)
     if (statusFilters) {
       conditions.push(inArray(loan.status, statusFilters))
@@ -80,6 +83,7 @@ export const loanOperations = {
   }: {
     filters?: {
       memberId?: string
+      organizationId?: string
       status?: string | string[]
     }
   } = {}): Promise<number> {
@@ -87,6 +91,8 @@ export const loanOperations = {
 
     const conditions = []
     if (filters.memberId) conditions.push(eq(loan.memberId, filters.memberId))
+    if (filters.organizationId)
+      conditions.push(eq(loan.organizationId, filters.organizationId))
     const statusFilters = normalizeEnumFilter(filters.status, loanStatusOptions)
     if (statusFilters) {
       conditions.push(inArray(loan.status, statusFilters))

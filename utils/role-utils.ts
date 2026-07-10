@@ -47,6 +47,21 @@ export function hasPermission(userRole: UserRole, permission: string): boolean {
   return ROLE_PERMISSIONS[userRole]?.includes(permission) || false
 }
 
+export function isMemberOrLeadershipRole(role?: string | null): boolean {
+  if (!role) return false
+
+  const normalizedRoles = role
+    .split(",")
+    .map((part) => part.trim().toLowerCase())
+    .filter(Boolean)
+
+  if (normalizedRoles.length === 0) return false
+
+  return normalizedRoles.some((candidate) =>
+    ["member", "secretary", "treasurer", "president"].includes(candidate)
+  )
+}
+
 export function hasRoleAccess(
   userRole: UserRole,
   requiredRole: UserRole

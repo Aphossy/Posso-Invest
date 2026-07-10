@@ -54,6 +54,7 @@ export const penaltyOperations = {
     sortOrder?: "asc" | "desc"
     filters?: {
       memberId?: string
+      organizationId?: string
       status?: string | string[]
       period?: string
       contributionId?: string
@@ -64,6 +65,8 @@ export const penaltyOperations = {
     const conditions = []
     if (filters.memberId)
       conditions.push(eq(penalty.memberId, filters.memberId))
+    if (filters.organizationId)
+      conditions.push(eq(penalty.organizationId, filters.organizationId))
     if (filters.contributionId)
       conditions.push(eq(penalty.contributionId, filters.contributionId))
     const statusFilters = normalizeEnumFilter(
@@ -89,6 +92,7 @@ export const penaltyOperations = {
   }: {
     filters?: {
       memberId?: string
+      organizationId?: string
       status?: string | string[]
       period?: string
       contributionId?: string
@@ -99,6 +103,8 @@ export const penaltyOperations = {
     const conditions = []
     if (filters.memberId)
       conditions.push(eq(penalty.memberId, filters.memberId))
+    if (filters.organizationId)
+      conditions.push(eq(penalty.organizationId, filters.organizationId))
     if (filters.contributionId)
       conditions.push(eq(penalty.contributionId, filters.contributionId))
     const statusFilters = normalizeEnumFilter(

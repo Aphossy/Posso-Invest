@@ -4,7 +4,7 @@ import SecretaryMembersPage from "@/components/dashboard/secretary/members/secre
 
 export const metadata: Metadata = {
   title: "Member Directory",
-  description: "Browse and view TrustLink Group organization members.",
+  description: "Browse and view 10/10 Ventures members.",
 }
 
 export default function MembersPage() {

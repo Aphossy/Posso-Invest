@@ -14,7 +14,7 @@ import { attendanceOperations } from "@/db/operations/attendance-operations"
 import { messageOperations } from "@/db/operations/message-operations"
 import { invitation, member, user } from "@/db/schemas"
 import logger from "@/utils/logger"
-import { extractRoleValue } from "@/utils/role-utils"
+import { extractRoleValue, normalizeRoleValue } from "@/utils/role-utils"
 import { format, parse, subMonths } from "date-fns"
 import { and, count, eq } from "drizzle-orm"
 
@@ -81,12 +81,47 @@ export const GET = withRequestLogging(
       })
     }
 
-    const orgApi = (auth.api as any).organization
-    const roleResponse = orgApi?.getActiveMemberRole
-      ? await orgApi.getActiveMemberRole({ headers: headersList })
-      : null
-    const activeRole = extractRoleValue(roleResponse)
-    const resolvedRole = activeRole || userProfile.role
+    const activeOrganizationId = session?.session?.activeOrganizationId
+    let resolvedRole = normalizeRoleValue(userProfile.role)
+
+    if (userProfile.id && activeOrganizationId) {
+      try {
+        const membershipRows = await db
+          .select({ role: member.role })
+          .from(member)
+          .where(
+            and(
+              eq(member.organizationId, activeOrganizationId),
+              eq(member.userId, userProfile.id)
+            )
+          )
+          .limit(1)
+
+        resolvedRole = normalizeRoleValue(membershipRows[0]?.role) ?? resolvedRole
+      } catch (error) {
+        logger.error("[dashboard:GET] member role lookup failed", {
+          userId: userProfile.id,
+          activeOrganizationId,
+          error,
+        })
+      }
+    }
+
+    if (!resolvedRole || resolvedRole === "member") {
+      try {
+        const orgApi = (auth.api as any).organization
+        const roleResponse = orgApi?.getActiveMemberRole
+          ? await orgApi.getActiveMemberRole({ headers: headersList })
+          : null
+        resolvedRole = normalizeRoleValue(extractRoleValue(roleResponse)) ?? resolvedRole
+      } catch (error) {
+        logger.error("[dashboard:GET] getActiveMemberRole fallback failed", {
+          userId: userProfile.id,
+          activeOrganizationId,
+          error,
+        })
+      }
+    }
 
     if (resolvedRole !== "admin") {
       return unauthorizedResponse(

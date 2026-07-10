@@ -242,7 +242,7 @@ export function SecretaryDashboardContent() {
             {greeting}, {firstName}!
           </h2>
           <p className="text-muted-foreground">
-            Meeting operations &amp; governance for TrustLink Group.
+            Meeting operations &amp; governance for 10/10 Ventures.
           </p>
         </div>
 

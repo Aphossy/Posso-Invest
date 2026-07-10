@@ -12,6 +12,7 @@ import {
 import { createInsertSchema, createSelectSchema } from "drizzle-zod"
 import type { z } from "zod"
 
+import { organization } from "./auth-schema"
 import { user } from "./auth-schema"
 import { contribution } from "./contribution-schema"
 
@@ -21,6 +22,10 @@ export const penalty = pgTable(
   "penalty",
   {
     id: text("id").primaryKey(),
+
+    organizationId: text("organization_id")
+      .notNull()
+      .references(() => organization.id, { onDelete: "cascade" }),
 
     // Optional link to the contribution this penalty was raised from.
     // Null means the penalty was issued directly (standalone / disciplinary).
@@ -68,6 +73,7 @@ export const penalty = pgTable(
       .notNull(),
   },
   (table) => ({
+    organizationIdIdx: index("penalty_organization_id_idx").on(table.organizationId),
     contributionIdIdx: index("penalty_contribution_id_idx").on(
       table.contributionId
     ),

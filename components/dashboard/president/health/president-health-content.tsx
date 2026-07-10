@@ -21,7 +21,8 @@ import {
   XCircle,
 } from "lucide-react"
 
-import { useAdminDashboard } from "@/hooks/api/use-admin-dashboard"
+import { usePresidentDashboard } from "@/hooks/api/use-president-dashboard"
+import { getContributionWindow } from "@/lib/contribution-window"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -112,7 +113,7 @@ function MetricRow({
 
 export function PresidentHealthContent() {
   const [mounted, setMounted] = useState(false)
-  const { data, isLoading, error, refetch, isFetching } = useAdminDashboard()
+  const { data, isLoading, error, refetch, isFetching } = usePresidentDashboard()
 
   useEffect(() => {
     setMounted(true)
@@ -138,7 +139,66 @@ export function PresidentHealthContent() {
 
   if (!data) return <HealthPageSkeleton />
 
-  const { stats, contributions, window: contributionWindow } = data.data
+  const pres = data.data
+
+  // Map president dashboard shape to the fields expected by this component
+  const contributionWindow = getContributionWindow(new Date())
+  const contributions = {
+    byStatus: {},
+    monthly: pres.contributions?.monthly || [],
+  }
+
+  const stats = {
+    contributions: {
+      totalAmount: 0,
+      thisMonthAmount:
+        pres.stats?.finance?.confirmedThisPeriodAmount ?? 0,
+      expectedThisMonth: pres.stats?.finance?.expectedThisPeriod ?? 0,
+      outstandingAmount: 0,
+      confirmedCount: 0,
+      pendingCount: 0,
+      lateCount: 0,
+      waivedCount: 0,
+      collectionRate: pres.stats?.finance?.collectionRate ?? 0,
+    },
+    loans: {
+      total: 0,
+      outstandingAmount: pres.stats?.finance?.activeLoanAmount ?? 0,
+      requested: pres.stats?.pendingLoanRequests ?? 0,
+      approved: 0,
+      disbursed: 0,
+      repaying: 0,
+      overdue: pres.stats?.overdueLoans ?? 0,
+      repaid: 0,
+    },
+    members: {
+      total: pres.stats?.totalMembers ?? siteConfig.platform.governance.membershipCount,
+      active: pres.stats?.activeMemberCount ?? 0,
+      invitationsPending: 0,
+      byRole: {},
+    },
+    meetings: {
+      upcoming: pres.meetings?.upcoming?.length ?? 0,
+      completed: 0,
+      nextMeeting: pres.stats?.nextMeeting?.scheduledAt ?? null,
+    },
+    attendance: {
+      latestMeetingRate: 0,
+      present: 0,
+      absent: 0,
+      late: 0,
+      excused: 0,
+    },
+    actionItems: {
+      open: pres.actionItems?.open?.length ?? 0,
+      inProgress: 0,
+      blocked: 0,
+      dueSoon: pres.actionItems?.open?.length ?? 0,
+    },
+    announcements: { published: 0, draft: 0, pinned: 0 },
+    messages: { unread: 0 },
+    activity: [],
+  }
 
   // ── Derived health indicators ─────────────────────────────────────────────
 
@@ -436,7 +496,7 @@ export function PresidentHealthContent() {
               }
               const bar = barColors[status] ?? "bg-slate-300"
               const dot = dotColors[status] ?? "bg-slate-400"
-              const pct = getPercent(cnt, membershipCount)
+              const pct = getPercent(Number(cnt), membershipCount)
               return (
                 <div key={status} className="space-y-1.5">
                   <div className="flex items-center justify-between text-sm">
@@ -447,7 +507,7 @@ export function PresidentHealthContent() {
                       </span>
                     </div>
                     <span className="font-semibold tabular-nums">
-                      {cnt}{" "}
+                      {String(cnt)}{" "}
                       <span className="text-xs font-normal text-muted-foreground">
                         ({Math.round(pct)}%)
                       </span>
@@ -633,7 +693,7 @@ export function PresidentHealthContent() {
                     <span className="text-sm capitalize text-muted-foreground">
                       {role}
                     </span>
-                    <Badge variant="secondary">{count}</Badge>
+                    <Badge variant="secondary">{String(count)}</Badge>
                   </div>
                 ))}
               </>
