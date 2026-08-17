@@ -452,7 +452,7 @@ export function RecordContributionForm({
             inputMode="numeric"
             autoComplete="off"
             {...register("amount")}
-            placeholder="80,000..."
+            placeholder="100,000..."
           />
           <p className="text-xs text-muted-foreground">
             Use whole numbers only.
