@@ -8,6 +8,10 @@ import { and, eq } from "drizzle-orm"
 import { z } from "zod"
 
 import { auth } from "@/lib/auth"
+import {
+  isValidReceiptReferenceId,
+  normalizeReceiptReferenceId,
+} from "@/lib/receipt-validation"
 
 const updateSchema = z.object({
   receiptType: z
@@ -26,9 +30,33 @@ const updateSchema = z.object({
     .enum(["cash", "bank_transfer", "mobile_money", "check", "other"])
     .optional(),
   period: z.string().optional().nullable(),
-  contributionId: z.string().optional().nullable(),
-  loanId: z.string().optional().nullable(),
-  penaltyId: z.string().optional().nullable(),
+  contributionId: z
+    .string()
+    .trim()
+    .optional()
+    .nullable()
+    .transform((value) => normalizeReceiptReferenceId(value ?? undefined))
+    .refine((value) => value === undefined || isValidReceiptReferenceId(value), {
+      message: "Contribution ID must be a valid UUID when provided.",
+    }),
+  loanId: z
+    .string()
+    .trim()
+    .optional()
+    .nullable()
+    .transform((value) => normalizeReceiptReferenceId(value ?? undefined))
+    .refine((value) => value === undefined || isValidReceiptReferenceId(value), {
+      message: "Loan ID must be a valid UUID when provided.",
+    }),
+  penaltyId: z
+    .string()
+    .trim()
+    .optional()
+    .nullable()
+    .transform((value) => normalizeReceiptReferenceId(value ?? undefined))
+    .refine((value) => value === undefined || isValidReceiptReferenceId(value), {
+      message: "Penalty ID must be a valid UUID when provided.",
+    }),
   fileUrl: z.string().optional().nullable(),
   fileKey: z.string().optional().nullable(),
   fileSize: z.number().optional().nullable(),

@@ -35,6 +35,7 @@ const createSchema = insertContributionSchema
     id: true,
     createdAt: true,
     updatedAt: true,
+    organizationId: true,
   })
   .extend({
     amount: z.coerce.string(),
@@ -273,6 +274,16 @@ export async function POST(request: Request) {
     )
   }
 
+  if (!activeOrganizationId) {
+    return apiError(
+      "MISSING_ORGANIZATION",
+      "No active organization is selected for this contribution.",
+      400,
+      { activeOrganizationId, sessionRole },
+      "Select an active organization and try again."
+    )
+  }
+
   const body = await request.json()
   const parsed = createSchema.safeParse(body)
   if (!parsed.success) {
@@ -292,6 +303,7 @@ export async function POST(request: Request) {
 
   const created = await contributionOperations.create({
     ...parsed.data,
+    organizationId: activeOrganizationId,
     id: crypto.randomUUID(),
     recordedBy: user.id,
   })

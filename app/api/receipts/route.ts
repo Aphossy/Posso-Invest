@@ -10,6 +10,10 @@ import { and, eq } from "drizzle-orm"
 import { z } from "zod"
 
 import { auth } from "@/lib/auth"
+import {
+  isValidReceiptReferenceId,
+  normalizeReceiptReferenceId,
+} from "@/lib/receipt-validation"
 
 const listSchema = z.object({
   search: z.string().optional(),
@@ -30,6 +34,30 @@ const createSchema = insertReceiptSchema
   .extend({
     amount: z.coerce.string(),
     issuedAt: z.coerce.date().optional(),
+    contributionId: z
+      .string()
+      .trim()
+      .optional()
+      .transform((value) => normalizeReceiptReferenceId(value))
+      .refine((value) => value === undefined || isValidReceiptReferenceId(value), {
+        message: "Contribution ID must be a valid UUID when provided.",
+      }),
+    loanId: z
+      .string()
+      .trim()
+      .optional()
+      .transform((value) => normalizeReceiptReferenceId(value))
+      .refine((value) => value === undefined || isValidReceiptReferenceId(value), {
+        message: "Loan ID must be a valid UUID when provided.",
+      }),
+    penaltyId: z
+      .string()
+      .trim()
+      .optional()
+      .transform((value) => normalizeReceiptReferenceId(value))
+      .refine((value) => value === undefined || isValidReceiptReferenceId(value), {
+        message: "Penalty ID must be a valid UUID when provided.",
+      }),
   })
 
 async function getResolvedRole() {

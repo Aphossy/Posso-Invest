@@ -4,6 +4,10 @@ import { useEffect, useMemo, useState } from "react"
 import { isMemberOrLeadershipRole } from "@/utils/role-utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
+  isValidReceiptReferenceId,
+  normalizeReceiptReferenceId,
+} from "@/lib/receipt-validation"
+import {
   Banknote,
   Check,
   ChevronsUpDown,
@@ -130,9 +134,30 @@ const schema = z.object({
       (v) => !v || /^\d{4}-\d{2}$/.test(v),
       "Period must be in YYYY-MM format"
     ),
-  contributionId: z.string().optional(),
-  loanId: z.string().optional(),
-  penaltyId: z.string().optional(),
+  contributionId: z
+    .string()
+    .trim()
+    .optional()
+    .transform((value) => normalizeReceiptReferenceId(value))
+    .refine((value) => value === undefined || isValidReceiptReferenceId(value), {
+      message: "Contribution ID must be a valid UUID when provided.",
+    }),
+  loanId: z
+    .string()
+    .trim()
+    .optional()
+    .transform((value) => normalizeReceiptReferenceId(value))
+    .refine((value) => value === undefined || isValidReceiptReferenceId(value), {
+      message: "Loan ID must be a valid UUID when provided.",
+    }),
+  penaltyId: z
+    .string()
+    .trim()
+    .optional()
+    .transform((value) => normalizeReceiptReferenceId(value))
+    .refine((value) => value === undefined || isValidReceiptReferenceId(value), {
+      message: "Penalty ID must be a valid UUID when provided.",
+    }),
   notes: z.string().optional(),
   fileUrl: z.string().optional(),
   fileKey: z.string().optional(),
