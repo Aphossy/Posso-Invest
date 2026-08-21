@@ -111,7 +111,7 @@ export const VerificationEmail = ({
 
           {/* Footer */}
           <Section style={footerSection}>
-            <Text style={footerText}>{organisationName} - Ikimina</Text>
+            <Text style={footerText}>{organisationName} - Ventures</Text>
             <Text style={footerText}>
               Email:{" "}
               <Link href={`mailto:${organisationEmail}`} style={footerLink}>

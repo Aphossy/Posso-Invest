@@ -9,7 +9,7 @@ export function createMetadata({
   ogImage = "/og.jpg",
   type = "website",
   noIndex = false,
-  author = "10/10 Ventures - Ikimina",
+  author = "10/10 Ventures - Ventures",
   keywords = [],
   publishedTime,
   modifiedTime,

@@ -158,7 +158,7 @@ export function formatAssetTypeLabel(assetType: string): string {
 }
 
 /**
- * Format category label for 10/10 Ventures Ikimina categories
+ * Format category label for 10/10 Ventures Ventures categories
  */
 export function formatAssetCategoryLabel(category: string): string {
   const labels: Record<string, string> = {
@@ -241,7 +241,7 @@ export function canDeleteAsset(
 }
 
 /**
- * Get category color for 10/10 Ventures Ikimina categories
+ * Get category color for 10/10 Ventures Ventures categories
  */
 export function getCategoryColor(category: string): string {
   const colors: Record<string, string> = {

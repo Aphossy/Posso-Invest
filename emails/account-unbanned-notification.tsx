@@ -60,7 +60,7 @@ export const AccountUnbannedNotification = ({
             <Text style={paragraph}>Muraho {userName},</Text>
             <Text style={paragraph}>
               Your account suspension has been lifted. You now have access to
-              the 10/10 Ventures Ikimina platform again.
+              the 10/10 Ventures Ventures platform again.
             </Text>
 
             <Section style={card}>

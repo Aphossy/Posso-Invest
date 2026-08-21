@@ -141,7 +141,7 @@ export function LoanRequestForm({
   const { totalSavings, isPending: isSavingsPending } = useMyConfirmedSavings()
   const { data: myLoansData, isPending: isLoansPending } = useMyLoans(50)
   const { profile } = useProfile()
-  const ikimina = profile?.metadata?.ikiminaProfile
+  const ventures = profile?.metadata?.venturesProfile
   const interestRate = siteConfig.platform.loans.interestRate
   const interestRatePercent = Math.round(interestRate * 100)
   const loanPolicySummary = [
@@ -346,8 +346,8 @@ export function LoanRequestForm({
           <p className="text-xs font-semibold uppercase tracking-wide text-foreground">
             Your Payout Details
           </p>
-          <PaymentInfoSection ikimina={ikimina} maskAccount={false} />
-          {!ikimina && (
+          <PaymentInfoSection ventures={ventures} maskAccount={false} />
+          {!ventures && (
             <div className="rounded-md border border-amber-300 bg-amber-50 p-3 dark:border-amber-800 dark:bg-amber-950/40">
               <p className="text-xs font-semibold text-amber-800 dark:text-amber-300">
                 Payout details missing
@@ -357,7 +357,7 @@ export function LoanRequestForm({
                 Please update them as soon as possible.
               </p>
               <Link
-                href="/member/profile?tab=ikimina"
+                href="/member/profile?tab=ventures"
                 className="mt-2 inline-flex items-center text-xs font-medium text-amber-800 underline underline-offset-2 hover:text-amber-900 dark:text-amber-300 dark:hover:text-amber-200">
                 Update payout details &rarr;
               </Link>

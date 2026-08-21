@@ -327,7 +327,7 @@ export function MemberAttendanceView() {
         <div>
           <h1 className="text-2xl font-semibold">My Attendance</h1>
           <p className="text-sm text-muted-foreground">
-            Your participation record across all Ikimina meetings.
+            Your participation record across all Ventures meetings.
           </p>
         </div>
         <Button

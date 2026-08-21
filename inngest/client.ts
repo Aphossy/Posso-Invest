@@ -5,7 +5,7 @@ import logger from "@/utils/logger"
 import { dependencyInjectionMiddleware, Inngest } from "inngest"
 
 export const inngest = new Inngest({
-  id: "10/10 Ventures-group-ikimina",
+  id: "10/10 Ventures-group-ventures",
   logger,
   middleware: [
     InngestLoggingMiddleware,

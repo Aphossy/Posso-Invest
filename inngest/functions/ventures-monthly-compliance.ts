@@ -92,7 +92,7 @@ async function resolveOrganizationId(): Promise<string> {
 
 export const monthlyComplianceDispatcher = inngest.createFunction(
   {
-    id: "ikimina-monthly-compliance-dispatcher",
+    id: "ventures-monthly-compliance-dispatcher",
     retries: 2,
     concurrency: 1,
     triggers: [
@@ -297,7 +297,7 @@ export const monthlyComplianceDispatcher = inngest.createFunction(
         }
 
         return {
-          name: "ikimina/reports.monthly.member-summary.email" as const,
+          name: "ventures/reports.monthly.member-summary.email" as const,
           data: {
             periodKey,
             recipientUserId: entry.userId,
@@ -313,7 +313,7 @@ export const monthlyComplianceDispatcher = inngest.createFunction(
 
     // Send TREASURER emails
     const treasurerEventsToSend = treasurerRows.map((row: MemberRow) => ({
-      name: "ikimina/reports.monthly.treasurer-summary.email" as const,
+      name: "ventures/reports.monthly.treasurer-summary.email" as const,
       data: {
         periodKey,
         recipientUserId: row.userId,
@@ -338,7 +338,7 @@ export const monthlyComplianceDispatcher = inngest.createFunction(
 
     // Send SECRETARY emails
     const secretaryEventsToSend = secretaryRows.map((row: MemberRow) => ({
-      name: "ikimina/reports.monthly.secretary-summary.email" as const,
+      name: "ventures/reports.monthly.secretary-summary.email" as const,
       data: {
         periodKey,
         recipientUserId: row.userId,
@@ -356,7 +356,7 @@ export const monthlyComplianceDispatcher = inngest.createFunction(
 
     // Send ADMIN emails
     const adminEventsToSend = adminRows.map((row: MemberRow) => ({
-      name: "ikimina/reports.monthly.admin-summary.email" as const,
+      name: "ventures/reports.monthly.admin-summary.email" as const,
       data: {
         periodKey,
         recipientUserId: row.userId,
@@ -379,7 +379,7 @@ export const monthlyComplianceDispatcher = inngest.createFunction(
 
     // Send PRESIDENT emails
     const presidentEventsToSend = presidentRows.map((row: MemberRow) => ({
-      name: "ikimina/reports.monthly.president-summary.email" as const,
+      name: "ventures/reports.monthly.president-summary.email" as const,
       data: {
         periodKey,
         recipientUserId: row.userId,
@@ -458,7 +458,7 @@ export const monthlyComplianceDispatcher = inngest.createFunction(
 
 export const monthlyMemberSummaryEmailSender = inngest.createFunction(
   {
-    id: "ikimina-monthly-member-summary-email-sender",
+    id: "ventures-monthly-member-summary-email-sender",
     retries: 2,
     concurrency: 5,
     triggers: [monthlyMemberSummaryEmailEvent],
@@ -542,10 +542,10 @@ type TreasurerEmailData = {
 
 export const monthlyTreasurerSummaryEmailSender = inngest.createFunction(
   {
-    id: "ikimina-monthly-treasurer-summary-email-sender",
+    id: "ventures-monthly-treasurer-summary-email-sender",
     retries: 2,
     concurrency: 5,
-    triggers: [{ event: "ikimina/reports.monthly.treasurer-summary.email" }],
+    triggers: [{ event: "ventures/reports.monthly.treasurer-summary.email" }],
   },
   async ({ event, step }) => {
     const data = event.data as TreasurerEmailData
@@ -637,10 +637,10 @@ type SecretaryEmailData = {
 
 export const monthlySecretarySummaryEmailSender = inngest.createFunction(
   {
-    id: "ikimina-monthly-secretary-summary-email-sender",
+    id: "ventures-monthly-secretary-summary-email-sender",
     retries: 2,
     concurrency: 5,
-    triggers: [{ event: "ikimina/reports.monthly.secretary-summary.email" }],
+    triggers: [{ event: "ventures/reports.monthly.secretary-summary.email" }],
   },
   async ({ event, step }) => {
     const data = event.data as SecretaryEmailData
@@ -731,10 +731,10 @@ type AdminEmailData = {
 
 export const monthlyAdminSummaryEmailSender = inngest.createFunction(
   {
-    id: "ikimina-monthly-admin-summary-email-sender",
+    id: "ventures-monthly-admin-summary-email-sender",
     retries: 2,
     concurrency: 5,
-    triggers: [{ event: "ikimina/reports.monthly.admin-summary.email" }],
+    triggers: [{ event: "ventures/reports.monthly.admin-summary.email" }],
   },
   async ({ event, step }) => {
     const data = event.data as AdminEmailData
@@ -829,10 +829,10 @@ type PresidentEmailData = {
 
 export const monthlyPresidentSummaryEmailSender = inngest.createFunction(
   {
-    id: "ikimina-monthly-president-summary-email-sender",
+    id: "ventures-monthly-president-summary-email-sender",
     retries: 2,
     concurrency: 5,
-    triggers: [{ event: "ikimina/reports.monthly.president-summary.email" }],
+    triggers: [{ event: "ventures/reports.monthly.president-summary.email" }],
   },
   async ({ event, step }) => {
     const data = event.data as PresidentEmailData

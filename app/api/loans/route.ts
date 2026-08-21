@@ -252,8 +252,8 @@ export async function GET(request: Request) {
       disbursedByName: item.disbursedBy
         ? (userMap.get(item.disbursedBy)?.name ?? null)
         : null,
-      memberIkiminaProfile:
-        (userMap.get(item.memberId)?.metadata as any)?.ikiminaProfile ?? null,
+      memberVenturesProfile:
+        (userMap.get(item.memberId)?.metadata as any)?.venturesProfile ?? null,
       totalRepaid: Math.round(totalRepaid),
       outstandingBalance: computeOutstanding(totalRepayable, totalRepaid),
     }
@@ -426,8 +426,8 @@ export async function POST(request: Request) {
 
   try {
     await inngest.send({
-      id: `ikimina-loan-requested-${created.id}`,
-      name: "ikimina/loan.requested",
+      id: `ventures-loan-requested-${created.id}`,
+      name: "ventures/loan.requested",
       data: {
         organizationId: activeOrganizationId || "unknown-org",
         loanId: created.id,

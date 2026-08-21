@@ -18,7 +18,7 @@ import { auth } from "@/lib/auth"
 import { getAuthSession } from "@/lib/auth-helpers"
 import { rateLimit } from "@/lib/rate-limiter"
 
-const IKIMINA_ALLOWED_ROLES = new Set([
+const VENTURES_ALLOWED_ROLES = new Set([
   "member",
   "treasurer",
   "president",
@@ -70,7 +70,7 @@ const updateProfileSchema = z.object({
 
   metadata: z
     .object({
-      ikiminaProfile: z
+      venturesProfile: z
         .object({
           bankName: z.string().max(120, "Bank name is too long").optional(),
           bankAccountNumber: z
@@ -247,8 +247,8 @@ export async function PATCH(request: NextRequest) {
       userAgent: headersList.get("user-agent") || "Unknown",
     }
 
-    const hasIkiminaUpdate = updates.metadata?.ikiminaProfile !== undefined
-    if (hasIkiminaUpdate) {
+    const hasVenturesUpdate = updates.metadata?.venturesProfile !== undefined
+    if (hasVenturesUpdate) {
       let resolvedRole = session.user?.role ?? null
 
       try {
@@ -264,16 +264,16 @@ export async function PATCH(request: NextRequest) {
         })
       }
 
-      if (!resolvedRole || !IKIMINA_ALLOWED_ROLES.has(resolvedRole)) {
+      if (!resolvedRole || !VENTURES_ALLOWED_ROLES.has(resolvedRole)) {
         return errorResponse(
           request,
           {
             code: "FORBIDDEN",
             message:
-              "You do not have permission to update Ikimina payout details.",
+              "You do not have permission to update Ventures payout details.",
             details: {
               role: resolvedRole,
-              allowedRoles: [...IKIMINA_ALLOWED_ROLES],
+              allowedRoles: [...VENTURES_ALLOWED_ROLES],
             },
           },
           { statusCode: httpStatus.FORBIDDEN, startTime }
@@ -295,18 +295,18 @@ export async function PATCH(request: NextRequest) {
     // Avatar
     if (updates.image !== undefined) mergedUpdates.image = updates.image
 
-    // Ikimina profile metadata (merge to avoid removing unrelated metadata keys)
+    // Ventures profile metadata (merge to avoid removing unrelated metadata keys)
     if (updates.metadata !== undefined) {
       const existingMetadata = user.metadata || {}
-      const existingIkiminaProfile = existingMetadata.ikiminaProfile || {}
-      const incomingIkiminaProfile = updates.metadata.ikiminaProfile || {}
+      const existingVenturesProfile = existingMetadata.venturesProfile || {}
+      const incomingVenturesProfile = updates.metadata.venturesProfile || {}
 
       mergedUpdates.metadata = {
         ...existingMetadata,
         ...updates.metadata,
-        ikiminaProfile: {
-          ...existingIkiminaProfile,
-          ...incomingIkiminaProfile,
+        venturesProfile: {
+          ...existingVenturesProfile,
+          ...incomingVenturesProfile,
         },
       }
     }

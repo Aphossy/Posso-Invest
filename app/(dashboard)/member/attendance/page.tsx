@@ -4,7 +4,7 @@ import { MemberAttendanceView } from "@/components/dashboard/attendance/member-a
 
 export const metadata: Metadata = {
   title: "My Attendance",
-  description: "Review your attendance history across all Ikimina meetings.",
+  description: "Review your attendance history across all Ventures meetings.",
 }
 
 export default function UserAttendancePage() {

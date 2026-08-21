@@ -80,7 +80,7 @@ export default function SignInViewPage() {
 
         <div className="relative flex pt-5 flex-col items-center justify-center">
           <h2 className="mb-2 text-3xl font-bold text-white">
-            10/10 Ventures - Ikimina
+            10/10 Ventures - Ventures
           </h2>
           <p className="mb-12 max-w-md text-center text-white/80">
             Save together. Build together. Thrive together. Welcome to the

@@ -133,7 +133,7 @@ export const AccountSuspendedEmail = ({
 
           {/* Footer */}
           <Section style={footerSection}>
-            <Text style={footerDetailText}>{organisationName} | Ikimina</Text>
+            <Text style={footerDetailText}>{organisationName} | Ventures</Text>
             <Text style={footerDetailText}>
               Email:{" "}
               <Link href={`mailto:${organisationEmail}`} style={footerLink}>

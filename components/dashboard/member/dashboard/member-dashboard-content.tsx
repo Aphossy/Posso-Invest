@@ -196,8 +196,8 @@ export function MemberDashboardContent() {
   const [isOverdueAlertCollapsed, setIsOverdueAlertCollapsed] = useState(false)
   const [isPenaltyAlertVisible, setIsPenaltyAlertVisible] = useState(true)
   const [isPenaltyAlertCollapsed, setIsPenaltyAlertCollapsed] = useState(false)
-  const [isIkiminaAlertVisible, setIsIkiminaAlertVisible] = useState(true)
-  const [isIkiminaAlertCollapsed, setIsIkiminaAlertCollapsed] = useState(false)
+  const [isVenturesAlertVisible, setIsVenturesAlertVisible] = useState(true)
+  const [isVenturesAlertCollapsed, setIsVenturesAlertCollapsed] = useState(false)
   const { data, isLoading, error, refetch } = useMemberDashboard()
   const { profile } = useProfile()
 
@@ -273,14 +273,14 @@ export function MemberDashboardContent() {
     penalties,
   } = data.data
 
-  const ikimina = profile?.metadata?.ikiminaProfile
+  const ventures = profile?.metadata?.venturesProfile
   const hasPayoutDetails =
-    !!ikimina?.preferredPayoutMethod &&
-    (ikimina.preferredPayoutMethod === "cash" ||
-      (ikimina.preferredPayoutMethod === "bank" &&
-        !!ikimina.bankAccountNumber) ||
-      (ikimina.preferredPayoutMethod === "mobile_money" &&
-        !!ikimina.mobileMoneyNumber))
+    !!ventures?.preferredPayoutMethod &&
+    (ventures.preferredPayoutMethod === "cash" ||
+      (ventures.preferredPayoutMethod === "bank" &&
+        !!ventures.bankAccountNumber) ||
+      (ventures.preferredPayoutMethod === "mobile_money" &&
+        !!ventures.mobileMoneyNumber))
 
   const firstName = member.name?.trim().split(/\s+/)[0] ?? member.email
   const monthlyTarget = siteConfig.platform.savings.monthlyContributionRwf
@@ -494,7 +494,7 @@ export function MemberDashboardContent() {
         </Alert>
       )}
 
-      {!hasPayoutDetails && isIkiminaAlertVisible && (
+      {!hasPayoutDetails && isVenturesAlertVisible && (
         <Alert variant="warning">
           <HandCoins className="h-4 w-4" />
           <div className="flex min-w-0 flex-1 items-start justify-between gap-3">
@@ -502,12 +502,12 @@ export function MemberDashboardContent() {
               <p className="text-sm font-medium leading-tight">
                 Payout details not set up
               </p>
-              {!isIkiminaAlertCollapsed && (
+              {!isVenturesAlertCollapsed && (
                 <AlertDescription className="mt-1">
                   The committee needs your payout information to disburse loans
                   and matching records. Please{" "}
                   <Link
-                    href="/member/profile?tab=ikimina"
+                    href="/member/profile?tab=ventures"
                     className="font-medium underline underline-offset-2">
                     update your payout details
                   </Link>{" "}
@@ -519,15 +519,15 @@ export function MemberDashboardContent() {
               <button
                 type="button"
                 onClick={() =>
-                  setIsIkiminaAlertCollapsed((current) => !current)
+                  setIsVenturesAlertCollapsed((current) => !current)
                 }
                 className="rounded-md p-1 text-muted-foreground transition-colors hover:bg-black/5 hover:text-foreground"
                 aria-label={
-                  isIkiminaAlertCollapsed
+                  isVenturesAlertCollapsed
                     ? "Expand payout alert"
                     : "Collapse payout alert"
                 }>
-                {isIkiminaAlertCollapsed ? (
+                {isVenturesAlertCollapsed ? (
                   <ChevronDown className="h-4 w-4" />
                 ) : (
                   <ChevronUp className="h-4 w-4" />
@@ -535,7 +535,7 @@ export function MemberDashboardContent() {
               </button>
               <button
                 type="button"
-                onClick={() => setIsIkiminaAlertVisible(false)}
+                onClick={() => setIsVenturesAlertVisible(false)}
                 className="rounded-md p-1 text-muted-foreground transition-colors hover:bg-black/5 hover:text-foreground"
                 aria-label="Dismiss payout alert">
                 <X className="h-4 w-4" />
@@ -674,7 +674,7 @@ export function MemberDashboardContent() {
             </CardContent>
           </Card>
 
-          {/* Attendance + ikimina rules */}
+          {/* Attendance + ventures rules */}
           <div className="flex flex-col gap-4">
             <Card>
               <CardHeader>
@@ -718,7 +718,7 @@ export function MemberDashboardContent() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-muted-foreground" />
-                  Ikimina rules
+                  Ventures rules
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">

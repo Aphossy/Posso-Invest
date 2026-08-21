@@ -5,7 +5,7 @@ import { ConstitutionView } from "@/components/dashboard/constitution/constituti
 export const metadata: Metadata = {
   title: "Constitution & Policies",
   description:
-    "The governing constitution of 10/10 Ventures Ikimina - Version 1.0, adopted January 10, 2026.",
+    "The governing constitution of 10/10 Ventures Ventures - Version 1.0, adopted January 10, 2026.",
 }
 
 export default function DocumentsConstitutionPage() {

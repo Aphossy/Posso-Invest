@@ -3,11 +3,11 @@
  *
  * Loans never moved through their late-stage lifecycle automatically:
  *  - the near-due reminder feature (loanNearDueEmailNotifier) was dead code —
- *    nothing ever emitted `ikimina/loan.near-due`;
+ *    nothing ever emitted `ventures/loan.near-due`;
  *  - loans never flipped to `overdue` once their due date passed.
  *
  * This cron (runs daily, Kigali morning) scans active loans and:
- *  1. emits `ikimina/loan.near-due` at 14 / 7 / 3 days before the due date,
+ *  1. emits `ventures/loan.near-due` at 14 / 7 / 3 days before the due date,
  *     wiring up the existing reminder notifier;
  *  2. transitions past-due `disbursed`/`repaying` loans to `overdue`, notifying
  *     the member (email + in-app) and leadership (in-app), with an audit entry.
@@ -123,7 +123,7 @@ async function loadLeadership(
 
 export const loanLifecycleSweep = inngest.createFunction(
   {
-    id: "ikimina-loan-lifecycle-sweep",
+    id: "ventures-loan-lifecycle-sweep",
     retries: 3,
     concurrency: 1,
     triggers: [{ cron: "TZ=Africa/Kigali 0 7 * * *" }],
@@ -152,8 +152,8 @@ export const loanLifecycleSweep = inngest.createFunction(
           l.notes ||
           "Loan repayment"
         nearDueEvents.push({
-          name: "ikimina/loan.near-due",
-          id: `ikimina-loan-near-due-${l.id}-${days}d`,
+          name: "ventures/loan.near-due",
+          id: `ventures-loan-near-due-${l.id}-${days}d`,
           data: {
             organizationId: orgId,
             loanId: l.id,

@@ -337,7 +337,7 @@ export function LoanDetailsDialog({
           Member Payout Details
         </p>
         <PaymentInfoSection
-          ikimina={loan.memberIkiminaProfile}
+          ventures={loan.memberVenturesProfile}
           memberName={loan.memberName}
           maskAccount={false}
         />

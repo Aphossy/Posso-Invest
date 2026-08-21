@@ -23,7 +23,7 @@ interface ProfileHeaderProps {
 export function ProfileHeader({ profile, onUpdate }: ProfileHeaderProps) {
   const { role } = useActiveRole()
   const getProfileCompletion = () => {
-    const ikiminaProfile = profile.metadata?.ikiminaProfile
+    const venturesProfile = profile.metadata?.venturesProfile
     const fields = [
       profile.name,
       profile.email,
@@ -35,14 +35,14 @@ export function ProfileHeader({ profile, onUpdate }: ProfileHeaderProps) {
       profile.address?.cell,
       profile.address?.village,
       profile.address?.city,
-      ikiminaProfile?.preferredPayoutMethod,
-      ikiminaProfile?.bankName,
-      ikiminaProfile?.bankAccountNumber,
-      ikiminaProfile?.bankAccountHolder,
-      ikiminaProfile?.mobileMoneyProvider,
-      ikiminaProfile?.mobileMoneyNumber,
-      ikiminaProfile?.emergencyContactName,
-      ikiminaProfile?.emergencyContactPhone,
+      venturesProfile?.preferredPayoutMethod,
+      venturesProfile?.bankName,
+      venturesProfile?.bankAccountNumber,
+      venturesProfile?.bankAccountHolder,
+      venturesProfile?.mobileMoneyProvider,
+      venturesProfile?.mobileMoneyNumber,
+      venturesProfile?.emergencyContactName,
+      venturesProfile?.emergencyContactPhone,
     ]
     const filledFields = fields.filter(
       (field) => field && field.toString().trim() !== ""

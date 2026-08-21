@@ -161,7 +161,7 @@ function getInitialMinutes(): EnrichedMinute[] {
       meetingId: "meeting-inaugural-jan-2026",
       status: "published" as const,
       summary:
-        "Official inaugural (constitutive) meeting of 10/10 Ventures - Ikimina Savings & Investment Group.",
+        "Official inaugural (constitutive) meeting of 10/10 Ventures - Ventures Savings & Investment Group.",
       decisions: {
         items: [
           "Group officially named 10/10 Ventures",

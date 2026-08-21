@@ -63,7 +63,7 @@ export async function POST(request: Request) {
   const eventId = `manual-monthly-report-dispatch-${Date.now()}`
   await inngest.send({
     id: eventId,
-    name: "ikimina/reports.monthly.dispatch.requested",
+    name: "ventures/reports.monthly.dispatch.requested",
     data: {
       testRunId: parsed.data.testRunId,
     },

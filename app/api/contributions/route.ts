@@ -325,8 +325,8 @@ export async function POST(request: Request) {
 
   try {
     await inngest.send({
-      id: `ikimina-contribution-recorded-${created.id}`,
-      name: "ikimina/contribution.recorded",
+      id: `ventures-contribution-recorded-${created.id}`,
+      name: "ventures/contribution.recorded",
       data: {
         organizationId: activeOrganizationId || "unknown-org",
         contributionId: created.id,

@@ -96,7 +96,7 @@ const articles = [
     summary:
       "The official name is 10/10 VENTURES - also the future joint dental clinic name.",
     content: [
-      'The official name of the group is 10/10 VENTURES, hereinafter referred to as "the Group" or "the Ikimina."',
+      'The official name of the group is 10/10 VENTURES, hereinafter referred to as "the Group" or "the Ventures."',
       "The 10/10 Ventures name shall also serve as the name of the joint dental clinic that members intend to establish collectively in the future.",
     ],
   },
@@ -131,9 +131,9 @@ const articles = [
     title: "Vision",
     icon: Award,
     summary:
-      "A strong, transparent Ikimina enabling members to save, invest, and build a modern dental clinic.",
+      "A strong, transparent Ventures enabling members to save, invest, and build a modern dental clinic.",
     content: [
-      "To become a strong, transparent, and legally recognized professional Ikimina that enables members to save, invest, and jointly establish a modern, state-of-the-art dental clinic serving the Rwandan community.",
+      "To become a strong, transparent, and legally recognized professional Ventures that enables members to save, invest, and jointly establish a modern, state-of-the-art dental clinic serving the Rwandan community.",
     ],
   },
   {

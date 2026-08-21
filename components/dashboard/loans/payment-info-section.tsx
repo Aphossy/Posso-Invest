@@ -1,8 +1,8 @@
-import type { IkiminaProfileMetadata } from "@/db/schemas"
+import type { VenturesProfileMetadata } from "@/db/schemas"
 import { Banknote, CreditCard } from "lucide-react"
 
 interface PaymentInfoSectionProps {
-  ikimina?: IkiminaProfileMetadata | null
+  ventures?: VenturesProfileMetadata | null
   memberName?: string | null
   /** Mask bank account number — true by default */
   maskAccount?: boolean
@@ -15,11 +15,11 @@ function maskAccountNumber(value?: string | null) {
 }
 
 export function PaymentInfoSection({
-  ikimina,
+  ventures,
   memberName,
   maskAccount = true,
 }: PaymentInfoSectionProps) {
-  if (!ikimina) {
+  if (!ventures) {
     return (
       <div className="rounded-lg border border-dashed p-3 text-xs text-muted-foreground">
         {memberName ? `${memberName} has` : "Member has"} not set up payout
@@ -29,7 +29,7 @@ export function PaymentInfoSection({
   }
 
   // Normalise to lowercase so "Bank" / "BANK" / "bank" all match
-  const raw = ikimina.preferredPayoutMethod ?? "bank"
+  const raw = ventures.preferredPayoutMethod ?? "bank"
   const method = raw.toLowerCase().trim()
 
   return (
@@ -44,20 +44,20 @@ export function PaymentInfoSection({
         <div className="grid grid-cols-1 gap-2 pt-1">
           <div>
             <p className="text-xs text-muted-foreground">Bank</p>
-            <p className="font-medium">{ikimina.bankName || "Not provided"}</p>
+            <p className="font-medium">{ventures.bankName || "Not provided"}</p>
           </div>
           <div>
             <p className="text-xs text-muted-foreground">Account No.</p>
             <p className="font-mono font-medium">
               {maskAccount
-                ? maskAccountNumber(ikimina.bankAccountNumber)
-                : ikimina.bankAccountNumber?.trim() || "Not provided"}
+                ? maskAccountNumber(ventures.bankAccountNumber)
+                : ventures.bankAccountNumber?.trim() || "Not provided"}
             </p>
           </div>
           <div>
             <p className="text-xs text-muted-foreground">Account Holder</p>
             <p className="font-medium">
-              {ikimina.bankAccountHolder || "Not provided"}
+              {ventures.bankAccountHolder || "Not provided"}
             </p>
           </div>
         </div>
@@ -68,13 +68,13 @@ export function PaymentInfoSection({
           <div>
             <p className="text-xs text-muted-foreground">Provider</p>
             <p className="font-medium uppercase">
-              {ikimina.mobileMoneyProvider || "Not provided"}
+              {ventures.mobileMoneyProvider || "Not provided"}
             </p>
           </div>
           <div>
             <p className="text-xs text-muted-foreground">Number</p>
             <p className="font-mono font-medium">
-              {ikimina.mobileMoneyNumber || "Not provided"}
+              {ventures.mobileMoneyNumber || "Not provided"}
             </p>
           </div>
         </div>

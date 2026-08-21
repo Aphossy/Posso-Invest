@@ -4,7 +4,7 @@ import { sendWelcomeEmail } from "@/utils/auth-notification-utils"
 
 export const organizationMemberJoinedEmailNotifier = inngest.createFunction(
   {
-    id: "ikimina-organization-member-joined-email-notifier",
+    id: "ventures-organization-member-joined-email-notifier",
     retries: 2,
     concurrency: 4,
     triggers: [memberJoinedEvent],

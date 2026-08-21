@@ -267,7 +267,7 @@ async function applyLatePenalties(
 
 export const contributionWindowOpenedNotifier = inngest.createFunction(
   {
-    id: "ikimina-contribution-window-opened-notifier",
+    id: "ventures-contribution-window-opened-notifier",
     retries: 3,
     concurrency: 1,
     triggers: [{ cron: "TZ=Africa/Kigali 0 8 25 * *" }],
@@ -496,7 +496,7 @@ export const contributionWindowOpenedNotifier = inngest.createFunction(
 
 export const contributionWindowReminderNotifier = inngest.createFunction(
   {
-    id: "ikimina-contribution-window-reminder-notifier",
+    id: "ventures-contribution-window-reminder-notifier",
     retries: 3,
     concurrency: 1,
     triggers: [{ cron: "TZ=Africa/Kigali 0 8 3 * *" }],
@@ -736,7 +736,7 @@ export const contributionWindowReminderNotifier = inngest.createFunction(
 
 export const contributionWindowLastDayNotifier = inngest.createFunction(
   {
-    id: "ikimina-contribution-window-last-day-notifier",
+    id: "ventures-contribution-window-last-day-notifier",
     retries: 3,
     concurrency: 1,
     triggers: [{ cron: "TZ=Africa/Kigali 0 8 6 * *" }],
@@ -979,7 +979,7 @@ export const contributionWindowLastDayNotifier = inngest.createFunction(
 
 export const contributionDeadlinePassedNotifier = inngest.createFunction(
   {
-    id: "ikimina-contribution-deadline-passed-notifier",
+    id: "ventures-contribution-deadline-passed-notifier",
     retries: 3,
     concurrency: 1,
     triggers: [{ cron: "TZ=Africa/Kigali 0 8 7 * *" }],

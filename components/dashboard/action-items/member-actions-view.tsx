@@ -418,7 +418,7 @@ export function MemberActionsView() {
         <div>
           <h1 className="text-2xl font-semibold">My Action Items</h1>
           <p className="text-sm text-muted-foreground">
-            Tasks assigned to you from Ikimina meetings and group decisions.
+            Tasks assigned to you from Ventures meetings and group decisions.
           </p>
         </div>
         <Button

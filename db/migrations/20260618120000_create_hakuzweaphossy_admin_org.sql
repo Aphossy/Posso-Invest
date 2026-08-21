@@ -47,7 +47,7 @@ inserted_organization AS (
     'trustlink-group',
     NULL,
     now(),
-    '{"type":"ikimina"}',
+    '{"type":"ventures"}',
     'TrustLink Group default organization'
   )
   ON CONFLICT (slug) DO UPDATE

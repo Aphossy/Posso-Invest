@@ -79,7 +79,7 @@ export type DatabaseSchema = typeof schema
 
 export type {
   User,
-  IkiminaProfileMetadata,
+  VenturesProfileMetadata,
   NewUser,
   Session,
   NewSession,

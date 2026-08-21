@@ -15,7 +15,7 @@ import {
 import { createInsertSchema, createSelectSchema } from "drizzle-zod"
 import type { z } from "zod"
 
-export type IkiminaProfileMetadata = {
+export type VenturesProfileMetadata = {
   bankName?: string
   bankAccountNumber?: string
   bankAccountHolder?: string
@@ -73,7 +73,7 @@ export const user = pgTable(
         referralCode?: string
         ipAddress?: string
         userAgent?: string
-        ikiminaProfile?: IkiminaProfileMetadata
+        venturesProfile?: VenturesProfileMetadata
       }>()
       .default({}),
 

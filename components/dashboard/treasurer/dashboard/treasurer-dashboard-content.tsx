@@ -1173,7 +1173,7 @@ export function TreasurerDashboardContent() {
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground">
-              The next Ikimina audit is in approximately{" "}
+              The next Ventures audit is in approximately{" "}
               <span className="font-semibold text-foreground">
                 {audit.daysToAudit} days
               </span>{" "}
@@ -1248,7 +1248,7 @@ export function TreasurerDashboardContent() {
           </CardContent>
         </Card>
 
-        {/* Ikimina platform rules */}
+        {/* Ventures platform rules */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">

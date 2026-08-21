@@ -1,5 +1,5 @@
 import { COMPANY_INFO, organisationName } from "@/constants/organisation"
-import type { IkiminaProfileMetadata } from "@/db/schemas"
+import type { VenturesProfileMetadata } from "@/db/schemas"
 import type { Loan } from "@/db/schemas/loan-schema"
 import jsPDF from "jspdf"
 import autoTable from "jspdf-autotable"
@@ -10,7 +10,7 @@ export interface LoanExportable extends Loan {
   memberEmail?: string | null
   approvedByName?: string | null
   disbursedByName?: string | null
-  memberIkiminaProfile?: IkiminaProfileMetadata | null
+  memberVenturesProfile?: VenturesProfileMetadata | null
   totalRepaid?: number | null
   outstandingBalance?: number | null
 }

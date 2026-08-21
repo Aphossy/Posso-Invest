@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { type IkiminaProfileMetadata, type User } from "@/db/schemas"
+import { type VenturesProfileMetadata, type User } from "@/db/schemas"
 import {
   AlertCircle,
   Building2,
@@ -40,12 +40,12 @@ import {
 import { Loader } from "../common/loader"
 import { UnsavedChangesDialog } from "../common/unsaved-changes-dialog"
 
-type PayoutMethod = NonNullable<IkiminaProfileMetadata["preferredPayoutMethod"]>
+type PayoutMethod = NonNullable<VenturesProfileMetadata["preferredPayoutMethod"]>
 type MobileMoneyProvider = NonNullable<
-  IkiminaProfileMetadata["mobileMoneyProvider"]
+  VenturesProfileMetadata["mobileMoneyProvider"]
 >
 
-const IKIMINA_ALLOWED_ROLES = new Set([
+const VENTURES_ALLOWED_ROLES = new Set([
   "member",
   "treasurer",
   "president",
@@ -60,66 +60,66 @@ function maskAccountNumber(value?: string) {
   return `**** **** ${last4}`
 }
 
-interface ProfileIkiminaInfoProps {
+interface ProfileVenturesInfoProps {
   profile: User
   onUpdate: (updates: Partial<User>) => Promise<User>
 }
 
-export function ProfileIkiminaInfo({
+export function ProfileVenturesInfo({
   profile,
   onUpdate,
-}: ProfileIkiminaInfoProps) {
+}: ProfileVenturesInfoProps) {
   const { role, session } = useActiveRole()
   const [isEditing, setIsEditing] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const metadata = profile.metadata || {}
-  const ikimina = metadata.ikiminaProfile || {}
+  const ventures = metadata.venturesProfile || {}
 
   const [formData, setFormData] = useState({
-    bankName: ikimina.bankName || "",
-    bankAccountNumber: ikimina.bankAccountNumber || "",
-    bankAccountHolder: ikimina.bankAccountHolder || "",
-    preferredPayoutMethod: (ikimina.preferredPayoutMethod ||
+    bankName: ventures.bankName || "",
+    bankAccountNumber: ventures.bankAccountNumber || "",
+    bankAccountHolder: ventures.bankAccountHolder || "",
+    preferredPayoutMethod: (ventures.preferredPayoutMethod ||
       "bank") as PayoutMethod,
-    mobileMoneyProvider: (ikimina.mobileMoneyProvider ||
+    mobileMoneyProvider: (ventures.mobileMoneyProvider ||
       "mtn") as MobileMoneyProvider,
-    mobileMoneyNumber: ikimina.mobileMoneyNumber || "",
-    emergencyContactName: ikimina.emergencyContactName || "",
-    emergencyContactPhone: ikimina.emergencyContactPhone || "",
+    mobileMoneyNumber: ventures.mobileMoneyNumber || "",
+    emergencyContactName: ventures.emergencyContactName || "",
+    emergencyContactPhone: ventures.emergencyContactPhone || "",
   })
 
   const originalData = useMemo(
     () => ({
-      bankName: ikimina.bankName || "",
-      bankAccountNumber: ikimina.bankAccountNumber || "",
-      bankAccountHolder: ikimina.bankAccountHolder || "",
-      preferredPayoutMethod: (ikimina.preferredPayoutMethod ||
+      bankName: ventures.bankName || "",
+      bankAccountNumber: ventures.bankAccountNumber || "",
+      bankAccountHolder: ventures.bankAccountHolder || "",
+      preferredPayoutMethod: (ventures.preferredPayoutMethod ||
         "bank") as PayoutMethod,
-      mobileMoneyProvider: (ikimina.mobileMoneyProvider ||
+      mobileMoneyProvider: (ventures.mobileMoneyProvider ||
         "mtn") as MobileMoneyProvider,
-      mobileMoneyNumber: ikimina.mobileMoneyNumber || "",
-      emergencyContactName: ikimina.emergencyContactName || "",
-      emergencyContactPhone: ikimina.emergencyContactPhone || "",
+      mobileMoneyNumber: ventures.mobileMoneyNumber || "",
+      emergencyContactName: ventures.emergencyContactName || "",
+      emergencyContactPhone: ventures.emergencyContactPhone || "",
     }),
     [
-      ikimina.bankAccountHolder,
-      ikimina.bankAccountNumber,
-      ikimina.bankName,
-      ikimina.emergencyContactName,
-      ikimina.emergencyContactPhone,
-      ikimina.mobileMoneyNumber,
-      ikimina.mobileMoneyProvider,
-      ikimina.preferredPayoutMethod,
+      ventures.bankAccountHolder,
+      ventures.bankAccountNumber,
+      ventures.bankName,
+      ventures.emergencyContactName,
+      ventures.emergencyContactPhone,
+      ventures.mobileMoneyNumber,
+      ventures.mobileMoneyProvider,
+      ventures.preferredPayoutMethod,
     ]
   )
 
   const hasChanges = JSON.stringify(formData) !== JSON.stringify(originalData)
   const isOwner = session?.user?.id === profile.id
-  const canEditIkimina = isOwner && !!role && IKIMINA_ALLOWED_ROLES.has(role)
+  const canEditVentures = isOwner && !!role && VENTURES_ALLOWED_ROLES.has(role)
 
   const navGuard = useNavigationGuard({
-    enabled: isEditing && hasChanges && canEditIkimina,
+    enabled: isEditing && hasChanges && canEditVentures,
   })
 
   const handleCancel = () => {
@@ -128,12 +128,12 @@ export function ProfileIkiminaInfo({
   }
 
   const handleSave = async () => {
-    if (!canEditIkimina) {
-      toast.error("You are not allowed to edit Ikimina payout details")
+    if (!canEditVentures) {
+      toast.error("You are not allowed to edit Ventures payout details")
       return
     }
 
-    const cleanedIkiminaProfile: IkiminaProfileMetadata = {
+    const cleanedVenturesProfile: VenturesProfileMetadata = {
       bankName: formData.bankName.trim() || undefined,
       bankAccountNumber: formData.bankAccountNumber.trim() || undefined,
       bankAccountHolder: formData.bankAccountHolder.trim() || undefined,
@@ -151,18 +151,18 @@ export function ProfileIkiminaInfo({
     }
 
     if (
-      cleanedIkiminaProfile.preferredPayoutMethod === "mobile_money" &&
-      !cleanedIkiminaProfile.mobileMoneyNumber
+      cleanedVenturesProfile.preferredPayoutMethod === "mobile_money" &&
+      !cleanedVenturesProfile.mobileMoneyNumber
     ) {
       toast.error("Mobile money number is required for mobile money payouts")
       return
     }
 
     if (
-      cleanedIkiminaProfile.preferredPayoutMethod === "bank" &&
-      (!cleanedIkiminaProfile.bankName ||
-        !cleanedIkiminaProfile.bankAccountNumber ||
-        !cleanedIkiminaProfile.bankAccountHolder)
+      cleanedVenturesProfile.preferredPayoutMethod === "bank" &&
+      (!cleanedVenturesProfile.bankName ||
+        !cleanedVenturesProfile.bankAccountNumber ||
+        !cleanedVenturesProfile.bankAccountHolder)
     ) {
       toast.error("Bank name, account number, and account holder are required")
       return
@@ -173,13 +173,13 @@ export function ProfileIkiminaInfo({
       await onUpdate({
         metadata: {
           ...(profile.metadata || {}),
-          ikiminaProfile: cleanedIkiminaProfile,
+          venturesProfile: cleanedVenturesProfile,
         },
       })
-      toast.success("Ikimina payout details updated successfully")
+      toast.success("Ventures payout details updated successfully")
       setIsEditing(false)
     } catch (error: any) {
-      toast.error(error.message || "Failed to update ikimina profile")
+      toast.error(error.message || "Failed to update ventures profile")
     } finally {
       setLoading(false)
     }
@@ -192,7 +192,7 @@ export function ProfileIkiminaInfo({
           <div>
             <CardTitle className="flex items-center gap-2">
               <HandCoins className="h-5 w-5" />
-              Ikimina Financial Details
+              Ventures Financial Details
             </CardTitle>
             <CardDescription>
               Payout destination and emergency contact used for contributions,
@@ -200,7 +200,7 @@ export function ProfileIkiminaInfo({
             </CardDescription>
           </div>
           <div className="flex space-x-2">
-            {canEditIkimina && isEditing ? (
+            {canEditVentures && isEditing ? (
               <>
                 <Button
                   variant="outline"
@@ -223,7 +223,7 @@ export function ProfileIkiminaInfo({
                   )}
                 </Button>
               </>
-            ) : canEditIkimina ? (
+            ) : canEditVentures ? (
               <Button onClick={() => setIsEditing(true)}>
                 <Edit className="mr-2 h-4 w-4" />
                 Edit
@@ -242,7 +242,7 @@ export function ProfileIkiminaInfo({
       </CardHeader>
 
       <CardContent className="space-y-6">
-        {!canEditIkimina && (
+        {!canEditVentures && (
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>
@@ -285,7 +285,7 @@ export function ProfileIkiminaInfo({
           ) : (
             <div className="rounded-md bg-muted/50 p-3">
               <p className="text-sm capitalize">
-                {(ikimina.preferredPayoutMethod || "Not provided").replace(
+                {(ventures.preferredPayoutMethod || "Not provided").replace(
                   "_",
                   " "
                 )}
@@ -312,7 +312,7 @@ export function ProfileIkiminaInfo({
               />
             ) : (
               <div className="rounded-md bg-muted/50 p-3">
-                <p className="text-sm">{ikimina.bankName || "Not provided"}</p>
+                <p className="text-sm">{ventures.bankName || "Not provided"}</p>
               </div>
             )}
           </div>
@@ -340,7 +340,7 @@ export function ProfileIkiminaInfo({
             ) : (
               <div className="rounded-md bg-muted/50 p-3">
                 <p className="text-sm">
-                  {maskAccountNumber(ikimina.bankAccountNumber)}
+                  {maskAccountNumber(ventures.bankAccountNumber)}
                 </p>
               </div>
             )}
@@ -369,7 +369,7 @@ export function ProfileIkiminaInfo({
             ) : (
               <div className="rounded-md bg-muted/50 p-3">
                 <p className="text-sm">
-                  {ikimina.bankAccountHolder || "Not provided"}
+                  {ventures.bankAccountHolder || "Not provided"}
                 </p>
               </div>
             )}
@@ -406,7 +406,7 @@ export function ProfileIkiminaInfo({
             ) : (
               <div className="rounded-md bg-muted/50 p-3">
                 <p className="text-sm uppercase">
-                  {ikimina.mobileMoneyProvider || "Not provided"}
+                  {ventures.mobileMoneyProvider || "Not provided"}
                 </p>
               </div>
             )}
@@ -437,7 +437,7 @@ export function ProfileIkiminaInfo({
             ) : (
               <div className="rounded-md bg-muted/50 p-3">
                 <p className="text-sm">
-                  {ikimina.mobileMoneyNumber || "Not provided"}
+                  {ventures.mobileMoneyNumber || "Not provided"}
                 </p>
               </div>
             )}
@@ -468,7 +468,7 @@ export function ProfileIkiminaInfo({
             ) : (
               <div className="rounded-md bg-muted/50 p-3">
                 <p className="text-sm">
-                  {ikimina.emergencyContactName || "Not provided"}
+                  {ventures.emergencyContactName || "Not provided"}
                 </p>
               </div>
             )}
@@ -497,7 +497,7 @@ export function ProfileIkiminaInfo({
             ) : (
               <div className="rounded-md bg-muted/50 p-3">
                 <p className="text-sm">
-                  {ikimina.emergencyContactPhone || "Not provided"}
+                  {ventures.emergencyContactPhone || "Not provided"}
                 </p>
               </div>
             )}

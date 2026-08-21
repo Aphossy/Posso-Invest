@@ -66,7 +66,7 @@ const getAudienceRoles = (
     return ["admin", "president", "secretary", "treasurer"]
   }
 
-  // "members" and "public" both target all org participants - in an ikimina
+  // "members" and "public" both target all org participants - in an ventures
   // every role holder (admin, president, secretary, treasurer, member) is also
   // an active member of the group and should receive member-facing broadcasts.
   return ["admin", "president", "secretary", "treasurer", "member"]
@@ -78,7 +78,7 @@ const getAudienceRoles = (
 
 export const announcementPublishedEmailNotifier = inngest.createFunction(
   {
-    id: "ikimina-announcement-published-email-notifier",
+    id: "ventures-announcement-published-email-notifier",
     retries: 3,
     concurrency: 4,
     triggers: [announcementPublishedEvent],
@@ -236,7 +236,7 @@ export const announcementPublishedEmailNotifier = inngest.createFunction(
 
 export const actionItemCreatedEmailNotifier = inngest.createFunction(
   {
-    id: "ikimina-action-item-created-email-notifier",
+    id: "ventures-action-item-created-email-notifier",
     retries: 3,
     concurrency: 5,
     triggers: [actionItemCreatedEvent],
@@ -421,7 +421,7 @@ export const actionItemCreatedEmailNotifier = inngest.createFunction(
 
 export const actionItemStatusChangedEmailNotifier = inngest.createFunction(
   {
-    id: "ikimina-action-item-status-changed-email-notifier",
+    id: "ventures-action-item-status-changed-email-notifier",
     retries: 3,
     concurrency: 5,
     triggers: [actionItemStatusChangedEvent],

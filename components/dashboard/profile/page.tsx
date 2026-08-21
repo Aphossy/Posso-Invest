@@ -20,7 +20,7 @@ import { ProfileAddressInfo } from "@/components/profile/profile-address-info"
 import { ProfileBasicInfo } from "@/components/profile/profile-basic-info"
 import { ProfileContactInfo } from "@/components/profile/profile-contact-info"
 import { ProfileHeader } from "@/components/profile/profile-header"
-import { ProfileIkiminaInfo } from "@/components/profile/profile-ikimina-info"
+import { ProfileVenturesInfo } from "@/components/profile/profile-ventures-info"
 import { ProfileSkeleton } from "@/components/profile/profile-skeleton"
 
 export default function ProfilePage() {
@@ -33,7 +33,7 @@ export default function ProfilePage() {
 
   // Validate activeTab
   useEffect(() => {
-    if (!["overview", "contact", "address", "ikimina"].includes(activeTab)) {
+    if (!["overview", "contact", "address", "ventures"].includes(activeTab)) {
       setActiveTab("overview")
     }
   }, [activeTab, setActiveTab])
@@ -118,9 +118,9 @@ export default function ProfilePage() {
             <MapPin className="h-4 w-4" />
             <span className="inline">Address</span>
           </TabsTrigger>
-          <TabsTrigger value="ikimina" className="flex items-center gap-2">
+          <TabsTrigger value="ventures" className="flex items-center gap-2">
             <HandCoins className="h-4 w-4" />
-            <span className="inline">Ikimina</span>
+            <span className="inline">Ventures</span>
           </TabsTrigger>
         </TabsList>
 
@@ -142,9 +142,9 @@ export default function ProfilePage() {
           </Suspense>
         </TabsContent>
 
-        <TabsContent value="ikimina" className="space-y-6">
+        <TabsContent value="ventures" className="space-y-6">
           <Suspense fallback={<ProfileSkeleton />}>
-            <ProfileIkiminaInfo profile={profile!} onUpdate={updateProfile} />
+            <ProfileVenturesInfo profile={profile!} onUpdate={updateProfile} />
           </Suspense>
         </TabsContent>
       </Tabs>

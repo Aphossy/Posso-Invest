@@ -100,7 +100,7 @@ function RedirectContent() {
         name: organisationName,
         slug: defaultSlug,
         metadata: {
-          type: "ikimina",
+          type: "ventures",
         },
       })
 

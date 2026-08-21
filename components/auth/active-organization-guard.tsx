@@ -34,7 +34,7 @@ export function ActiveOrganizationGuard() {
         name: organisationName,
         slug: defaultSlug,
         metadata: {
-          type: "ikimina",
+          type: "ventures",
         },
       })
 

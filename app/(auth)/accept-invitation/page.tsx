@@ -183,7 +183,7 @@ export default function AcceptInvitationPage() {
           </div>
           <CardTitle className="text-2xl">Accept your invitation</CardTitle>
           <CardDescription>
-            Join the 10/10 Ventures workspace to access your Ikimina dashboard.
+            Join the 10/10 Ventures workspace to access your Ventures dashboard.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

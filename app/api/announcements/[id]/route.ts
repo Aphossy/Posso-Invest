@@ -301,8 +301,8 @@ export async function PUT(
 
     try {
       await inngest.send({
-        id: `ikimina-announcement-published-${updated.id}`,
-        name: "ikimina/announcement.published",
+        id: `ventures-announcement-published-${updated.id}`,
+        name: "ventures/announcement.published",
         data: {
           organizationId: activeOrganizationId || "unknown-org",
           announcementId: updated.id,

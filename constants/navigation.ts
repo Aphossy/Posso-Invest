@@ -89,7 +89,7 @@ export const MEMBER_NAVIGATION: NavigationGroup[] = [
         title: "Dashboard",
         url: "/member/dashboard",
         icon: LayoutDashboard,
-        description: "Your Ikimina overview",
+        description: "Your Ventures overview",
         shortcut: "mod+1",
       },
       {

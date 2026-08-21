@@ -1,7 +1,7 @@
 import { eventType, staticSchema } from "inngest"
 
 export const memberJoinedEvent = eventType(
-  "ikimina/organization.member.joined",
+  "ventures/organization.member.joined",
   {
     schema: staticSchema<{
       organizationId: string
@@ -17,7 +17,7 @@ export const memberJoinedEvent = eventType(
 )
 
 export const contributionRecordedEvent = eventType(
-  "ikimina/contribution.recorded",
+  "ventures/contribution.recorded",
   {
     schema: staticSchema<{
       organizationId: string
@@ -38,7 +38,7 @@ export const contributionRecordedEvent = eventType(
   }
 )
 
-export const loanRequestedEvent = eventType("ikimina/loan.requested", {
+export const loanRequestedEvent = eventType("ventures/loan.requested", {
   schema: staticSchema<{
     organizationId: string
     loanId: string
@@ -53,7 +53,7 @@ export const loanRequestedEvent = eventType("ikimina/loan.requested", {
   }>(),
 })
 
-export const loanApprovedEvent = eventType("ikimina/loan.approved", {
+export const loanApprovedEvent = eventType("ventures/loan.approved", {
   schema: staticSchema<{
     organizationId: string
     loanId: string
@@ -70,7 +70,7 @@ export const loanApprovedEvent = eventType("ikimina/loan.approved", {
   }>(),
 })
 
-export const loanNearDueEvent = eventType("ikimina/loan.near-due", {
+export const loanNearDueEvent = eventType("ventures/loan.near-due", {
   schema: staticSchema<{
     organizationId: string
     loanId: string
@@ -85,7 +85,7 @@ export const loanNearDueEvent = eventType("ikimina/loan.near-due", {
   }>(),
 })
 
-export const penaltyRecordedEvent = eventType("ikimina/penalty.recorded", {
+export const penaltyRecordedEvent = eventType("ventures/penalty.recorded", {
   schema: staticSchema<{
     organizationId: string
     penaltyId: string
@@ -105,7 +105,7 @@ export const penaltyRecordedEvent = eventType("ikimina/penalty.recorded", {
 })
 
 export const announcementPublishedEvent = eventType(
-  "ikimina/announcement.published",
+  "ventures/announcement.published",
   {
     schema: staticSchema<{
       organizationId: string
@@ -122,7 +122,7 @@ export const announcementPublishedEvent = eventType(
   }
 )
 
-export const actionItemCreatedEvent = eventType("ikimina/action-item.created", {
+export const actionItemCreatedEvent = eventType("ventures/action-item.created", {
   schema: staticSchema<{
     organizationId: string
     actionItemId: string
@@ -142,7 +142,7 @@ export const actionItemCreatedEvent = eventType("ikimina/action-item.created", {
 })
 
 export const actionItemStatusChangedEvent = eventType(
-  "ikimina/action-item.status.changed",
+  "ventures/action-item.status.changed",
   {
     schema: staticSchema<{
       organizationId: string
@@ -163,7 +163,7 @@ export const actionItemStatusChangedEvent = eventType(
 )
 
 export const monthlyMemberSummaryEmailEvent = eventType(
-  "ikimina/reports.monthly.member-summary.email",
+  "ventures/reports.monthly.member-summary.email",
   {
     schema: staticSchema<{
       periodKey: string
@@ -178,7 +178,7 @@ export const monthlyMemberSummaryEmailEvent = eventType(
 )
 
 export const monthlyDispatchRequestedEvent = eventType(
-  "ikimina/reports.monthly.dispatch.requested",
+  "ventures/reports.monthly.dispatch.requested",
   {
     schema: staticSchema<{ testRunId?: string }>(),
   }

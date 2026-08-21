@@ -11,7 +11,7 @@ export interface MemberCardPdfPayload {
 
 const BRAND = {
   orgName: process.env.NEXT_PUBLIC_ORGANISATION_NAME || "10/10 Ventures",
-  groupLabel: "Group · Ikimina",
+  groupLabel: "Group · Ventures",
   location:
     process.env.NEXT_PUBLIC_ORGANISATION_PHYSICAL_ADDRESS ||
     "Nyamata Sector, Bugesera, Rwanda",

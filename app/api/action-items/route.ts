@@ -318,8 +318,8 @@ export async function POST(request: Request) {
 
     try {
       await inngest.send({
-        id: `ikimina-action-item-created-${created.id}`,
-        name: "ikimina/action-item.created",
+        id: `ventures-action-item-created-${created.id}`,
+        name: "ventures/action-item.created",
         data: {
           organizationId: activeOrganizationId || "unknown-org",
           actionItemId: created.id,
@@ -415,8 +415,8 @@ export async function POST(request: Request) {
   } else {
     try {
       await inngest.send({
-        id: `ikimina-action-item-created-${created.id}`,
-        name: "ikimina/action-item.created",
+        id: `ventures-action-item-created-${created.id}`,
+        name: "ventures/action-item.created",
         data: {
           organizationId: activeOrganizationId || "unknown-org",
           actionItemId: created.id,

@@ -71,7 +71,7 @@ const getLeadershipRecipients = async (
 
 export const contributionRecordedEmailNotifier = inngest.createFunction(
   {
-    id: "ikimina-contribution-recorded-email-notifier",
+    id: "ventures-contribution-recorded-email-notifier",
     retries: 3,
     concurrency: 4,
     triggers: [contributionRecordedEvent],
@@ -248,7 +248,7 @@ export const contributionRecordedEmailNotifier = inngest.createFunction(
 
 export const loanRequestedEmailNotifier = inngest.createFunction(
   {
-    id: "ikimina-loan-requested-email-notifier",
+    id: "ventures-loan-requested-email-notifier",
     retries: 3,
     concurrency: 4,
     triggers: [loanRequestedEvent],
@@ -424,7 +424,7 @@ export const loanRequestedEmailNotifier = inngest.createFunction(
 
 export const loanApprovedEmailNotifier = inngest.createFunction(
   {
-    id: "ikimina-loan-approved-email-notifier",
+    id: "ventures-loan-approved-email-notifier",
     retries: 3,
     concurrency: 4,
     triggers: [loanApprovedEvent],
@@ -568,7 +568,7 @@ export const loanApprovedEmailNotifier = inngest.createFunction(
 
 export const loanNearDueEmailNotifier = inngest.createFunction(
   {
-    id: "ikimina-loan-near-due-email-notifier",
+    id: "ventures-loan-near-due-email-notifier",
     retries: 3,
     concurrency: 4,
     triggers: [loanNearDueEvent],
@@ -725,7 +725,7 @@ export const loanNearDueEmailNotifier = inngest.createFunction(
 
 export const penaltyRecordedEmailNotifier = inngest.createFunction(
   {
-    id: "ikimina-penalty-recorded-email-notifier",
+    id: "ventures-penalty-recorded-email-notifier",
     retries: 3,
     concurrency: 4,
     triggers: [penaltyRecordedEvent],

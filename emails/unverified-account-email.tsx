@@ -122,7 +122,7 @@ export default function UnverifiedAccountEmail({
               • Ensures account security and prevents unauthorized access
               <br />• Enables contribution, loan, and meeting notifications
               <br />• Required for password recovery and account management
-              <br />• Helps us maintain a trusted Ikimina member community
+              <br />• Helps us maintain a trusted Ventures member community
             </Text>
 
             <Hr style={hr} />
@@ -143,7 +143,7 @@ export default function UnverifiedAccountEmail({
 
           {/* Footer */}
           <Section style={footer}>
-            <Text style={footerDetailText}>{organisationName} - Ikimina</Text>
+            <Text style={footerDetailText}>{organisationName} - Ventures</Text>
             <Text style={footerDetailText}>
               Email:{" "}
               <Link href={`mailto:${organisationEmail}`} style={footerLink}>

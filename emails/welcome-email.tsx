@@ -60,7 +60,7 @@ export const WelcomeEmail = ({ userName }: WelcomeEmailProps) => {
             <Text style={text}>
               We're thrilled to have you join the 10/10 Ventures family! Your
               account has been successfully verified, and you now have full
-              access to our Ikimina platform.
+              access to our Ventures platform.
             </Text>
 
             <Text style={tagline}>

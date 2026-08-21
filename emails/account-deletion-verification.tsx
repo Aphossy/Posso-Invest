@@ -84,7 +84,7 @@ export default function AccountDeletionVerificationEmail({
 
           {/* Footer */}
           <Section style={footer}>
-            <Text style={footerDetailText}>{organisationName} | Ikimina</Text>
+            <Text style={footerDetailText}>{organisationName} | Ventures</Text>
             <Text style={footerDetailText}>
               Email:{" "}
               <Link
