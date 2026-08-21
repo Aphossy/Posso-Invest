@@ -105,7 +105,7 @@ export const AccountInactiveEmail = ({
           <Text style={signature}>
             Best regards,
             <br />
-            TrustLink Group - Save together. Build together.
+            10/10 Ventures - Save together. Build together.
           </Text>
         </Container>
       </Body>

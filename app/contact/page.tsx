@@ -3,7 +3,7 @@ import { ContactClient } from "./contact-client"
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with the Posso Ventures Platform leadership committee.",
+  description: "Get in touch with the 10/10 Ventures Platform leadership committee.",
 }
 
 interface ContactPageProps {

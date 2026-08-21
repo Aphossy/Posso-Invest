@@ -55,7 +55,7 @@ export const AccountVerificationEmail = ({
             <Text style={greeting}>Dear {userName},</Text>
             <Text style={paragraph}>
               Thank you for creating your {organisationName}  account! We're excited
-              to have you join Posso Ventures focused on transparent
+              to have you join 10/10 Ventures focused on transparent
               saving, responsible lending, and building a modern dental clinic.
             </Text>
 
@@ -84,7 +84,7 @@ export const AccountVerificationEmail = ({
             <Hr style={hr} />
 
             <Text style={footer}>
-              If you didn't create a TrustLink Group account, please ignore this
+              If you didn't create a 10/10 Ventures account, please ignore this
               email or contact is at{" "}
               <Link href={`mailto:${organisationEmail}`} style={link}>
                 {organisationEmail}
@@ -122,7 +122,7 @@ export const AccountVerificationEmail = ({
 
 AccountVerificationEmail.PreviewProps = {
   userName: "Sandrine Mukandayisenga",
-  verificationUrl: "https://trustlink-group.rw/verify?token=example",
+  verificationUrl: "https://10/10 Ventures-group.rw/verify?token=example",
   expiresInHours: 24,
 } satisfies AccountVerificationEmailProps
 

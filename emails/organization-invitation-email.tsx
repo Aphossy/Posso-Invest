@@ -45,7 +45,7 @@ export default function OrganizationInvitationEmail({
     <Html lang="en">
       <Head />
       <Preview>
-        {inviterName} invited you to join {organizationName} on Posso Ventures.
+        {inviterName} invited you to join {organizationName} on 10/10 Ventures.
       </Preview>
       <Body style={main}>
         <Container style={container}>
@@ -140,8 +140,8 @@ export default function OrganizationInvitationEmail({
 }
 
 OrganizationInvitationEmail.PreviewProps = {
-  inviterName: "Posso Ventures Admin",
-  organizationName: "Posso Ventures",
+  inviterName: "10/10 Ventures Admin",
+  organizationName: "10/10 Ventures",
   roleLabel: "member",
   expiresAt: "Mar 11, 2026, 6:00 PM",
   invitationUrl:

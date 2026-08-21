@@ -52,14 +52,14 @@ export function DashboardSidebar() {
         <div className="flex items-center gap-2 px-4 py-2">
           <Image
             src="/brand/logo.png"
-            alt="Posso Ventures Group logo"
+            alt="10/10 Ventures Group logo"
             width={200}
-            height={200}
+            height={300}
             className="rounded-lg size-10"
           />
           <div className="grid flex-1 text-left text-sm">
             <span className="truncate capitalize font-semibold">
-              POSSO VENTURES
+              10/10 Ventures
             </span>
             <span className="truncate text-xs text-gray-500">
               Saving together for a Clinic.

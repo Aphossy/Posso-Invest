@@ -61,7 +61,7 @@ export const getIconComponent = (iconName: string) => {
   }
 }
 
-// TrustLink member dashboard preview cards for the login page
+// 10/10 Ventures member dashboard preview cards for the login page
 export const adminPages = [
   {
     id: 0,

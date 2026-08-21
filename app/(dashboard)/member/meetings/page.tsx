@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export const metadata: Metadata = {
   title: "Meeting Schedule",
-  description: "Review upcoming TrustLink Group meetings and venues.",
+  description: "Review upcoming 10/10 Ventures meetings and venues.",
 }
 
 type ApiListResponse<T> = { data: T[]; total?: number }

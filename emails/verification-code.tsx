@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\emails\verification-code.tsx
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\emails\verification-code.tsx
 import {
   organisationEmail,
   organisationLogo,
@@ -40,7 +40,7 @@ export const VerificationEmail = ({
   userName,
   location,
 }: VerificationEmailProps) => {
-  const previewText = `Your POSSO VENTURES verification code is ${code}`
+  const previewText = `Your 10/10 Ventures verification code is ${code}`
 
   const supportEmail =
     process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "possowiba01@gmail.com"
@@ -56,7 +56,7 @@ export const VerificationEmail = ({
               src={`${organisationLogo}`}
               width="60"
               height="60"
-              alt="Posso Ventures Logo"
+              alt="10/10 Ventures Logo"
               style={logo}
             />
           </Section>
@@ -67,7 +67,7 @@ export const VerificationEmail = ({
             <Text style={greeting}>Dear {userName},</Text>
             <Text style={paragraph}>
               You are receiving this email because you have enabled Two-Factor
-              Authentication for your Posso Ventures account. To complete the
+              Authentication for your 10/10 Ventures account. To complete the
               sign-in process, please enter the verification code below.
             </Text>
 
@@ -98,10 +98,10 @@ export const VerificationEmail = ({
             <Hr style={hr} />
 
             <Text style={footer}>
-              If you did not attempt to sign in to your Posso Ventures
+              If you did not attempt to sign in to your 10/10 Ventures
               Dashboard, please ignore this email and report immediately to{" "}
               <Link href={`mailto:${supportEmail}`} style={link}>
-                the Posso Ventures support team
+                the 10/10 Ventures support team
               </Link>
               . Your account security is our top priority.
             </Text>

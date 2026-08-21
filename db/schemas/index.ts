@@ -1,6 +1,6 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\db\schemas\index.ts
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\db\schemas\index.ts
 // Export combined schema object for Drizzle
-// TrustLink Group specific schemas
+// 10/10 Ventures specific schemas
 import * as actionItemSchema from "./action-item-schema"
 import * as announcementSchema from "./announcement-schema"
 import * as assetSchema from "./asset-schema"
@@ -48,7 +48,7 @@ export * from "./message-schema"
 export * from "./operational-expense-schema"
 
 export const schema = {
-  // TrustLink Group schemas
+  // 10/10 Ventures schemas
   ...authSchema,
   ...announcementSchema,
   ...attendanceSchema,

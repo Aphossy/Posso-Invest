@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator"
 export const metadata: Metadata = {
   title: "Pending Approvals | President",
   description:
-    "Dual-authorization for transactions above 50,000 RWF per the TrustLink constitution.",
+    "Dual-authorization for transactions above 50,000 RWF per the 10/10 Ventures constitution.",
 }
 
 const pendingApprovals = [

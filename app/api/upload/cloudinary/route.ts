@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\app\api\upload\cloudinary\route.ts
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\app\api\upload\cloudinary\route.ts
 import type { NextRequest } from "next/server"
 import logger from "@/utils/logger"
 import cloudinary from "cloudinary"
@@ -144,7 +144,7 @@ export async function POST(request: NextRequest) {
             {
               invalidate: true,
               resource_type: "image",
-              folder: "trustlink-group", // Organize uploads in folders
+              folder: "10/10 Ventures-group", // Organize uploads in folders
               transformation: [
                 { quality: "auto:best", fetch_format: "auto" }, // Optimize images
                 { width: 1000, crop: "scale" }, // Limit max dimensions

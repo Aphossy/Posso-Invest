@@ -80,7 +80,7 @@ export default function UserPage() {
               Member Management
             </h1>
             <p className="mt-1 text-muted-foreground">
-              Manage Posso Ventures organization members and committee access.
+              Manage 10/10 Ventures organization members and committee access.
             </p>
           </div>
         </div>

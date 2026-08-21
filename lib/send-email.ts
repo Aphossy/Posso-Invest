@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\lib\send-email.ts
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\lib\send-email.ts
 import type { ReactNode } from "react"
 import { organisationEmail } from "@/constants/organisation"
 import { Resend } from "resend"
@@ -18,7 +18,7 @@ if (!process.env.NEXT_PUBLIC_SUPPORT_EMAIL) {
 }
 if (!process.env.SENDER_NAME) {
   console.warn(
-    "SENDER_NAME environment variable not set, defaulting to 'TrustLink Group Platform'"
+    "SENDER_NAME environment variable not set, defaulting to '10/10 Ventures Platform'"
   )
 }
 

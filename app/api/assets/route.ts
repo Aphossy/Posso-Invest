@@ -73,7 +73,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Build visibility filter based on TrustLink Group role.
+    // Build visibility filter based on 10/10 Ventures role.
     // Private files are NEVER visible to others - only the owner can see them
     // regardless of role. The ownerId key enables the OR condition in the DB layer:
     //   (visibility IN [...allowed]) OR (visibility = 'private' AND uploaded_by = ownerId)

@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\app\api\message\[id]\route.ts
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\app\api\message\[id]\route.ts
 import { headers } from "next/headers"
 import type { NextRequest } from "next/server"
 import { db } from "@/db/connection"

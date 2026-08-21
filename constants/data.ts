@@ -137,7 +137,7 @@ export const RWANDA_DISTRICTS = [
 export const demoAccounts = [
   {
     role: "member",
-    email: "member@trustlinkgroup.rw",
+    email: "member@10/10 Venturesgroup.rw",
     icon: User,
     color: "from-green-500 to-emerald-600",
     bgColor: "bg-green-50 dark:bg-green-950/20",
@@ -145,7 +145,7 @@ export const demoAccounts = [
   },
   {
     role: "Treasurer",
-    email: "treasurer@trustlinkgroup.rw",
+    email: "treasurer@10/10 Venturesgroup.rw",
     icon: Wallet,
     color: "from-amber-500 to-orange-600",
     bgColor: "bg-amber-50 dark:bg-amber-950/20",
@@ -153,7 +153,7 @@ export const demoAccounts = [
   },
   {
     role: "Secretary",
-    email: "secretary@trustlinkgroup.rw",
+    email: "secretary@10/10 Venturesgroup.rw",
     icon: ClipboardList,
     color: "from-blue-500 to-cyan-600",
     bgColor: "bg-blue-50 dark:bg-blue-950/20",
@@ -161,7 +161,7 @@ export const demoAccounts = [
   },
   {
     role: "Admin",
-    email: "admin@trustlinkgroup.rw",
+    email: "admin@10/10 Venturesgroup.rw",
     icon: Shield,
     color: "from-purple-500 to-pink-600",
     bgColor: "bg-purple-50 dark:bg-purple-950/20",

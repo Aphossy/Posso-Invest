@@ -318,7 +318,7 @@ export function MemberDashboardContent() {
             {greeting}, {firstName}!
           </h2>
           <p className="text-muted-foreground">
-            Here&apos;s your Contribution snapshot for Posso Ventures.
+            Here&apos;s your Contribution snapshot for 10/10 Ventures.
           </p>
         </div>
 

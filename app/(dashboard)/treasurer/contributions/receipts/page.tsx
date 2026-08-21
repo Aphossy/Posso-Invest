@@ -5,7 +5,7 @@ import TreasurerReceiptsPage from "@/components/dashboard/treasurer/contribution
 export const metadata: Metadata = {
   title: "Receipts",
   description:
-    "Issue and archive contribution receipts, loan repayment proofs, and payment confirmations for TrustLink Group members",
+    "Issue and archive contribution receipts, loan repayment proofs, and payment confirmations for 10/10 Ventures members",
 }
 
 export default function ContributionsReceiptsPage() {

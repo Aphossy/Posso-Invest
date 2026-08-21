@@ -174,7 +174,7 @@ export function SecuritySettings({
     try {
       const { data, error } = await authClient.twoFactor.enable({
         password: twoFactorPassword,
-        issuer: "TrustLink Group",
+        issuer: "10/10 Ventures",
       })
 
       if (error) {
@@ -260,7 +260,7 @@ export function SecuritySettings({
     const url = URL.createObjectURL(blob)
     const a = document.createElement("a")
     a.href = url
-    a.download = "trustlink-group-2fa-backup-codes.txt"
+    a.download = "10/10 Ventures-group-2fa-backup-codes.txt"
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)

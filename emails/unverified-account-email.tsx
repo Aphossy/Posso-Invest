@@ -44,7 +44,7 @@ export default function UnverifiedAccountEmail({
   supportEmail,
 }: UnverifiedAccountEmailProps) {
   const previewText =
-    "Verify your email to access your Posso Ventures dashboard."
+    "Verify your email to access your 10/10 Ventures dashboard."
 
   return (
     <Html lang="en">
@@ -57,7 +57,7 @@ export default function UnverifiedAccountEmail({
               src={`${organisationLogo}`}
               width="60"
               height="60"
-              alt="Posso Ventures"
+              alt="10/10 Ventures"
               style={logo}
             />
           </Section>
@@ -69,7 +69,7 @@ export default function UnverifiedAccountEmail({
             <Text style={text}>Hello {userName},</Text>
 
             <Text style={text}>
-              We detected a login attempt to your Posso Ventures account, but
+              We detected a login attempt to your 10/10 Ventures account, but
               your email address hasn't been verified yet. For security reasons,
               you need to verify your email before you can access your account.
             </Text>

@@ -183,7 +183,7 @@ export async function PUT(
 
         const memberResult = await sendEmail({
           to: penalizedMember.email,
-          subject: "Your penalty record has been updated - TrustLink Group",
+          subject: "Your penalty record has been updated - 10/10 Ventures",
           html: memberHtml,
         })
 

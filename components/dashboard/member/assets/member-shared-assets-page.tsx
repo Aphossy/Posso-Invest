@@ -380,10 +380,10 @@ export default function MemberSharedAssetsPage() {
             {debouncedSearch
               ? `Results for "${debouncedSearch}"`
               : visibilityTab === "authenticated"
-                ? "Files shared with all TrustLink members"
+                ? "Files shared with all 10/10 Ventures members"
                 : visibilityTab === "public"
                   ? "Publicly accessible files"
-                  : "All files shared with TrustLink members"}{" "}
+                  : "All files shared with 10/10 Ventures members"}{" "}
             · Page {currentPage} of {totalPages}
           </CardDescription>
         </CardHeader>

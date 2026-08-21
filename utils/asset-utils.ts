@@ -54,7 +54,7 @@ export function getVisibilityColor(visibility: string): string {
 }
 
 /**
- * Format visibility label for TrustLink Group
+ * Format visibility label for 10/10 Ventures
  */
 export function formatVisibilityLabel(visibility: string): string {
   const labels: Record<string, string> = {
@@ -158,7 +158,7 @@ export function formatAssetTypeLabel(assetType: string): string {
 }
 
 /**
- * Format category label for TrustLink Group Ikimina categories
+ * Format category label for 10/10 Ventures Ikimina categories
  */
 export function formatAssetCategoryLabel(category: string): string {
   const labels: Record<string, string> = {
@@ -208,7 +208,7 @@ export function truncateFilename(filename: string, maxLength = 30): string {
 }
 
 /**
- * Check if user can edit asset (TrustLink Group roles)
+ * Check if user can edit asset (10/10 Ventures roles)
  */
 export function canEditAsset(
   asset: Asset,
@@ -227,7 +227,7 @@ export function canEditAsset(
 }
 
 /**
- * Check if user can delete asset (TrustLink Group roles)
+ * Check if user can delete asset (10/10 Ventures roles)
  */
 export function canDeleteAsset(
   asset: Asset,
@@ -241,7 +241,7 @@ export function canDeleteAsset(
 }
 
 /**
- * Get category color for TrustLink Group Ikimina categories
+ * Get category color for 10/10 Ventures Ikimina categories
  */
 export function getCategoryColor(category: string): string {
   const colors: Record<string, string> = {

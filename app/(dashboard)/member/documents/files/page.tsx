@@ -4,7 +4,7 @@ import UserAssetsPage from "@/components/dashboard/assets/user-assets-page"
 export const metadata = {
   title: "My Documents & Files",
   description:
-    "Upload and manage your personal TrustLink Group documents and files",
+    "Upload and manage your personal 10/10 Ventures documents and files",
 }
 
 export default function UserAssetPage() {

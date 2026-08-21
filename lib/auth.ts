@@ -414,7 +414,7 @@ export const auth = betterAuth({
           "http://localhost:3000"
         const invitationUrl = new URL("/accept-invitation", baseUrl)
         invitationUrl.searchParams.set("invitationId", data.id)
-        const inviterName = data.inviter?.user?.name || "TrustLink Group"
+        const inviterName = data.inviter?.user?.name || "10/10 Ventures"
         const roleLabel = Array.isArray(data.role)
           ? data.role.join(", ")
           : data.role
@@ -426,7 +426,7 @@ export const auth = betterAuth({
             })
           : "in 7 days"
         const supportEmail =
-          process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "trustlinkgrouprw@gmail.com"
+          process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "10/10 Venturesgrouprw@gmail.com"
         const loginUrl = new URL("/login", baseUrl)
         loginUrl.searchParams.set(
           "from",

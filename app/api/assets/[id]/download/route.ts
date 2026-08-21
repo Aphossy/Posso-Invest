@@ -123,7 +123,7 @@ export async function GET(
   }
 }
 
-// Helper function to check asset access (TrustLink Group visibility rules).
+// Helper function to check asset access (10/10 Ventures visibility rules).
 // Private files are ONLY accessible by the owner - even admin cannot download
 // another member's private files.
 function checkAssetAccess(

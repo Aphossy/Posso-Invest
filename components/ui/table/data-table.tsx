@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\components\ui\table\data-table.tsx
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\components\ui\table\data-table.tsx
 "use client"
 
 import type React from "react"

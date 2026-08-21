@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\app\api\assets\[id]\view\route.ts
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\app\api\assets\[id]\view\route.ts
 import { headers } from "next/headers"
 import type { NextRequest } from "next/server"
 import { userOperations } from "@/db/operations"
@@ -125,7 +125,7 @@ export async function POST(
   }
 }
 
-// Helper function to check asset access (TrustLink Group visibility rules).
+// Helper function to check asset access (10/10 Ventures visibility rules).
 // Private files are ONLY accessible by the owner - even admin cannot view
 // another member's private files.
 function checkAssetAccess(

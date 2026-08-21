@@ -50,7 +50,7 @@ export const user = pgTable(
       city?: string
     }>(),
 
-    // User role and type for TrustLink Group platform
+    // User role and type for 10/10 Ventures platform
     role: text("role").default("member"),
 
     // User preferences

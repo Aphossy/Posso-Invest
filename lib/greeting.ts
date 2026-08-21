@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\lib\utils\greeting.ts
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\lib\utils\greeting.ts
 
 export function getDynamicGreeting(): string {
   const now = new Date()
@@ -48,7 +48,7 @@ export function getDynamicGreeting(): string {
 
 export function getDashboardSubtitle(): string {
   const subtitles = [
-    "Here's what's happening with your trustlink group",
+    "Here's what's happening with your 10/10 Ventures",
     "Let's see what's new today",
     "Ready to make progress?",
     "Let's get things done!",

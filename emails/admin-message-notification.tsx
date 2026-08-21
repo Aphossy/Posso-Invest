@@ -55,7 +55,7 @@ export function AdminMessageNotificationEmail({
   const serviceLabel = serviceLabels[service] || service
   const isAccessRequest = service === "access-technical"
   const replySubject = encodeURIComponent(
-    `Re: ${subject || "Your message to TrustLink Group"}`
+    `Re: ${subject || "Your message to 10/10 Ventures"}`
   )
   const replyBody = encodeURIComponent(
     `Muraho ${name},\n\nThank you for your message. We have reviewed your request and will guide you on the next steps.\n\nBest regards,\n${organisationName}`

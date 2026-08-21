@@ -9,7 +9,7 @@ export function createMetadata({
   ogImage = "/og.jpg",
   type = "website",
   noIndex = false,
-  author = "Trustlink Group - Ikimina",
+  author = "10/10 Ventures - Ikimina",
   keywords = [],
   publishedTime,
   modifiedTime,
@@ -52,19 +52,19 @@ export function createMetadata({
 
   // Default description fallback
   const defaultDescription =
-    "Posso Ventures is a professional group that enables members to save, invest, and build a modern infrastructure together."
+    "10/10 Ventures is a professional group that enables members to save, invest, and build a modern infrastructure together."
   // Enhanced title for SEO
-  const enhancedTitle = `${title} | Posso Ventures`
+  const enhancedTitle = `${title} | 10/10 VENTURES`
 
   const metadata: Metadata = {
     title: enhancedTitle,
     description: description || defaultDescription,
-    keywords: [...keywords, "Venture", "Posso Ventures", "Investing", "Saving", "Rwanda"],
+    keywords: [...keywords, "Venture", "10/10 VENTURES", "Investing", "Saving", "Rwanda"],
     authors: Array.isArray(author)
       ? author.map((name) => ({ name }))
       : [{ name: author, url: baseUrl }],
-    creator: "Posso Ventures",
-    publisher: "Posso Ventures",
+    creator: "10/10 VENTURES",
+    publisher: "10/10 VENTURES",
     formatDetection: {
       telephone: true,
       email: true,
@@ -93,7 +93,7 @@ export function createMetadata({
       title: enhancedTitle,
       description: description || defaultDescription,
       url: canonicalUrl,
-      siteName: "Posso Ventures",
+      siteName: "10/10 VENTURES",
       images: [
         {
           url: imageUrl,
@@ -131,7 +131,7 @@ export function createPageJsonLd({
   description,
   path,
   type = "WebPage",
-  author = "Trustlink Group",
+  author = "10/10 Ventures",
   datePublished,
   dateModified,
   image,
@@ -167,7 +167,7 @@ export function createPageJsonLd({
     publisher: {
       "@type": "Organization",
       "@id": `${BASE_URL}/#organization`,
-      name: "Posso Ventures",
+      name: "10/10 Ventures",
     },
   }
 
@@ -236,11 +236,11 @@ export function createOrganizationSchema() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": `${BASE_URL}/#organization`,
-    name: "Posso Ventures",
+    name: "10/10 Ventures",
     url: BASE_URL,
     logo: `${BASE_URL}/brand/logo.png`,
     description:
-      "Posso Ventures is a professional group that enables members to save, invest, and build a modern infrastructure together.",
+      "10/10 VENTURES is a professional group that enables members to save, invest, and build a modern infrastructure together.",
 
     email: { organisationEmail },
     address: {

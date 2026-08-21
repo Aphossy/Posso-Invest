@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\db\operations\index.ts
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\db\operations\index.ts
 // Import all operations for unified export
 import { actionItemOperations } from "./action-item-operations"
 import { announcementOperations } from "./announcement-operations"

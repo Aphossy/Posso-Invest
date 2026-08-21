@@ -67,7 +67,7 @@ function RequestAccessGuide({ onContinue }: { onContinue: () => void }) {
         ))}
       </ol>
 
-      <div className="rounded-lg border border-[#007952]/20 bg-[#007952]/5 p-4 flex items-start gap-3">
+      {/* <div className="rounded-lg border border-[#007952]/20 bg-[#007952]/5 p-4 flex items-start gap-3">
         <Video className="mt-0.5 h-4 w-4 shrink-0 text-[#007952]" />
         <div className="space-y-1">
           <p className="text-sm font-medium text-foreground">
@@ -81,7 +81,7 @@ function RequestAccessGuide({ onContinue }: { onContinue: () => void }) {
             Watch the tutorial video →
           </a>
         </div>
-      </div>
+      </div> */}
 
       <div className="flex flex-col gap-2 pt-1">
         <Button
@@ -253,7 +253,7 @@ export default function Home() {
                 }
                 transition={{ duration: 0.7, delay: 0.08, ease: "easeOut" }}>
                 <Stethoscope className="h-3 w-3" />
-                Posso Ventures
+                10/10 Ventures
               </motion.div>
             </div>
 
@@ -345,7 +345,7 @@ export default function Home() {
           animate={reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.42, ease: "easeOut" }}>
           <p className="text-center text-xs text-[#1D293B]">
-            © {new Date().getFullYear()} Posso Ventures . All rights
+            © {new Date().getFullYear()} 10/10 Ventures . All rights
             reserved.
           </p>
         </motion.footer>

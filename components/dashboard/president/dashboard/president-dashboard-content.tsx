@@ -229,7 +229,7 @@ export function PresidentDashboardContent() {
             {greeting}, President
           </h2>
           <p className="text-muted-foreground">
-            Here&apos;s the governance pulse for TrustLink Group.
+            Here&apos;s the governance pulse for 10/10 Ventures.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">

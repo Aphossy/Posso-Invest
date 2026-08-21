@@ -8,7 +8,7 @@ import { ContributionsTable } from "@/components/dashboard/contributions/contrib
 
 export const metadata: Metadata = {
   title: "Contribution Overview",
-  description: "Monitor TrustLink Group savings performance.",
+  description: "Monitor 10/10 Ventures savings performance.",
 }
 
 type ApiListResponse<T> = { data: T[]; total?: number }

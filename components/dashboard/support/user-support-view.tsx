@@ -586,7 +586,7 @@ function FAQTab() {
         <CardContent className="text-sm text-muted-foreground space-y-1">
           <p>
             <span className="font-medium">Email:</span>{" "}
-            trustlinkgrouprw@gmail.com
+            10/10 Venturesgrouprw@gmail.com
           </p>
           <p>
             <span className="font-medium">Phone:</span> +250 788 000 000
@@ -662,7 +662,7 @@ export function UserSupportView() {
             <Mail className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <p className="text-sm font-medium">trustlinkgrouprw@gmail.com</p>
+            <p className="text-sm font-medium">10/10 Venturesgrouprw@gmail.com</p>
             <p className="text-xs text-muted-foreground">Response within 24h</p>
           </CardContent>
         </Card>

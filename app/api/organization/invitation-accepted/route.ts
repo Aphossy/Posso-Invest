@@ -89,12 +89,12 @@ export async function POST(request: Request) {
       .limit(1)
 
     const eventId = body.invitationId
-      ? `Posso Venture-member-joined-${body.invitationId}`
-      : `Posso Venture-member-joined-${activeOrganizationId}-${session.user.id}`
+      ? `10/10 Ventures-member-joined-${body.invitationId}`
+      : `10/10 Ventures-member-joined-${activeOrganizationId}-${session.user.id}`
 
     await inngest.send({
       id: eventId,
-      name: "Posso Venture/organization.member.joined",
+      name: "10/10 Ventures/organization.member.joined",
       data: {
         organizationId: activeOrganizationId,
         organizationName: orgRecord?.name ?? organisationName,

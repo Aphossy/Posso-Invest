@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\components\motion-primitives\animated-group.tsx
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\components\motion-primitives\animated-group.tsx
 "use client"
 
 import type { JSX, ReactNode } from "react"

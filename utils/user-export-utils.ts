@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\utils\user-export-utils.ts
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\utils\user-export-utils.ts
 import { COMPANY_INFO } from "@/constants/organisation"
 import { type User } from "@/db"
 import jsPDF from "jspdf"
@@ -19,7 +19,7 @@ interface PdfSummaryItem {
 export const exportUsers = async (users: User[], options: ExportOptions) => {
   const { format, includeFields, filename } = options
   const timestamp = new Date().toISOString().split("T")[0]
-  const defaultFilename = `trustlink-group-users-export-${timestamp}`
+  const defaultFilename = `10/10 Ventures-group-users-export-${timestamp}`
 
   // Filter data based on selected fields
   const filteredData = users.map((user) => {

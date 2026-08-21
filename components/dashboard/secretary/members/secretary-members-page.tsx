@@ -398,7 +398,7 @@ export default function SecretaryMembersPage() {
         <div>
           <h1 className="text-2xl font-bold sm:text-3xl">Member Directory</h1>
           <p className="text-muted-foreground">
-            Browse and view TrustLink Group organization members
+            Browse and view 10/10 Ventures organization members
           </p>
         </div>
         <Button

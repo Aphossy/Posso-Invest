@@ -101,7 +101,7 @@ const OrbitingSpinner = () => {
             fontWeight: "500",
             letterSpacing: "0.5px",
           }}>
-          POSSO VENTURES
+          10/10 Ventures
         </div>
         <div
           style={{

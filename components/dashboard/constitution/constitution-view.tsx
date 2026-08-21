@@ -430,7 +430,7 @@ const articles = [
     summary:
       "Official account with Equity Bank Rwanda. All 8 founders as signatories. Dual authorization for any transaction.",
     content: [
-      "TrustLink Group shall maintain an official group bank account with Equity Bank Rwanda.",
+      "10/10 Ventures shall maintain an official group bank account with Equity Bank Rwanda.",
       "In compliance with Equity Bank Rwanda requirements, the account shall have a maximum of eight (8) authorized signatories, as listed in Article 7.2 of this Constitution.",
       "All Group funds shall be deposited into and disbursed from this official account.",
       "Any transaction shall require dual authorization: the signature of both the President and the Treasurer.",
@@ -471,7 +471,7 @@ const articles = [
     summary:
       "Adopted August 01, 2026 at the Inaugural Meeting. Enters into force upon all member signatures and notarization.",
     content: [
-      "This Constitution was adopted on August 01, 2026, at a duly convened Inaugural Meeting of TrustLink Group held in Nyamata Sector, Bugesera District, Republic of Rwanda.",
+      "This Constitution was adopted on August 01, 2026, at a duly convened Inaugural Meeting of 10/10 Ventures held in Nyamata Sector, Bugesera District, Republic of Rwanda.",
       "This Constitution enters into force immediately upon signing by all founding members and certification by a duly authorized Notary of the Republic of Rwanda.",
     ],
     numbered: true,
@@ -845,7 +845,7 @@ export function ConstitutionView() {
                 Founding Members
               </CardTitle>
               <p className="text-sm text-muted-foreground">
-                Eleven (11) founding members of TrustLink Group - authorized
+                Eleven (11) founding members of 10/10 Ventures - authorized
                 bank signatories (Article 7.2 & 15).
               </p>
             </CardHeader>

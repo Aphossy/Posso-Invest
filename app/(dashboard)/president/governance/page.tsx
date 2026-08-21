@@ -35,7 +35,7 @@ const resolutions = [
   {
     id: "RES-001",
     date: "January 10, 2026",
-    title: "Adopt TrustLink Group Constitution v1.0",
+    title: "Adopt 10/10 Ventures Constitution v1.0",
     outcome: "Passed",
     votes: "8–0–0",
   },
@@ -48,7 +48,7 @@ export default function PresidentGovernancePage() {
         <div>
           <h1 className="text-2xl font-semibold">Resolutions & Decisions</h1>
           <p className="text-sm text-muted-foreground">
-            All binding decisions passed at TrustLink Group meetings.
+            All binding decisions passed at 10/10 Ventures meetings.
           </p>
         </div>
         <Button variant="outline">

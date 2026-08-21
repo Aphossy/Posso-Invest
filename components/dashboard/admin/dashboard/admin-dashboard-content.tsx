@@ -227,7 +227,7 @@ export function AdminDashboardContent() {
             {greeting}, Admin
           </h2>
           <p className="text-muted-foreground">
-            Here's the Ventures pulse for POSSO Ventures.
+            Here's the Ventures pulse for 10/10 Ventures.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -424,7 +424,7 @@ export function AdminDashboardContent() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4 text-muted-foreground" />
-                Posso Ventures rules
+                10/10 Ventures rules
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">

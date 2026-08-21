@@ -291,7 +291,7 @@ export function PresidentHealthContent() {
         <div>
           <h1 className="text-2xl font-semibold">Group Health</h1>
           <p className="text-sm text-muted-foreground">
-            Real-time health and risk indicators for TrustLink Group.
+            Real-time health and risk indicators for 10/10 Ventures.
           </p>
         </div>
         <div className="flex items-center gap-3">

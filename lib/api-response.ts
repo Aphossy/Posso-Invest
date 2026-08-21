@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\lib\api-response.ts
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\lib\api-response.ts
 import { createHash } from "crypto"
 import { URL } from "url"
 import { NextResponse, type NextRequest } from "next/server"
@@ -77,8 +77,8 @@ function addCorsHeaders(headers: Headers, request: NextRequest): void {
 
   // Allow requests from the mobile app and development servers
   const allowedOrigins = [
-    "https://www.trustlink-group.rw",
-    "https://trustlink-group.rw",
+    "https://www.10/10 Ventures-group.rw",
+    "https://10/10 Ventures-group.rw",
     "http://localhost:3000",
     "http://localhost:8081",
   ]
@@ -88,7 +88,7 @@ function addCorsHeaders(headers: Headers, request: NextRequest): void {
     process.env.NODE_ENV === "development" ||
     allowedOrigins.includes(origin) ||
     origin.startsWith("exp://") || // Expo development
-    origin.includes("trustlink-group") // Mobile app scheme
+    origin.includes("10/10 Ventures-group") // Mobile app scheme
   ) {
     headers.set("Access-Control-Allow-Origin", origin === "*" ? "*" : origin)
     headers.set("Access-Control-Allow-Credentials", "true")

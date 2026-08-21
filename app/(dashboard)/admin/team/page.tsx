@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export const metadata: Metadata = {
   title: "Team",
-  description: "Team page for TrustLink Group.",
+  description: "Team page for 10/10 Ventures.",
 }
 
 export default function TeamPage() {
@@ -13,7 +13,7 @@ export default function TeamPage() {
       <div>
         <h1 className="text-2xl font-semibold">Team</h1>
         <p className="text-sm text-muted-foreground">
-          Team page for TrustLink Group.
+          Team page for 10/10 Ventures.
         </p>
       </div>
       <Card>

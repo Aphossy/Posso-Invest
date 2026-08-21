@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\components\dashboard\assets\asset-upload-dialog.tsx
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\components\dashboard\assets\asset-upload-dialog.tsx
 "use client"
 
 import { useState } from "react"
@@ -165,7 +165,7 @@ export function AssetUploadDialog({
         <DialogHeader>
           <DialogTitle>Upload File</DialogTitle>
           <DialogDescription>
-            Upload a document or file to the Posso Ventures document library
+            Upload a document or file to the 10/10 Ventures document library
           </DialogDescription>
         </DialogHeader>
 

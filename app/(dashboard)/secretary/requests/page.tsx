@@ -4,7 +4,7 @@ import SecretaryRequestsPage from "@/components/dashboard/secretary/requests/sec
 
 export const metadata: Metadata = {
   title: "Join Requests",
-  description: "Manage membership invitations for TrustLink Group.",
+  description: "Manage membership invitations for 10/10 Ventures.",
 }
 
 export default function RequestsPage() {

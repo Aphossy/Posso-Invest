@@ -4,7 +4,7 @@ import OrganizationPage from "@/components/dashboard/admin/organization/organiza
 
 export const metadata: Metadata = {
   title: "Organization",
-  description: "Manage Posso Ventures organization settings.",
+  description: "Manage 10/10 Ventures organization settings.",
 }
 
 export default function Page() {

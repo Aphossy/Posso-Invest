@@ -7,7 +7,7 @@ import { TreasurerDashboardContent } from "@/components/dashboard/treasurer/dash
 export const metadata: Metadata = {
   title: "Treasurer Dashboard",
   description:
-    "Monitor contributions, loans, penalties, and financial health for TrustLink Group.",
+    "Monitor contributions, loans, penalties, and financial health for 10/10 Ventures.",
 }
 
 export default function TreasurerDashboardPage() {

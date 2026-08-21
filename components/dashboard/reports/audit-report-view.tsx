@@ -387,8 +387,7 @@ export function AuditReportView() {
           <div>
             <h1 className="text-2xl font-semibold">Audit Report</h1>
             <p className="text-sm text-muted-foreground">
-              {auditCadenceMonths}-month periodic financial review for TrustLink
-              Group.
+              {auditCadenceMonths}-month periodic financial review for 10/10 Ventures.
             </p>
           </div>
         </div>

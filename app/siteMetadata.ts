@@ -7,22 +7,22 @@ const baseUrl =
 export const siteMetadata: Metadata = {
   metadataBase: new URL(`${baseUrl}`),
   title: {
-    default: "Posso Ventures - Save Together, Build Together",
-    template: "%s | Posso Ventures",
+    default: "10/10 Ventures - Save Together, Build Together",
+    template: "%s | 10/10 Ventures",
   },
   description:
-    "Posso Ventures is a professional group that enables members to save, invest, and build a modern infrastructure together.",
-  applicationName: "Posso Ventures",
+    "10/10 Ventures is a professional group that enables members to save, invest, and build a modern infrastructure together.",
+  applicationName: "10/10 Ventures",
   authors: [
     {
-      name: "Posso Ventures",
+      name: "10/10 Ventures",
       url: `${baseUrl}`,
     },
   ],
-  creator: "Posso Ventures",
+  creator: "10/10 Ventures",
   generator: "Next.js",
   keywords: [
-    "Posso Ventures",
+    "10/10 Ventures",
     "Investment Group",
     "Dental Clinic Investment",
     "Group Savings",
@@ -34,7 +34,7 @@ export const siteMetadata: Metadata = {
   ],
   manifest: "/manifest.ts",
   referrer: "origin-when-cross-origin",
-  publisher: "Posso Ventures",
+  publisher: "10/10 Ventures",
   robots: {
     index: true,
     follow: true,
@@ -63,25 +63,25 @@ export const siteMetadata: Metadata = {
   twitter: {
     card: "summary_large_image",
 
-    title: "Posso Ventures",
+    title: "10/10 Ventures",
     description:
-      "Posso Ventures is a professional group that enables members to save, invest, and build a modern infrastructure together.",
+      "10/10 Ventures is a professional group that enables members to save, invest, and build a modern infrastructure together.",
     images: [`${baseUrl}/og.jpg`],
   },
   openGraph: {
-    title: "Posso Ventures",
+    title: "10/10 Ventures",
     description:
-      "Posso Ventures is a professional group that enables members to save, invest, and build a modern infrastructure together.",
+      "10/10 Ventures is a professional group that enables members to save, invest, and build a modern infrastructure together.",
     type: "website",
     locale: "en_RW",
     url: `${baseUrl}`,
-    siteName: "Posso Ventures",
+    siteName: "10/10 Ventures",
     images: [
       {
         url: "/og.jpg",
         width: 1200,
         height: 630,
-        alt: "Posso Ventures",
+        alt: "10/10 Ventures",
         type: "image/jpeg",
       },
     ],
@@ -89,7 +89,7 @@ export const siteMetadata: Metadata = {
   },
   appleWebApp: {
     capable: true,
-    title: "Posso Ventures",
+    title: "10/10 Ventures",
     statusBarStyle: "black-translucent",
   },
   formatDetection: {
@@ -102,7 +102,7 @@ export const siteMetadata: Metadata = {
   category: "Organization",
   classification: "Business",
   abstract:
-    "Posso Ventures is a professional group that enables members to save, invest, and build a modern infrastructure together.",
+    "10/10 Ventures is a professional group that enables members to save, invest, and build a modern infrastructure together.",
   other: {
     "theme-color": "#004225",
     "msapplication-TileColor": "#004225",

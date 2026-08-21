@@ -44,8 +44,8 @@ export default function MeetingsMinutesPage() {
       // For the inaugural meeting, download from public/doc
       if (minute.id === "inaugural-jan-2026") {
         const link = document.createElement("a")
-        link.href = "/doc/TrustLink%20Inaugural%20Minutes.pdf"
-        link.download = `TrustLink-Minutes-${minute.meetingTitle || "Inaugural"}.pdf`
+        link.href = "/doc/10/10 Ventures%20Inaugural%20Minutes.pdf"
+        link.download = `10/10 Ventures-Minutes-${minute.meetingTitle || "Inaugural"}.pdf`
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)
@@ -55,7 +55,7 @@ export default function MeetingsMinutesPage() {
       // For other minutes, generate PDF
       await generateMinutesPDF(
         minute,
-        `TrustLink-Minutes-${minute.meetingTitle || new Date(minute.createdAt).toLocaleDateString("en-RW")}`
+        `10/10 Ventures-Minutes-${minute.meetingTitle || new Date(minute.createdAt).toLocaleDateString("en-RW")}`
       )
     } catch (err) {
       console.error("Error downloading PDF:", err)
@@ -88,7 +88,7 @@ export default function MeetingsMinutesPage() {
         <div>
           <h1 className="text-2xl font-semibold">Meeting Minutes</h1>
           <p className="text-sm text-muted-foreground">
-            Official records of TrustLink Group meetings. Download copies for
+            Official records of 10/10 Ventures meetings. Download copies for
             your records.
           </p>
         </div>
@@ -161,10 +161,10 @@ function getInitialMinutes(): EnrichedMinute[] {
       meetingId: "meeting-inaugural-jan-2026",
       status: "published" as const,
       summary:
-        "Official inaugural (constitutive) meeting of TrustLink Group - Ikimina Savings & Investment Group.",
+        "Official inaugural (constitutive) meeting of 10/10 Ventures - Ikimina Savings & Investment Group.",
       decisions: {
         items: [
-          "Group officially named TRUSTLINK GROUP",
+          "Group officially named 10/10 Ventures",
           "Vision, Mission, and Objectives adopted unanimously",
           "Membership criteria and obligations established",
           "Leadership committee elected (President, Secretary, Treasurer)",

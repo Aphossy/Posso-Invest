@@ -16,8 +16,8 @@ function isRequestFromTrustedSource(request: Request): boolean {
   // Allow requests from:
   // 1. Your production domain
   const trustedDomains = [
-    "https://www.trustlink-group.rw",
-    "https://trustlink-group.rw",
+    "https://www.10/10 Ventures-group.rw",
+    "https://10/10 Ventures-group.rw",
     "http://localhost:3000",
     "http://localhost:8081",
   ]

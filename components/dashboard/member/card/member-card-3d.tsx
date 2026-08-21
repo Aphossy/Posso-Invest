@@ -161,7 +161,7 @@ function CardTexture({ name, role, memberId, joinDate }: CardData) {
         anchorX="center"
         anchorY="middle"
         letterSpacing={0.14}>
-        POSSO VENTURES
+        10/10 Ventures
       </Text>
 
       <Text
@@ -260,7 +260,7 @@ function CardTexture({ name, role, memberId, joinDate }: CardData) {
         color="#96b8d4"
         anchorX="center"
         anchorY="middle">
-        Posso Ventures - Savings & Investment Group
+        10/10 Ventures - Savings & Investment Group
       </Text>
       <Text
         position={[0, -1.18, 0.003]}

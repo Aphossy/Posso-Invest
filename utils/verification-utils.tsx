@@ -44,9 +44,9 @@ export const generateVerificationToken = async () => {
 //     )
 
 //     const result = await resend.emails.send({
-//       from: `TrustLink Group <${process.env.SENDER_EMAIL}>`,
+//       from: `10/10 Ventures <${process.env.SENDER_EMAIL}>`,
 //       to: email,
-//       subject: "Verify Your TrustLink Group Account",
+//       subject: "Verify Your 10/10 Ventures Account",
 //       html: emailHtml,
 //     })
 
@@ -79,7 +79,7 @@ export const sendVerificationUserEmail = async (
 
     const result = await sendEmail({
       to: email,
-      subject: "Verify Your TrustLink Group Account",
+      subject: "Verify Your 10/10 Ventures Account",
       html: emailHtml,
     })
 

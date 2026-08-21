@@ -56,7 +56,7 @@ export const AccountSuspendedEmail = ({
               src={`${organisationLogo}`}
               width="60"
               height="60"
-              alt="Posso Ventures Logo"
+              alt="10/10 Ventures Logo"
               style={logo}
             />
           </Section>
@@ -68,7 +68,7 @@ export const AccountSuspendedEmail = ({
             <Text style={paragraph}>Hello {userName},</Text>
 
             <Text style={paragraph}>
-              We detected a login attempt on your Posso Ventures account, but
+              We detected a login attempt on your 10/10 Ventures account, but
               your account is currently suspended.
             </Text>
 

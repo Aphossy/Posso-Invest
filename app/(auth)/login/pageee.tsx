@@ -80,7 +80,7 @@ export default function SignInViewPage() {
 
         <div className="relative flex pt-5 flex-col items-center justify-center">
           <h2 className="mb-2 text-3xl font-bold text-white">
-            Trustlink Group - Ikimina
+            10/10 Ventures - Ikimina
           </h2>
           <p className="mb-12 max-w-md text-center text-white/80">
             Save together. Build together. Thrive together. Welcome to the
@@ -219,7 +219,7 @@ export default function SignInViewPage() {
               />
             </div>
             <div>
-              <h3 className="font-bold">Trustlink Group</h3>
+              <h3 className="font-bold">10/10 Ventures</h3>
               <p className="text-sm text-white/70">
                 Building a better future together
               </p>

@@ -10,14 +10,14 @@ export interface MemberCardPdfPayload {
 }
 
 const BRAND = {
-  orgName: process.env.NEXT_PUBLIC_ORGANISATION_NAME || "TrustLink Group",
+  orgName: process.env.NEXT_PUBLIC_ORGANISATION_NAME || "10/10 Ventures",
   groupLabel: "Group · Ikimina",
   location:
     process.env.NEXT_PUBLIC_ORGANISATION_PHYSICAL_ADDRESS ||
     "Nyamata Sector, Bugesera, Rwanda",
   phone: process.env.NEXT_PUBLIC_ORGANISATION_PHONE || "+250 785 251 067",
   email:
-    process.env.NEXT_PUBLIC_ORGANIZATION_EMAIL || "trustlinkgrouprw@gmail.com",
+    process.env.NEXT_PUBLIC_ORGANIZATION_EMAIL || "10/10 Venturesgrouprw@gmail.com",
 }
 
 function formatFileSafe(value: string) {
@@ -68,7 +68,7 @@ function drawCardFront(
   doc.setFont("times", "bold")
   doc.setFontSize(14.5)
   doc.setTextColor(255, 255, 255)
-  doc.text("TrustLink", x + 20, y + 11.9)
+  doc.text("10/10 Ventures", x + 20, y + 11.9)
 
   doc.setFont("helvetica", "bold")
   doc.setFontSize(6.9)
@@ -117,7 +117,7 @@ function drawCardBack(
   doc.setFont("times", "bold")
   doc.setFontSize(9)
   doc.setTextColor(172, 172, 172)
-  doc.text("TrustLink", x + width - 22.5, y + 12.5)
+  doc.text("10/10 Ventures", x + width - 22.5, y + 12.5)
 
   const dotX = x + 12
   const textX = dotX + 5

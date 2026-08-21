@@ -9,7 +9,7 @@ import { AttendanceTable } from "@/components/dashboard/attendance/attendance-ta
 
 export const metadata: Metadata = {
   title: "Attendance Overview",
-  description: "Monitor attendance records for TrustLink Group meetings.",
+  description: "Monitor attendance records for 10/10 Ventures meetings.",
 }
 
 type ApiListResponse<T> = { data: T[]; total?: number }

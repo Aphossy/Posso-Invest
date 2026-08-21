@@ -1,17 +1,17 @@
 // constants/site-config.ts
 
 export const siteConfig = {
-  name: "Posso Ventures",
-  title: "Posso Ventures - Professional Ventures Group for Dental Therapy Graduates",
+  name: "10/10 Ventures",
+  title: "10/10 Ventures - Professional Ventures Group for Dental Therapy Graduates",
   description:
-    "Posso Ventures is a transparent Ventures Group that empowers members to save, invest, and build a modern dental clinic together.",
+    "10/10 Ventures is a transparent Ventures Group that empowers members to save, invest, and build a modern dental clinic together.",
   url: "https://possocapital.vercel.app",
   ogImage: "https://possocapital.vercel.app/og.jpg",
   tagline: "Save together. Build together.",
   keywords: [
     "Ventures Group",
     "savings group",
-    "Posso Ventures",
+    "10/10 Ventures",
     "dental therapy graduates",
     "Rwanda savings",
     "group loans",
@@ -116,21 +116,21 @@ export const siteConfig = {
   },
 
   seo: {
-    defaultTitle: "Posso Ventures - Professional Ventures Group in Rwanda",
-    titleTemplate: "%s | Posso Ventures",
+    defaultTitle: "10/10 Ventures - Professional Ventures Group in Rwanda",
+    titleTemplate: "%s | 10/10 Ventures",
     description:
       "A transparent Ventures Group for Dental Therapy graduates focused on saving, investing, and establishing a modern dental clinic.",
     openGraph: {
       type: "website",
       locale: "en_US",
       url: "https://possocapital.vercel.app",
-      siteName: "Posso Ventures",
+      siteName: "10/10 Ventures",
       images: [
         {
           url: "https://possocapital.vercel.app/og.jpg",
           width: 1200,
           height: 630,
-          alt: "Posso Ventures",
+          alt: "10/10 Ventures",
         },
       ],
     },

@@ -58,20 +58,20 @@ const QUICK_TEMPLATES = {
   welcome: {
     label: "Welcome",
     icon: Sparkles,
-    subject: "Welcome to TrustLink Group!",
+    subject: "Welcome to 10/10 Ventures!",
     message: `Hi {{name}},
 
-Welcome to TrustLink Group. We are glad to have you with us.
+Welcome to 10/10 Ventures. We are glad to have you with us.
 
 If you need help with bookings, profile setup, or account settings, just reply to this email and our team will assist you.
 
 Warm regards,
-TrustLink Group Team`,
+10/10 Ventures Team`,
   },
   followUp: {
     label: "Follow-up",
     icon: Mail,
-    subject: "Quick follow-up from TrustLink Group",
+    subject: "Quick follow-up from 10/10 Ventures",
     message: `Hi {{name}},
 
 We wanted to follow up regarding your account and make sure everything is going smoothly.
@@ -79,7 +79,7 @@ We wanted to follow up regarding your account and make sure everything is going 
 If there is anything you need help with, please let us know and we will support you.
 
 Best,
-TrustLink Group`,
+10/10 Ventures`,
   },
   warning: {
     label: "Warning",
@@ -92,7 +92,7 @@ This is an important notice about your account activity.
 Please review your recent actions and contact support if you have any questions. Continued policy violations may result in account restrictions.
 
 Regards,
-TrustLink Group`,
+10/10 Ventures`,
   },
 } as const
 

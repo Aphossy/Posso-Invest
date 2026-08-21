@@ -157,7 +157,7 @@ export function PresidentMembersView() {
             Member Directory
           </h1>
           <p className="text-sm text-muted-foreground">
-            Roster, roles, and membership overview for TrustLink Group.
+            Roster, roles, and membership overview for 10/10 Ventures.
           </p>
         </div>
         <Button

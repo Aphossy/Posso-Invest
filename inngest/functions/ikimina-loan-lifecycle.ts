@@ -213,7 +213,7 @@ export const loanLifecycleSweep = inngest.createFunction(
                       ? new Date(l.dueDate).toISOString()
                       : undefined,
                     notes: l.notes,
-                    updatedByName: "TrustLink (automated)",
+                    updatedByName: "10/10 Ventures (automated)",
                     loanId: l.id,
                   })
                 )

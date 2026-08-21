@@ -105,7 +105,7 @@ export default function CustomerNotFound() {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-[#00A1DE]/5 via-[#FAD201]/5 to-[#20603D]/5 border border-[#00A1DE]/10">
               <Sparkles className="w-4 h-4 text-[#FAD201]" />
               <span className="text-sm font-medium bg-linear-to-r from-[#00A1DE] to-[#20603D] bg-clip-text text-transparent">
-                TrustLink Group - Building the Future
+                10/10 Ventures - Building the Future
               </span>
             </div>
           </motion.div>

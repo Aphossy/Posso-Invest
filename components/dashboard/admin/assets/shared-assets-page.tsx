@@ -258,7 +258,7 @@ export default function SharedAssetsPage() {
         <div>
           <h1 className="text-2xl font-bold sm:text-3xl">Shared Assets</h1>
           <p className="text-muted-foreground">
-            Group photos, media, and files shared with Posso Ventures members -
+            Group photos, media, and files shared with 10/10 Ventures members -
             private files and your own uploads are excluded
           </p>
         </div>
@@ -473,7 +473,7 @@ export default function SharedAssetsPage() {
             {debouncedSearch
               ? `Results for "${debouncedSearch}"`
               : visibilityTab === "all"
-                ? "All assets shared with TrustLink members"
+                ? "All assets shared with 10/10 Ventures members"
                 : `Showing ${VISIBILITY_TABS.find((t) => t.value === visibilityTab)?.label} assets`}{" "}
             · Page {currentPage} of {totalPages}
           </CardDescription>

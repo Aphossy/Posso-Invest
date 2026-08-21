@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export const metadata: Metadata = {
   title: "Banking",
-  description: "Banking page for Posso Ventures.",
+  description: "Banking page for 10/10 Ventures.",
 }
 
 export default function BankingPage() {
@@ -13,7 +13,7 @@ export default function BankingPage() {
       <div>
         <h1 className="text-2xl font-semibold">Banking</h1>
         <p className="text-sm text-muted-foreground">
-          Banking page for Posso Ventures.
+          Banking page for 10/10 Ventures.
         </p>
       </div>
       <Card>

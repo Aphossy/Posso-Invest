@@ -216,7 +216,7 @@ export default function AuthError({
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-[#00A1DE]/10 via-[#FAD201]/10 to-[#20603D]/10 border border-[#165598]/20">
             <MapPin className="w-4 h-4 text-[#165598]" />
             <span className="text-sm font-semibold bg-linear-to-r from-[#165598] to-[#28bcd6] bg-clip-text text-transparent">
-              TrustLink Group
+              10/10 Ventures
             </span>
             <Sparkles className="w-4 h-4 text-[#FAD201]" />
           </div>

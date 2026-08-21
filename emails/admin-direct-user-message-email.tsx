@@ -27,7 +27,7 @@ export default function AdminDirectUserMessageEmail({
       <Preview>{subject}</Preview>
       <Body style={main}>
         <Container style={container}>
-          <Heading style={heading}>Message from Posso Ventures Admin</Heading>
+          <Heading style={heading}>Message from 10/10 Ventures Admin</Heading>
 
           <Text style={text}>Hello {userName},</Text>
           <Text style={text}>You have received a message from our team.</Text>

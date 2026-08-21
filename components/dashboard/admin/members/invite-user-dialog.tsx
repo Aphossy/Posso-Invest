@@ -218,7 +218,7 @@ export default function InviteUserDialog({
       open={open}
       onOpenChange={onOpenChange}
       title="Invite Member"
-      description="Send a secure invitation with the right Posso Venture role."
+      description="Send a secure invitation with the right 10/10 Ventures role."
       footer={footer}>
       {formBody}
     </ResponsiveModal>

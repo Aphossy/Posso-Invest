@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\emails\welcome-email.tsx
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\emails\welcome-email.tsx
 import {
   organisationEmail,
   organisationLogo,
@@ -26,7 +26,7 @@ interface WelcomeEmailProps {
 
 export const WelcomeEmail = ({ userName }: WelcomeEmailProps) => {
   const previewText =
-    "Welcome to Posso Ventures! Your account is ready to start saving."
+    "Welcome to 10/10 Ventures! Your account is ready to start saving."
 
   return (
     <Html lang="en">
@@ -38,7 +38,7 @@ export const WelcomeEmail = ({ userName }: WelcomeEmailProps) => {
           <Section style={headerSection}>
             <Img
               src={`${organisationLogo}`}
-              alt="Posso Ventures Logo"
+              alt="10/10 Ventures Logo"
               width="60"
               height="60"
               style={logo}
@@ -47,7 +47,7 @@ export const WelcomeEmail = ({ userName }: WelcomeEmailProps) => {
 
           {/* Welcome Banner */}
           <Section style={welcomeBanner}>
-            <Heading style={bannerHeading}>Welcome to Posso Ventures!</Heading>
+            <Heading style={bannerHeading}>Welcome to 10/10 Ventures!</Heading>
             <Text style={bannerText}>
               Your account is verified and ready to participate
             </Text>
@@ -58,7 +58,7 @@ export const WelcomeEmail = ({ userName }: WelcomeEmailProps) => {
             <Text style={greeting}>Hello {userName},</Text>
 
             <Text style={text}>
-              We're thrilled to have you join the Posso Ventures family! Your
+              We're thrilled to have you join the 10/10 Ventures family! Your
               account has been successfully verified, and you now have full
               access to our Ikimina platform.
             </Text>
@@ -161,11 +161,11 @@ export const WelcomeEmail = ({ userName }: WelcomeEmailProps) => {
           <Section style={footer}>
             <Text style={footerText}>
               You're receiving this email because you created an account at
-              Posso Ventures. We're excited to have you on board!
+              10/10 Ventures. We're excited to have you on board!
             </Text>
             <Section style={copyright}>
               <Text style={copyrightText}>
-                © {new Date().getFullYear()} Posso Ventures. All rights
+                © {new Date().getFullYear()} 10/10 Ventures. All rights
                 reserved.
               </Text>
             </Section>

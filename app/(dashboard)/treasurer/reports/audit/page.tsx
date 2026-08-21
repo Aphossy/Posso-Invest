@@ -5,7 +5,7 @@ import { AuditReportView } from "@/components/dashboard/reports/audit-report-vie
 export const metadata: Metadata = {
   title: "Audit Report",
   description:
-    "Periodic 4-month financial audit covering contributions, loans, and compliance for TrustLink Group.",
+    "Periodic 4-month financial audit covering contributions, loans, and compliance for 10/10 Ventures.",
 }
 
 export default function ReportsAuditPage() {

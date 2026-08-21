@@ -264,7 +264,7 @@ export const generateMinutesPDF = async (
   filename?: string
 ): Promise<void> => {
   const timestamp = new Date().toISOString().split("T")[0]
-  const defaultFilename = `TrustLink-Minutes-${minute.meetingTitle || timestamp}`
+  const defaultFilename = `10/10 Ventures-Minutes-${minute.meetingTitle || timestamp}`
 
   try {
     const doc = new jsPDF()

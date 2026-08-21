@@ -248,7 +248,7 @@ export default function TreasurerSharedAssetsPage() {
         <div>
           <h1 className="text-2xl font-bold sm:text-3xl">Shared Assets</h1>
           <p className="text-muted-foreground">
-            Group photos, media, and files shared with TrustLink committee and
+            Group photos, media, and files shared with 10/10 Ventures committee and
             all members, excluding your own uploads
           </p>
         </div>

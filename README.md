@@ -1,6 +1,6 @@
-# POSSO Ventures
+# 10/10 Ventures
 
-POSSO Ventures is a disciplined savings, investment, and business-development proposal built around a shared vision of long-term wealth creation for 10 committed members in Kigali, Rwanda.
+10/10 Ventures is a disciplined savings, investment, and business-development proposal built around a shared vision of long-term wealth creation for 10 committed members in Kigali, Rwanda.
 
 The model combines monthly savings, strategic reinvestment, and phased business launches across bakery, avocado farming, mushroom cultivation, and a future beetroot-and-grape winery.
 
@@ -10,7 +10,7 @@ The model combines monthly savings, strategic reinvestment, and phased business 
 
 ## Overview
 
-POSSO Ventures brings together 10 members who contribute 100,000 Frw every month for 24 months, creating a total group capital of 24,000,000 Frw.
+10/10 Ventures brings together 10 members who contribute 100,000 Frw every month for 24 months, creating a total group capital of 24,000,000 Frw.
 
 After the saving phase ends, the capital is deployed into profitable ventures that generate income, build reserves, and create long-term wealth for all members.
 
@@ -119,7 +119,7 @@ These figures are based on the group’s projected business performance and rein
 
 ## Core Values
 
-POSSO Ventures is built on:
+10/10 Ventures is built on:
 
 - discipline
 - integrity
@@ -160,12 +160,12 @@ The group will operate with clear rules for:
 
 ## Conclusion
 
-POSSO Ventures is more than a savings group. It is a structured path toward shared prosperity, entrepreneurship, and long-term wealth creation.
+10/10 Ventures is more than a savings group. It is a structured path toward shared prosperity, entrepreneurship, and long-term wealth creation.
 
 With discipline, collective action, and patient reinvestment, the group aims to build ventures that generate lasting value for every member and their future generations.
 
 ---
 
-POSSO Ventures — Kigali, Rwanda
+10/10 Ventures — Kigali, Rwanda
 
 Save 2 Years. Build 3 Years. Benefit for a Lifetime.

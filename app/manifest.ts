@@ -1,7 +1,7 @@
 export default function manifest() {
   return {
-    name: "Posso Ventures",
-    short_name: "Posso Ventures",
+    name: "10/10 Ventures",
+    short_name: "10/10 Ventures",
     icons: [
       {
         src: "/web-app-manifest-192x192.png",
@@ -13,7 +13,7 @@ export default function manifest() {
         src: "/web-app-manifest-512x512.png",
         sizes: "512x512",
         type: "image/png",
-        purpose: "maskable",
+        purpose: "maskable",  
       },
     ],
     theme_color: "#004225",

@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\hooks\api\use-messages.ts
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\hooks\api\use-messages.ts
 import type { Message } from "@/db/schemas/message-schema"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 

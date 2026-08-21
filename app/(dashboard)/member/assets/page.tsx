@@ -5,7 +5,7 @@ import MemberSharedAssetsPage from "@/components/dashboard/member/assets/member-
 export const metadata: Metadata = {
   title: "Member Shared Assets",
   description:
-    "Browse Public and All Members assets shared by other TrustLink Group members",
+    "Browse Public and All Members assets shared by other 10/10 Ventures members",
 }
 
 export default function UserAssetsPage() {

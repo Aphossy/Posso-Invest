@@ -225,7 +225,7 @@ export default function VerifyAccountPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.5 }}>
                 {message ||
-                  "Congratulations! Your TrustLink Group account has been successfully verified. You can now access all features and start your auction journey."}
+                  "Congratulations! Your 10/10 Ventures account has been successfully verified. You can now access all features and start your auction journey."}
               </motion.p>
 
               <motion.div

@@ -1,7 +1,7 @@
 {
-  "name": "trustlink-group-website",
-  "description": "TrustLink Group - Connecting Opportunities, Empowering Growth in Rwanda and Beyond.",
-  "author": "TrustLink Group",
+  "name": "10/10 Ventures-group-website",
+  "description": "10/10 Ventures - Connecting Opportunities, Empowering Growth in Rwanda and Beyond.",
+  "author": "10/10 Ventures",
   "license": "MIT",
   "version": "0.1.0",
   "private": true,
@@ -11,7 +11,7 @@
     "typescript",
     "drizzle",
     "postgresql",
-    "trustlink-group"
+    "10/10 Ventures-group"
   ],
   "scripts": {
     "dev": "next dev --turbopack",

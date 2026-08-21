@@ -7,7 +7,7 @@ import { AdminDashboardContent } from "@/components/dashboard/admin/dashboard/ad
 export const metadata: Metadata = {
   title: "Admin Dashboard",
   description:
-    "Comprehensive overview of platform metrics and operations for administrators on TrustLink Group.",
+    "Comprehensive overview of platform metrics and operations for administrators on 10/10 Ventures.",
 }
 
 export default function AdminDashboardPage() {

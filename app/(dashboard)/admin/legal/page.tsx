@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export const metadata: Metadata = {
   title: "Legal",
-  description: "Legal page for TrustLink Group.",
+  description: "Legal page for 10/10 Ventures.",
 }
 
 export default function LegalPage() {
@@ -13,7 +13,7 @@ export default function LegalPage() {
       <div>
         <h1 className="text-2xl font-semibold">Legal</h1>
         <p className="text-sm text-muted-foreground">
-          Legal page for TrustLink Group.
+          Legal page for 10/10 Ventures.
         </p>
       </div>
       <Card>

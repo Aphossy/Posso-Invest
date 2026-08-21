@@ -365,7 +365,7 @@ export default function PresidentLettersPage() {
                 {debouncedSearch
                   ? `Results for "${debouncedSearch}"`
                   : typeTab === "all"
-                    ? "All TrustLink Group letters and correspondence"
+                    ? "All 10/10 Ventures letters and correspondence"
                     : LETTER_TYPE_LABELS[typeTab]}{" "}
                 · Page {page} of {totalPages}
               </CardDescription>

@@ -274,7 +274,7 @@ export function TreasurerDashboardContent() {
             {greeting}, {firstName}!
           </h2>
           <p className="text-muted-foreground">
-            Financial overview for TrustLink Group - period{" "}
+            Financial overview for 10/10 Ventures - period{" "}
             <span className="font-medium">{cw.period.replace("-", " ")}</span>.
           </p>
         </div>

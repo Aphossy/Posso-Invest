@@ -33,7 +33,7 @@ export default function PasswordResetEmail({
   return (
     <Html lang="en">
       <Head />
-      <Preview>Reset your Posso Ventures password</Preview>
+      <Preview>Reset your 10/10 Ventures password</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={logoSection}>
@@ -41,7 +41,7 @@ export default function PasswordResetEmail({
               src={`${organisationLogo}`}
               width="60"
               height="60"
-              alt="Posso Ventures"
+              alt="10/10 Ventures"
               style={logo}
             />
           </Section>
@@ -52,7 +52,7 @@ export default function PasswordResetEmail({
             <Text style={heroText}>Hi {userName},</Text>
             <Text style={text}>
               Someone recently requested a password change for your 
-              Posso Ventures account. If this was you, you can set a new password here:
+              10/10 Ventures account. If this was you, you can set a new password here:
             </Text>
             <Section style={buttonContainer}>
               <Button style={button} href={resetUrl}>

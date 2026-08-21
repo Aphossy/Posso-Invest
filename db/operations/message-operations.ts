@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\db\operations\message-operations.ts
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\db\operations\message-operations.ts
 import { db } from "@/db/connection"
 import {
   messageAttachments,

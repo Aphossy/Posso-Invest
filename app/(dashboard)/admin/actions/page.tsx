@@ -4,7 +4,7 @@ import { AdminActionsView } from "@/components/dashboard/action-items/admin-acti
 
 export const metadata: Metadata = {
   title: "Action Items",
-  description: "Track action items and accountability for Posso Ventures.",
+  description: "Track action items and accountability for 10/10 Ventures.",
 }
 
 export default function AdminActionsPage() {

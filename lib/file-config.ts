@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\lib\file-config.ts
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\lib\file-config.ts
 /**
  * File Management Configuration
  * Fully type-safe with literal unions and type guards

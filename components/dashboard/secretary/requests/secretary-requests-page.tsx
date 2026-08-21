@@ -488,7 +488,7 @@ export default function SecretaryRequestsPage() {
         <div>
           <h1 className="text-2xl font-bold sm:text-3xl">Join Requests</h1>
           <p className="text-muted-foreground">
-            Manage membership invitations for TrustLink Group
+            Manage membership invitations for 10/10 Ventures
           </p>
         </div>
         <div className="flex items-center gap-2">

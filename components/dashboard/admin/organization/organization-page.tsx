@@ -672,7 +672,7 @@ export default function OrganizationPage() {
                             name: event.target.value,
                           }))
                         }
-                        placeholder="TrustLink Group…"
+                        placeholder="10/10 Ventures…"
                         autoComplete="organization"
                       />
                       {updateErrors.name ? (
@@ -694,7 +694,7 @@ export default function OrganizationPage() {
                             slug: event.target.value,
                           }))
                         }
-                        placeholder="trustlink-group…"
+                        placeholder="10/10 Ventures-group…"
                         spellCheck={false}
                       />
                       {updateErrors.slug ? (
@@ -1106,7 +1106,7 @@ export default function OrganizationPage() {
             <CardHeader>
               <CardTitle>Invitations</CardTitle>
               <CardDescription>
-                Track pending and accepted invitations for TrustLink Group.
+                Track pending and accepted invitations for 10/10 Ventures.
               </CardDescription>
             </CardHeader>
             <CardContent>

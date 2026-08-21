@@ -76,7 +76,7 @@ export const sendLoginNotificationEmail = async (
 
     const result = await sendEmail({
       to: userDetails.email,
-      subject: `Login Alert - TrustLink Group`,
+      subject: `Login Alert - 10/10 Ventures`,
       html: emailHtml,
     })
 
@@ -259,7 +259,7 @@ export const sendWelcomeEmail = async (email: string, userName: string) => {
 
     const result = await sendEmail({
       to: email,
-      subject: "Welcome to TrustLink Group - Your Account is Ready!",
+      subject: "Welcome to 10/10 Ventures - Your Account is Ready!",
       html: emailHtml,
     })
 
@@ -324,7 +324,7 @@ export const send2FAOTPEmail = async ({
 
     const result = await sendEmail({
       to: user.email,
-      subject: `Your TrustLink Group verification code is ${otp}`,
+      subject: `Your 10/10 Ventures verification code is ${otp}`,
       html: emailHtml,
     })
 
@@ -380,7 +380,7 @@ export const sendAccountBannedEmail = async (
 ) => {
   try {
     const supportEmail =
-      process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "trustlinkgrouprw@gmail.com"
+      process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "10/10 Venturesgrouprw@gmail.com"
     const startDate = new Date()
 
     // Calculate end date if temporary ban with duration
@@ -447,7 +447,7 @@ export const sendAccountUnbannedEmail = async (
     const unbannedDate = new Date()
 
     const subject =
-      "Great News! Your TrustLink Group Account Has Been Reinstated"
+      "Great News! Your 10/10 Ventures Account Has Been Reinstated"
 
     const result = await sendEmail({
       to: userEmail,

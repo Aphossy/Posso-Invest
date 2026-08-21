@@ -36,7 +36,7 @@ export default function AdminNotFound() {
             className="max-w-xl mx-auto">
             <p className="text-muted-foreground leading-relaxed">
               We're developing advanced administrative tools to help you manage
-              the TrustLink Group platform efficiently. This feature will give
+              the 10/10 Ventures platform efficiently. This feature will give
               you powerful controls and insights.
             </p>
           </motion.div>
@@ -99,7 +99,7 @@ export default function AdminNotFound() {
                     We're building comprehensive administrative features
                     including user management, analytics dashboards, platform
                     settings. Stay tuned for powerful tools to help you manage
-                    your experience on the TrustLink Group platform.
+                    your experience on the 10/10 Ventures platform.
                   </p>
                 </div>
               </div>
@@ -115,7 +115,7 @@ export default function AdminNotFound() {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-purple-500/5 via-[#FAD201]/5 to-indigo-600/5 border border-purple-500/10">
               <Sparkles className="w-4 h-4 text-[#FAD201]" />
               <span className="text-sm font-medium bg-linear-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                TrustLink Group - Platform Excellence
+                10/10 Ventures - Platform Excellence
               </span>
             </div>
           </motion.div>

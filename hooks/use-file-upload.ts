@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\hooks\use-file-upload.ts
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\hooks\use-file-upload.ts
 "use client"
 
 import type React from "react"

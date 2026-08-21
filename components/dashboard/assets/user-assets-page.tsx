@@ -130,7 +130,7 @@ export default function UserAssetsPage() {
         <div>
           <h1 className="text-2xl font-bold">My Documents & Files</h1>
           <p className="text-muted-foreground pt-1">
-            Upload and manage your personal TrustLink Group documents and files
+            Upload and manage your personal 10/10 Ventures documents and files
           </p>
         </div>
         <div className="flex items-center gap-2">

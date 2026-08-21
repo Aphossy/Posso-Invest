@@ -115,7 +115,7 @@ export default function AcceptInvitationPage() {
       const resolvedRole =
         extractRoleValue(emitData.role ?? roleResponse) ?? "member"
 
-      toast.success("Invitation accepted. Welcome to TrustLink Group.")
+      toast.success("Invitation accepted. Welcome to 10/10 Ventures.")
       router.push(getRoleDashboard(resolvedRole) as Route)
     } catch (error) {
       console.error(error)
@@ -179,11 +179,11 @@ export default function AcceptInvitationPage() {
         <CardHeader>
           <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
             <Mail className="h-4 w-4" />
-            TrustLink Group Invitation
+            10/10 Ventures Invitation
           </div>
           <CardTitle className="text-2xl">Accept your invitation</CardTitle>
           <CardDescription>
-            Join the TrustLink Group workspace to access your Ikimina dashboard.
+            Join the 10/10 Ventures workspace to access your Ikimina dashboard.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -263,7 +263,7 @@ export default function AcceptInvitationPage() {
                   <AlertDialogDescription className="space-y-2">
                     <span className="block">
                       Rejecting this invitation removes your access to the
-                      TrustLink Group workspace.
+                      10/10 Ventures workspace.
                     </span>
                     <span className="block text-xs text-muted-foreground">
                       Note: you can only join later with a new invitation link.

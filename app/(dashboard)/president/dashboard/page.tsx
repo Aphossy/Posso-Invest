@@ -7,7 +7,7 @@ import { PresidentDashboardContent } from "@/components/dashboard/president/dash
 export const metadata: Metadata = {
   title: "President Dashboard",
   description:
-    "Governance overview and financial authorization for TrustLink Group.",
+    "Governance overview and financial authorization for 10/10 Ventures.",
 }
 
 export default function PresidentDashboardPage() {

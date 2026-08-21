@@ -7,7 +7,7 @@ import { MemberDashboardContent } from "@/components/dashboard/member/dashboard/
 export const metadata: Metadata = {
   title: "Member Dashboard",
   description:
-    "Track savings, meetings, loans, and your Contribution status in your Posso Ventures dashboard.",
+    "Track savings, meetings, loans, and your Contribution status in your 10/10 Ventures dashboard.",
 }
 
 export default function MemberDashboardPage() {

@@ -20,7 +20,7 @@ export const sendPasswordResetEmail = async (
     )
     const result = await sendEmail({
       to: email,
-      subject: "Reset Your TrustLink Group Password",
+      subject: "Reset Your 10/10 Ventures Password",
       html: emailHtml,
     })
 
@@ -45,7 +45,7 @@ export const sendPasswordChangeConfirmationEmail = async (
 
     const result = await sendEmail({
       to: email,
-      subject: "Your TrustLink Group Password Has Been Changed",
+      subject: "Your 10/10 Ventures Password Has Been Changed",
       html: emailHtml,
     })
 

@@ -1,5 +1,5 @@
 export const organisationName =
-  process.env.NEXT_PUBLIC_ORGANISATION_NAME || "Posso Ventures"
+  process.env.NEXT_PUBLIC_ORGANISATION_NAME || "10/10 Ventures"
 export const organisationSlogan =
   process.env.NEXT_PUBLIC_ORGANISATION_SLOGAN ||
   "Save together. Build together."

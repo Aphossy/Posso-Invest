@@ -2,7 +2,7 @@ import logger from "@/utils/logger"
 import { Middleware } from "inngest"
 
 export class InngestLoggingMiddleware extends Middleware.BaseMiddleware {
-  readonly id = "trustlink:logger"
+  readonly id = "10/10 Ventures:logger"
 
   onRunStart({ ctx, fn }: Middleware.OnRunStartArgs) {
     logger.info("Inngest function started", {

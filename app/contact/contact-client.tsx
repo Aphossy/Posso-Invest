@@ -95,7 +95,7 @@ export function ContactClient({
           </h1>
           <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[#F7F3EC]/72">
             Reach out to our leadership committee for any questions about
-            Posso Ventures Platform. For access requests, use the dedicated form below.
+            10/10 Ventures Platform. For access requests, use the dedicated form below.
           </p>
         </div>
 
@@ -104,10 +104,10 @@ export function ContactClient({
           <section className="space-y-3 lg:sticky lg:top-8 lg:self-start">
             <div className="relative flex flex-col items-center justify-center">
               <h2 className="mb-2 text-3xl font-bold text-white">
-                Posso Ventures Platform
+                10/10 Ventures Platform
               </h2>
               <p className="mb-12 max-w-md text-center text-white/80">
-                Our leadership committee is here to assist you with any inquiries or concerns regarding the Posso Ventures Platform. Please feel free to reach out to us for support or information.
+                Our leadership committee is here to assist you with any inquiries or concerns regarding the 10/10 Ventures Platform. Please feel free to reach out to us for support or information.
               </p>
 
               {domLoaded && (

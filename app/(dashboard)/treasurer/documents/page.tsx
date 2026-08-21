@@ -5,7 +5,7 @@ import TreasurerFinancialFilesPage from "@/components/dashboard/treasurer/financ
 export const metadata: Metadata = {
   title: "Financial Files",
   description:
-    "Manage TrustLink Group financial reports, contribution records, loan documents, and statements",
+    "Manage 10/10 Ventures financial reports, contribution records, loan documents, and statements",
 }
 
 export default function DocumentsPage() {

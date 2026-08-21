@@ -86,7 +86,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
 
           <div className="relative flex flex-col items-center justify-center pt-5">
             <h2 className="mb-2 text-3xl font-bold text-white">
-              Posso Ventures
+              10/10 Ventures
             </h2>
             <p className="mb-4 max-w-md text-center text-white/80">
               Welcome to the future of community-driven savings and growth.
@@ -226,7 +226,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
                 />
               </div>
               <div>
-                <h3 className="font-bold">Posso Ventures</h3>
+                <h3 className="font-bold">10/10 Ventures</h3>
                 <p className="text-sm text-white/70">
                   Building a better future together
                 </p>

@@ -167,7 +167,7 @@ export async function notifyUserWelcome(
   await createNotification({
     userId,
     type: "system",
-    title: "Welcome to TrustLink Group Digital Solutions!",
+    title: "Welcome to 10/10 Ventures Digital Solutions!",
     message: `Hi ${userName}! Welcome aboard. We're excited to have you here. Explore your dashboard to get started.`,
     data: {
       action: NOTIFICATION_ACTION.VIEW_DASHBOARD,

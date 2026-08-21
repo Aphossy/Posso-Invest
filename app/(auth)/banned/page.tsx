@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/card"
 
 export const metadata: Metadata = {
-  title: "Account Suspended - TrustLink Group",
+  title: "Account Suspended - 10/10 Ventures",
   description: "Your account has been suspended",
 }
 

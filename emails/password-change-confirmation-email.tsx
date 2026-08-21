@@ -33,7 +33,7 @@ export default function PasswordChangeConfirmationEmail({
   return (
     <Html lang="en">
       <Head />
-      <Preview>Your Posso Ventures password has been changed</Preview>
+      <Preview>Your 10/10 Ventures password has been changed</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={logoSection}>
@@ -41,7 +41,7 @@ export default function PasswordChangeConfirmationEmail({
               src={`${organisationLogo}`}
               width="60"
               height="60"
-              alt="Posso Ventures"
+              alt="10/10 Ventures"
               style={logo}
             />
           </Section>
@@ -51,7 +51,7 @@ export default function PasswordChangeConfirmationEmail({
           <Section style={contentWrapper}>
             <Text style={heroText}>Hi {userName},</Text>
             <Text style={text}>
-              This email confirms that your Posso Ventures account password has
+              This email confirms that your 10/10 Ventures account password has
               been successfully changed.
             </Text>
             <Text style={text}>
@@ -74,7 +74,7 @@ export default function PasswordChangeConfirmationEmail({
             <Section style={securitySection}>
               <Text style={sectionTitle}>Security Tips:</Text>
               <Text style={text}>
-                • Use a strong, unique password for your Posso Ventures account
+                • Use a strong, unique password for your 10/10 Ventures account
                 <br />• Enable two-factor authentication for added security
                 <br />• Never share your password with anyone
                 <br />• Log out of shared or public computers

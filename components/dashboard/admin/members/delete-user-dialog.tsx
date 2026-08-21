@@ -1,4 +1,4 @@
-// C:\Users\user\OneDrive\Desktop\trustlink-group\components\dashboard\admin\users\delete-user-dialog.tsx
+// C:\Users\user\OneDrive\Desktop\10/10 Ventures-group\components\dashboard\admin\users\delete-user-dialog.tsx
 "use client"
 
 import { useState } from "react"

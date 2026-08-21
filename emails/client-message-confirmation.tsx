@@ -132,7 +132,7 @@ export function ClientMessageConfirmationEmail({
                 }
                 style={button}>
                 {isAccessRequest
-                  ? "Return to TrustLink Group"
+                  ? "Return to 10/10 Ventures"
                   : "Open Support Page"}
               </Button>
             </Section>

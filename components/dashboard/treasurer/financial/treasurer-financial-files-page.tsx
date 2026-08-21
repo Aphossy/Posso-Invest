@@ -260,7 +260,7 @@ export default function TreasurerFinancialFilesPage() {
         <div>
           <h1 className="text-2xl font-bold sm:text-3xl">Financial Files</h1>
           <p className="text-muted-foreground">
-            Manage TrustLink Group financial reports, contribution records, loan
+            Manage 10/10 Ventures financial reports, contribution records, loan
             documents, and statements
           </p>
         </div>

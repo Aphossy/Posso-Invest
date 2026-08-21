@@ -4,7 +4,7 @@ import { UserSupportView } from "@/components/dashboard/support/user-support-vie
 
 export const metadata: Metadata = {
   title: "Support",
-  description: "Submit tickets and get help from the TrustLink support team",
+  description: "Submit tickets and get help from the 10/10 Ventures support team",
 }
 
 export default function UserSupportPage() {

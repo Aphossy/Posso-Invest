@@ -225,7 +225,7 @@ export default function SecretaryLettersPage() {
             Letters & Approvals
           </h1>
           <p className="text-muted-foreground">
-            Manage TrustLink Group correspondence, approval letters, legal
+            Manage 10/10 Ventures correspondence, approval letters, legal
             documents, and formal communications
           </p>
         </div>
@@ -382,7 +382,7 @@ export default function SecretaryLettersPage() {
                 {debouncedSearch
                   ? `Results for "${debouncedSearch}"`
                   : typeTab === "all"
-                    ? "All TrustLink Group letters and correspondence"
+                    ? "All 10/10 Ventures letters and correspondence"
                     : LETTER_TYPE_LABELS[typeTab]}{" "}
                 · Page {page} of {totalPages}
               </CardDescription>

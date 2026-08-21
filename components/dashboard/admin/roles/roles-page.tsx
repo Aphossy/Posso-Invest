@@ -160,7 +160,7 @@ export default function RolesPage() {
           <CardHeader>
             <CardDescription>Active organization</CardDescription>
             <CardTitle className="text-base font-semibold">
-              {activeOrganization?.name ?? "Posso Ventures"}
+              {activeOrganization?.name ?? "10/10 Ventures"}
             </CardTitle>
           </CardHeader>
           <CardContent className="text-xs text-muted-foreground">
@@ -204,7 +204,7 @@ export default function RolesPage() {
             <CardTitle className="text-base font-semibold">
               Role policy
             </CardTitle>
-            <CardDescription>Posso Ventures access rules</CardDescription>
+            <CardDescription>10/10 Ventures access rules</CardDescription>
           </CardHeader>
           <CardContent className="text-sm text-muted-foreground">
             <ul className="list-disc space-y-1 pl-5">
