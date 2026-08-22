@@ -175,7 +175,7 @@ export interface AdminDashboardResponse {
   }
 }
 
-export function useAdminDashboard() {
+export function useAdminDashboard(enabled = true) {
   return useQuery<AdminDashboardResponse, ApiErrorException>({
     queryKey: ["dashboard", "admin"],
     queryFn: async () => {
@@ -197,6 +197,7 @@ export function useAdminDashboard() {
         throw error
       }
     },
+    enabled,
     staleTime: 60 * 1000, // 1 minute
     refetchInterval: 5 * 60 * 1000, // 5 minutes
     retry: (failureCount, error) => {

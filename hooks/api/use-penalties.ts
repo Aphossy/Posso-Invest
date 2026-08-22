@@ -27,6 +27,7 @@ export interface UsePenaltiesParams {
   contributionId?: string
   limit?: number
   offset?: number
+  enabled?: boolean
 }
 
 export interface CreatePenaltyInput {
@@ -51,6 +52,7 @@ export interface UpdatePenaltyInput {
 function buildQueryString(params: UsePenaltiesParams = {}) {
   const sp = new URLSearchParams()
   Object.entries(params).forEach(([k, v]) => {
+    if (k === "enabled") return
     if (v !== undefined && v !== null && v !== "") sp.set(k, String(v))
   })
   const q = sp.toString()
@@ -79,6 +81,7 @@ export function usePenalties(params: UsePenaltiesParams = {}) {
       }
       return payload as PenaltiesListResponse
     },
+    enabled: params.enabled,
     staleTime: 2 * 60 * 1000,
     retry: (failureCount, error) => {
       if (

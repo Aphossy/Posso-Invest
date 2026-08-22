@@ -42,6 +42,7 @@ export interface UseLoansParams {
   status?: string
   limit?: number
   offset?: number
+  enabled?: boolean
 }
 
 export interface CreateLoanInput {
@@ -124,7 +125,11 @@ export function useLoans<T = Loan>(params: UseLoansParams = {}) {
     queryKey: ["loans", params],
     queryFn: async () => {
       try {
-        return await apiClient.get<LoansListResponse<T>>("/api/loans", params)
+        const { enabled: _enabled, ...requestParams } = params
+        return await apiClient.get<LoansListResponse<T>>(
+          "/api/loans",
+          requestParams
+        )
       } catch (error) {
         if (error instanceof ApiErrorException) {
           throw error
@@ -140,6 +145,7 @@ export function useLoans<T = Loan>(params: UseLoansParams = {}) {
         throw error
       }
     },
+    enabled: params.enabled,
     staleTime: 2 * 60 * 1000,
     retry: (failureCount, error) => {
       if (
@@ -196,13 +202,14 @@ export function useAdminLoans() {
   }
 }
 
-export function useTreasurerLoanRequests() {
+export function useTreasurerLoanRequests(enabled = true) {
   const requestedLoansQuery = useQuery<
     LoansListResponse<LoanExportable>,
     ApiErrorException
   >({
     queryKey: ["loans", "treasurer", "requested"],
     queryFn: async () => fetchAllLoans<LoanExportable>({ status: "requested" }),
+    enabled,
     staleTime: 2 * 60 * 1000,
     retry: (failureCount, error) => {
       if (
@@ -220,6 +227,7 @@ export function useTreasurerLoanRequests() {
   >({
     queryKey: ["loans", "treasurer", "approved"],
     queryFn: async () => fetchAllLoans<LoanExportable>({ status: "approved" }),
+    enabled,
     staleTime: 2 * 60 * 1000,
     retry: (failureCount, error) => {
       if (

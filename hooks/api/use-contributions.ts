@@ -60,12 +60,14 @@ export interface UseContributionsParams {
   period?: string
   limit?: number
   offset?: number
+  enabled?: boolean
 }
 
 const buildQueryString = (params: UseContributionsParams = {}) => {
   const searchParams = new URLSearchParams()
 
   Object.entries(params).forEach(([key, value]) => {
+    if (key === "enabled") return
     if (value !== undefined && value !== null && value !== "") {
       searchParams.set(key, String(value))
     }
@@ -80,7 +82,8 @@ export function useContributions(params: UseContributionsParams = {}) {
     queryKey: ["contributions", params],
     queryFn: async () => {
       try {
-        const query = buildQueryString(params)
+        const { enabled: _enabled, ...requestParams } = params
+        const query = buildQueryString(requestParams)
         const response = await fetch(`/api/contributions${query}`, {
           cache: "no-store",
         })
@@ -113,6 +116,7 @@ export function useContributions(params: UseContributionsParams = {}) {
         throw error
       }
     },
+    enabled: params.enabled,
     staleTime: 2 * 60 * 1000,
     retry: (failureCount, error) => {
       if (

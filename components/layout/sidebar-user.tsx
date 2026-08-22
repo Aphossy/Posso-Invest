@@ -1,7 +1,6 @@
 // components\layout\sidebar-user.tsx
 "use client"
 
-import { useEffect, useState } from "react"
 import type { Route } from "next"
 import Link from "next/link"
 import {
@@ -68,16 +67,9 @@ const SidebarUser = () => {
     window.location.assign("/admin/dashboard")
   }
 
-  const [isLoading, setIsLoading] = useState(true)
   const isConnected = useOnlineStatus()
 
-  useEffect(() => {
-    // Simulate loading
-    const timer = setTimeout(() => setIsLoading(false), 1000)
-    return () => clearTimeout(timer)
-  }, [])
-
-  if (isLoading || !user) {
+  if (!user) {
     return (
       <div className="flex items-center gap-2 px-2 py-1.5">
         <div className="bg-muted h-8 w-8 animate-pulse rounded-lg" />
@@ -201,9 +193,9 @@ const SidebarUser = () => {
             <div className="mt-2 flex w-fit items-center justify-between rounded-md border border-border/60 bg-background/70 px-2 py-1.5 text-xs">
               <span className="tabular-nums font-medium">
                 <Clock
-                  format={"hh:mm A - ddd, MMM DD"}
-                  ticking={true}
-                  timezone={"Africa/Kigali"}
+                  format="hh:mm A - ddd, MMM DD"
+                  ticking
+                  timezone="Africa/Kigali"
                 />
               </span>
             </div>

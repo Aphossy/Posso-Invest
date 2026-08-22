@@ -38,6 +38,7 @@ export interface UseActionItemsParams {
   createdBy?: string
   limit?: number
   offset?: number
+  enabled?: boolean
 }
 
 export interface CreateActionItemInput {
@@ -70,6 +71,7 @@ const buildQueryString = (params: UseActionItemsParams = {}) => {
   const searchParams = new URLSearchParams()
 
   Object.entries(params).forEach(([key, value]) => {
+    if (key === "enabled") return
     if (value !== undefined && value !== null && value !== "") {
       searchParams.set(key, String(value))
     }
@@ -84,7 +86,8 @@ export function useActionItems(params: UseActionItemsParams = {}) {
     queryKey: ["action-items", params],
     queryFn: async () => {
       try {
-        const query = buildQueryString(params)
+        const { enabled: _enabled, ...requestParams } = params
+        const query = buildQueryString(requestParams)
         const response = await fetch(`/api/action-items${query}`, {
           cache: "no-store",
         })
@@ -117,6 +120,7 @@ export function useActionItems(params: UseActionItemsParams = {}) {
         throw error
       }
     },
+    enabled: params.enabled,
     staleTime: 2 * 60 * 1000,
     retry: (failureCount, error) => {
       if (

@@ -60,6 +60,7 @@ export interface UseMessagesParams {
   assignedTo?: string
   sortBy?: "createdAt" | "name" | "subject" | "status" | "priority"
   sortOrder?: "asc" | "desc"
+  enabled?: boolean
 }
 
 export function useMessages(params: UseMessagesParams = {}) {
@@ -89,6 +90,7 @@ export function useMessages(params: UseMessagesParams = {}) {
       )
       return response
     },
+    enabled: params.enabled,
     staleTime: 1 * 60 * 1000,
   })
 }

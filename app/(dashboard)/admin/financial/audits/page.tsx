@@ -192,8 +192,8 @@ export default async function FinancialAuditsPage({
           <CardTitle className="text-base font-semibold">Audit Trail</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <form className="grid gap-3 rounded-lg border p-3 md:grid-cols-2 lg:grid-cols-5">
-            <div className="space-y-1">
+          <form className="grid min-w-0 gap-3 rounded-lg border p-3 md:grid-cols-2 lg:grid-cols-5">
+            <div className="min-w-0 space-y-1">
               <label
                 htmlFor="severity"
                 className="text-xs font-medium text-muted-foreground">
@@ -214,7 +214,7 @@ export default async function FinancialAuditsPage({
               </select>
             </div>
 
-            <div className="space-y-1">
+            <div className="min-w-0 space-y-1">
               <label
                 htmlFor="action"
                 className="text-xs font-medium text-muted-foreground">
@@ -234,7 +234,7 @@ export default async function FinancialAuditsPage({
               </select>
             </div>
 
-            <div className="space-y-1">
+            <div className="min-w-0 space-y-1">
               <label
                 htmlFor="from"
                 className="text-xs font-medium text-muted-foreground">
@@ -248,7 +248,7 @@ export default async function FinancialAuditsPage({
               />
             </div>
 
-            <div className="space-y-1">
+            <div className="min-w-0 space-y-1">
               <label
                 htmlFor="to"
                 className="text-xs font-medium text-muted-foreground">
@@ -257,8 +257,8 @@ export default async function FinancialAuditsPage({
               <Input id="to" name="to" type="date" defaultValue={toDateInput} />
             </div>
 
-            <div className="flex items-end gap-2">
-              <Button type="submit" size="sm" className="w-full">
+            <div className="flex min-w-0 items-end gap-2">
+              <Button type="submit" size="sm" className="min-w-0 w-full">
                 Apply
               </Button>
               <Button
@@ -266,7 +266,7 @@ export default async function FinancialAuditsPage({
                 type="button"
                 variant="outline"
                 size="sm"
-                className="w-full">
+                className="min-w-0 w-full">
                 <Link href="/admin/financial/audits">Reset</Link>
               </Button>
             </div>

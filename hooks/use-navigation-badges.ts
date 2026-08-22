@@ -22,8 +22,8 @@ export interface NavigationBadges {
 /**
  * Hook to get admin navigation badges (uses aggregated dashboard data)
  */
-function useAdminBadges(): NavigationBadges {
-  const { data: adminData } = useAdminDashboard()
+function useAdminBadges(enabled: boolean): NavigationBadges {
+  const { data: adminData } = useAdminDashboard(enabled)
 
   return useMemo(() => {
     const badges: NavigationBadges = {}
@@ -64,12 +64,21 @@ function useAdminBadges(): NavigationBadges {
  * Hook to get member navigation badges
  * Shows: pending loan requests, active penalties, open action items
  */
-function useMemberBadges(): NavigationBadges {
-  const { data: loansData } = useLoans({ status: "requested", limit: 100 })
-  const { data: penaltiesData } = usePenalties({ status: "active", limit: 100 })
+function useMemberBadges(enabled: boolean): NavigationBadges {
+  const { data: loansData } = useLoans({
+    status: "requested",
+    limit: 100,
+    enabled,
+  })
+  const { data: penaltiesData } = usePenalties({
+    status: "active",
+    limit: 100,
+    enabled,
+  })
   const { data: actionItemsData } = useActionItems({
     status: "open",
     limit: 100,
+    enabled,
   })
 
   return useMemo(() => {
@@ -100,13 +109,18 @@ function useMemberBadges(): NavigationBadges {
  * Hook to get treasurer navigation badges
  * Shows: pending loan requests, pending disbursements, unverified contributions, active penalties
  */
-function useTreasurerBadges(): NavigationBadges {
-  const { requestedCount, approvedCount } = useTreasurerLoanRequests()
+function useTreasurerBadges(enabled: boolean): NavigationBadges {
+  const { requestedCount, approvedCount } = useTreasurerLoanRequests(enabled)
   const { data: contributionsData } = useContributions({
     status: "pending",
     limit: 200,
+    enabled,
   })
-  const { data: penaltiesData } = usePenalties({ status: "active", limit: 200 })
+  const { data: penaltiesData } = usePenalties({
+    status: "active",
+    limit: 200,
+    enabled,
+  })
 
   return useMemo(() => {
     const badges: NavigationBadges = {}
@@ -139,10 +153,11 @@ function useTreasurerBadges(): NavigationBadges {
  * Hook to get secretary navigation badges
  * Shows: open action items
  */
-function useSecretaryBadges(): NavigationBadges {
+function useSecretaryBadges(enabled: boolean): NavigationBadges {
   const { data: actionItemsData } = useActionItems({
     status: "open",
     limit: 100,
+    enabled,
   })
 
   return useMemo(() => {
@@ -162,13 +177,22 @@ function useSecretaryBadges(): NavigationBadges {
  * Hook to get president navigation badges
  * Shows: pending loan approvals, open action items, unread messages
  */
-function usePresidentBadges(): NavigationBadges {
-  const { data: loansData } = useLoans({ status: "requested", limit: 100 })
+function usePresidentBadges(enabled: boolean): NavigationBadges {
+  const { data: loansData } = useLoans({
+    status: "requested",
+    limit: 100,
+    enabled,
+  })
   const { data: actionItemsData } = useActionItems({
     status: "open",
     limit: 100,
+    enabled,
   })
-  const { data: messagesData } = useMessages({ status: "new", limit: 100 })
+  const { data: messagesData } = useMessages({
+    status: "new",
+    limit: 100,
+    enabled,
+  })
 
   return useMemo(() => {
     const badges: NavigationBadges = {}
@@ -202,11 +226,11 @@ function usePresidentBadges(): NavigationBadges {
  * @returns An object mapping navigation URLs to badge counts
  */
 export function useNavigationBadges(role: UserRole): NavigationBadges {
-  const adminBadges = useAdminBadges()
-  const memberBadges = useMemberBadges()
-  const treasurerBadges = useTreasurerBadges()
-  const secretaryBadges = useSecretaryBadges()
-  const presidentBadges = usePresidentBadges()
+  const adminBadges = useAdminBadges(role === "admin")
+  const memberBadges = useMemberBadges(role === "member")
+  const treasurerBadges = useTreasurerBadges(role === "treasurer")
+  const secretaryBadges = useSecretaryBadges(role === "secretary")
+  const presidentBadges = usePresidentBadges(role === "president")
 
   return useMemo(() => {
     switch (role) {
