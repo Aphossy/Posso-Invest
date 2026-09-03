@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { POSSO_MESSAGE_SERVICE_OPTIONS } from "@/constants/message-services"
+import { ORGANIZATION_MESSAGE_SERVICE_OPTIONS } from "@/constants/message-services"
 import { motion } from "framer-motion"
 import { AlertCircle, CheckCircle, Send } from "lucide-react"
 
@@ -409,7 +409,7 @@ export function ContactFormSection({
                           ? "border-[#FFFFFF]/20 bg-[#132949] text-[#F7F3EC]"
                           : ""
                       }>
-                      {POSSO_MESSAGE_SERVICE_OPTIONS.map((service) => (
+                      {ORGANIZATION_MESSAGE_SERVICE_OPTIONS.map((service) => (
                         <SelectItem key={service.value} value={service.value}>
                           {service.label}
                         </SelectItem>

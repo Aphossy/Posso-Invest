@@ -56,7 +56,7 @@ export const AccountVerificationEmail = ({
             <Text style={paragraph}>
               Thank you for creating your {organisationName}  account! We're excited
               to have you join 10/10 Ventures focused on transparent
-              saving, responsible lending, and building a modern dental clinic.
+              saving, responsible lending, and collective growth.
             </Text>
 
             <Text style={paragraph}>

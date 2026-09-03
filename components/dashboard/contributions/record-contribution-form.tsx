@@ -1,9 +1,10 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { siteConfig } from "@/constants/site-config"
 import { isMemberOrLeadershipRole } from "@/utils/role-utils"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { format } from "date-fns"
+import { addMonths, format, subMonths } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -12,12 +13,16 @@ import { z } from "zod"
 import { ApiErrorException } from "@/types/api"
 import { organizationClient } from "@/lib/organization-client"
 import { cn } from "@/lib/utils"
-import { useCreateContributionMutation } from "@/hooks/api/use-contributions"
+import {
+  useContributions,
+  useCreateContributionMutation,
+} from "@/hooks/api/use-contributions"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import MultipleSelector, { type Option } from "@/components/ui/multiselect"
 import {
   Popover,
   PopoverContent,
@@ -42,20 +47,14 @@ interface RecordContributionFormProps {
   onSubmittingChange?: (isSubmitting: boolean) => void
 }
 
-const contributionPeriodOptions = [
-  { value: "2026-01", label: "January 2026" },
-  { value: "2026-02", label: "February 2026" },
-  { value: "2026-03", label: "March 2026" },
-  { value: "2026-04", label: "April 2026" },
-  { value: "2026-05", label: "May 2026" },
-  { value: "2026-06", label: "June 2026" },
-  { value: "2026-07", label: "July 2026" },
-  { value: "2026-08", label: "August 2026" },
-  { value: "2026-09", label: "September 2026" },
-  { value: "2026-10", label: "October 2026" },
-  { value: "2026-11", label: "November 2026" },
-  { value: "2026-12", label: "December 2026" },
-] as const
+const currentPeriod = format(new Date(), "yyyy-MM")
+const contributionPeriodOptions: Option[] = Array.from(
+  { length: 25 },
+  (_, index) => {
+    const date = subMonths(addMonths(new Date(), index - 12), 0)
+    return { value: format(date, "yyyy-MM"), label: format(date, "MMMM yyyy") }
+  }
+)
 
 const moneyPattern = /^\d+$/
 const normalizeMoneyInput = (value: string) => value.trim().replace(/,/g, "")
@@ -73,12 +72,7 @@ const recordContributionSchema = z
       .refine((value) => Number(normalizeMoneyInput(value)) > 0, {
         message: "Amount must be greater than zero.",
       }),
-    period: z.enum(
-      contributionPeriodOptions.map((item) => item.value) as [
-        (typeof contributionPeriodOptions)[number]["value"],
-        ...(typeof contributionPeriodOptions)[number]["value"][],
-      ]
-    ),
+    periods: z.array(z.string()).min(1, "Select at least one unpaid period."),
     receiptNumber: z.string().optional(),
     penaltyAmount: z
       .string()
@@ -206,13 +200,14 @@ export function RecordContributionForm({
     control,
     reset,
     setError,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<RecordContributionFormValues>({
     resolver: zodResolver(recordContributionSchema),
     defaultValues: {
       memberId: "",
-      amount: "",
-      period: "2026-01",
+      amount: String(siteConfig.platform.savings.monthlyContributionRwf),
+      periods: [currentPeriod],
       receiptNumber: "",
       penaltyAmount: "",
       paidAt: "",
@@ -221,6 +216,32 @@ export function RecordContributionForm({
       status: "pending",
     },
   })
+
+  const selectedMemberId = watch("memberId")
+  const selectedPeriods = watch("periods") ?? []
+  const {
+    data: memberContributionData,
+    isPending: isLoadingMemberContributions,
+  } = useContributions({
+    memberId: selectedMemberId,
+    limit: 1000,
+    enabled: Boolean(selectedMemberId),
+  })
+  const existingPeriods = useMemo(
+    () =>
+      new Set((memberContributionData?.data ?? []).map((item) => item.period)),
+    [memberContributionData?.data]
+  )
+  const periodOptions = useMemo(
+    () =>
+      contributionPeriodOptions.map((option) => ({
+        ...option,
+        disable: existingPeriods.has(option.value),
+      })),
+    [existingPeriods]
+  )
+  const monthlyAmount = Number(normalizeMoneyInput(watch("amount") || "0")) || 0
+  const totalAmount = monthlyAmount * selectedPeriods.length
 
   useEffect(() => {
     onSubmittingChange?.(
@@ -309,7 +330,7 @@ export function RecordContributionForm({
       await createContribution.mutateAsync({
         memberId: values.memberId.trim(),
         amount: normalizeMoneyInput(values.amount),
-        period: values.period,
+        periods: values.periods,
         status: values.status,
         receiptNumber: values.receiptNumber?.trim() || undefined,
         penaltyAmount: values.penaltyAmount?.trim()
@@ -327,8 +348,8 @@ export function RecordContributionForm({
 
       reset({
         memberId: "",
-        amount: "",
-        period: "2026-01",
+        amount: String(siteConfig.platform.savings.monthlyContributionRwf),
+        periods: [currentPeriod],
         receiptNumber: "",
         penaltyAmount: "",
         paidAt: "",
@@ -446,7 +467,7 @@ export function RecordContributionForm({
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="amount">Amount (RWF)</Label>
+          <Label htmlFor="amount">Monthly Amount (RWF)</Label>
           <Input
             id="amount"
             inputMode="numeric"
@@ -465,32 +486,61 @@ export function RecordContributionForm({
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="period">Contribution Period</Label>
+          <Label htmlFor="periods">Contribution Periods</Label>
           <Controller
             control={control}
-            name="period"
+            name="periods"
             render={({ field }) => (
-              <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger
-                  id="period"
-                  aria-invalid={Boolean(errors.period)}>
-                  <SelectValue placeholder="Select month" />
-                </SelectTrigger>
-                <SelectContent>
-                  {contributionPeriodOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <MultipleSelector
+                value={periodOptions.filter((option) =>
+                  field.value.includes(option.value)
+                )}
+                options={periodOptions}
+                onChange={(options: Option[]) =>
+                  field.onChange(options.map((option) => option.value))
+                }
+                disabled={!selectedMemberId || isLoadingMemberContributions}
+                placeholder={
+                  !selectedMemberId
+                    ? "Select a member first"
+                    : isLoadingMemberContributions
+                      ? "Loading unpaid periods..."
+                      : "Select unpaid periods"
+                }
+                hidePlaceholderWhenSelected
+                emptyIndicator="No unpaid periods available"
+              />
             )}
           />
-          {errors.period?.message && (
+          <p className="text-xs text-muted-foreground">
+            Already recorded periods are unavailable.
+          </p>
+          {errors.periods?.message && (
             <p className="text-xs text-destructive" aria-live="polite">
-              {errors.period.message}
+              {errors.periods.message}
             </p>
           )}
+        </div>
+
+        <div className="rounded-md border bg-muted/30 p-3 md:col-span-2">
+          <div className="grid gap-3 text-sm sm:grid-cols-3">
+            <div>
+              <p className="text-muted-foreground">Monthly contribution</p>
+              <p className="font-semibold tabular-nums">
+                {new Intl.NumberFormat("en-RW").format(monthlyAmount)} RWF
+              </p>
+            </div>
+            <div>
+              <p className="text-muted-foreground">Selected periods</p>
+              <p className="font-semibold">{selectedPeriods.length}</p>
+            </div>
+            <div>
+              <p className="text-muted-foreground">Total amount</p>
+              <p className="font-semibold tabular-nums">
+                {new Intl.NumberFormat("en-RW").format(totalAmount)} RWF
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="space-y-2">

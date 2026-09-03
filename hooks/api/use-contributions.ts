@@ -27,7 +27,8 @@ export interface ContributionAttachment {
 export interface CreateContributionInput {
   memberId: string
   amount: string
-  period: string
+  period?: string
+  periods?: string[]
   status: "pending" | "confirmed" | "late" | "waived"
   receiptNumber?: string
   penaltyAmount?: string

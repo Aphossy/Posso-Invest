@@ -8,13 +8,13 @@ import {
   pgTable,
   text,
   timestamp,
+  uniqueIndex,
   varchar,
 } from "drizzle-orm/pg-core"
 import { createInsertSchema, createSelectSchema } from "drizzle-zod"
 import type { z } from "zod"
 
-import { organization } from "./auth-schema"
-import { user } from "./auth-schema"
+import { organization, user } from "./auth-schema"
 
 type ContributionAttachment = {
   id: string
@@ -85,10 +85,17 @@ export const contribution = pgTable(
       .notNull(),
   },
   (table) => ({
-    organizationIdIdx: index("contribution_organization_id_idx").on(table.organizationId),
+    organizationIdIdx: index("contribution_organization_id_idx").on(
+      table.organizationId
+    ),
     memberIdIdx: index("contribution_member_id_idx").on(table.memberId),
     statusIdx: index("contribution_status_idx").on(table.status),
     periodIdx: index("contribution_period_idx").on(table.period),
+    memberPeriodUnique: uniqueIndex("contribution_member_period_unique").on(
+      table.organizationId,
+      table.memberId,
+      table.period
+    ),
     createdAtIdx: index("contribution_created_at_idx").on(table.createdAt),
   })
 )

@@ -94,10 +94,10 @@ const articles = [
     title: "Name of the Group",
     icon: BookOpen,
     summary:
-      "The official name is 10/10 VENTURES - also the future joint dental clinic name.",
+      "The official name is 10/10 VENTURES.",
     content: [
       'The official name of the group is 10/10 VENTURES, hereinafter referred to as "the Group" or "the Ventures."',
-      "The 10/10 Ventures name shall also serve as the name of the joint dental clinic that members intend to establish collectively in the future.",
+      "The name 10/10 Ventures shall be used consistently in all group records, communications, and activities.",
     ],
   },
  {
@@ -131,9 +131,9 @@ const articles = [
     title: "Vision",
     icon: Award,
     summary:
-      "A strong, transparent Ventures enabling members to save, invest, and build a modern dental clinic.",
+      "A strong, transparent Ventures enabling members to save, invest, and build sustainable opportunities.",
     content: [
-      "To become a strong, transparent, and legally recognized professional Ventures that enables members to save, invest, and jointly establish a modern, state-of-the-art dental clinic serving the Rwandan community.",
+      "To become a strong, transparent, and legally recognized professional Ventures that enables members to save, invest, and build sustainable opportunities serving the Rwandan community.",
     ],
   },
   {
@@ -154,7 +154,7 @@ const articles = [
       "Six key objectives covering saving, investment, member support, unity, transparency, and legal compliance.",
     content: [
       "Encourage consistent and disciplined saving habits among all members.",
-      "Build a collective fund sufficient for long-term investment, specifically the establishment and operation of a joint dental clinic.",
+      "Build a collective fund sufficient for long-term investment and sustainable growth.",
       "Provide financial and moral support to members experiencing genuine hardship.",
       "Strengthen professional unity, networking, and collaboration among Dental Therapy graduates.",
       "Ensure transparency, accountability, and trust in all financial and governance matters.",
@@ -471,7 +471,7 @@ const articles = [
     summary:
       "Adopted August 01, 2026 at the Inaugural Meeting. Enters into force upon all member signatures and notarization.",
     content: [
-      "This Constitution was adopted on August 01, 2026, at a duly convened Inaugural Meeting of 10/10 Ventures held in Nyamata Sector, Bugesera District, Republic of Rwanda.",
+      "This Constitution was adopted on August 01, 2026, at a duly convened Inaugural Meeting of 10/10 Ventures, Republic of Rwanda.",
       "This Constitution enters into force immediately upon signing by all founding members and certification by a duly authorized Notary of the Republic of Rwanda.",
     ],
     numbered: true,
@@ -599,8 +599,8 @@ export function ConstitutionView() {
           </Button>
           <Button size="sm" asChild>
             <a
-              href="/doc/Possoventures-Constitution.pdf"
-              download="Possoventures-Constitution.pdf">
+              href="/doc/10-10-Ventures-Constitution.pdf"
+              download="10-10-Ventures-Constitution.pdf">
               <Download className="h-4 w-4" />
               Download PDF
             </a>
@@ -744,7 +744,7 @@ export function ConstitutionView() {
               <ol className="space-y-2">
                 {[
                   "Encourage consistent and disciplined saving habits among all members.",
-                  "Build a collective fund sufficient for the establishment and operation of a joint dental clinic.",
+                  "Build a collective fund sufficient for long-term investment and sustainable growth.",
                   "Provide financial and moral support to members experiencing genuine hardship.",
                   "Strengthen professional unity, networking, and collaboration among Dental Therapy graduates.",
                   "Ensure transparency, accountability, and trust in all financial and governance matters.",
@@ -781,8 +781,8 @@ export function ConstitutionView() {
               </div>
               <Button variant="outline" size="sm" asChild>
                 <a
-                  href="/doc/Possoventures-Constitution.pdf"
-                  download="Possoventures-Constitution.pdf">
+                  href="/doc/10-10-Ventures-Constitution.pdf"
+                  download="10-10-Ventures-Constitution.pdf">
                   <Download className="h-4 w-4" />
                   Download Full PDF
                 </a>

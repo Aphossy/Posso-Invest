@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "contribution_member_period_unique" ON "contribution" USING btree ("organization_id","member_id","period");--> statement-breakpoint

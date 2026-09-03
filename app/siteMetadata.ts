@@ -24,12 +24,10 @@ export const siteMetadata: Metadata = {
   keywords: [
     "10/10 Ventures",
     "Investment Group",
-    "Dental Clinic Investment",
     "Group Savings",
     "Investment Opportunities",
     "Financial Growth",
     "Community Building",
-    "Modern Dental Clinic",
     "Rwanda Investment Group",
   ],
   manifest: "/manifest.ts",

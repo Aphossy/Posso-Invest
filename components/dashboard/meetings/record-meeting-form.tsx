@@ -226,7 +226,7 @@ export function RecordMeetingForm({
           <Input
             id="location"
             {...register("location")}
-            placeholder="Nyamata Sector"
+            placeholder="Meeting location"
             autoComplete="off"
           />
         </div>

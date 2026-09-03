@@ -1,4 +1,4 @@
-export const POSSO_MESSAGE_SERVICE_VALUES = [
+export const ORGANIZATION_MESSAGE_SERVICE_VALUES = [
   "contributions-savings",
   "loans-repayments",
   "meetings-minutes",
@@ -9,11 +9,11 @@ export const POSSO_MESSAGE_SERVICE_VALUES = [
   "other",
 ] as const
 
-export type PossoMessageService =
-  (typeof POSSO_MESSAGE_SERVICE_VALUES)[number]
+export type OrganizationMessageService =
+  (typeof ORGANIZATION_MESSAGE_SERVICE_VALUES)[number]
 
-export const POSSO_MESSAGE_SERVICE_LABELS: Record<
-  PossoMessageService,
+export const ORGANIZATION_MESSAGE_SERVICE_LABELS: Record<
+  OrganizationMessageService,
   string
 > = {
   "contributions-savings": "Contributions & Savings",
@@ -26,8 +26,8 @@ export const POSSO_MESSAGE_SERVICE_LABELS: Record<
   other: "General Inquiry",
 }
 
-export const POSSO_MESSAGE_SERVICE_OPTIONS =
-  POSSO_MESSAGE_SERVICE_VALUES.map((value) => ({
+export const ORGANIZATION_MESSAGE_SERVICE_OPTIONS =
+  ORGANIZATION_MESSAGE_SERVICE_VALUES.map((value) => ({
     value,
-    label: POSSO_MESSAGE_SERVICE_LABELS[value],
+    label: ORGANIZATION_MESSAGE_SERVICE_LABELS[value],
   }))

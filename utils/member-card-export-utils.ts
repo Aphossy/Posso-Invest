@@ -14,7 +14,7 @@ const BRAND = {
   groupLabel: "Group · Ventures",
   location:
     process.env.NEXT_PUBLIC_ORGANISATION_PHYSICAL_ADDRESS ||
-    "Nyamata Sector, Bugesera, Rwanda",
+    "Kigali, Rwanda",
   phone: process.env.NEXT_PUBLIC_ORGANISATION_PHONE || "+250 785 251 067",
   email:
     process.env.NEXT_PUBLIC_ORGANIZATION_EMAIL || "10/10 Venturesgrouprw@gmail.com",

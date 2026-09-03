@@ -235,14 +235,14 @@ export function ContactClient({
             {/* Ventures Platform email */}
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
               <a
-                href="mailto:possoventures@gmail.com"
+                href="mailto:possowiba01@gmail.com"
                 className="flex items-center gap-3 rounded-2xl border border-[#FFFFFF]/12 bg-[#FFFFFF]/6 px-5 py-4 backdrop-blur-sm transition hover:border-[#E8B84B]/40 hover:bg-[#FFFFFF]/10"
               >
                 <Mail className="h-4 w-4 shrink-0 text-[#C9992A]" />
                 <div>
                   <p className="text-xs text-[#F7F3EC]/62">Ventures Platform Email</p>
                   <p className="mt-0.5 text-sm font-medium text-[#FFFFFF]/92">
-                    possoventures@gmail.com
+                    possowiba01@gmail.com
                   </p>
                 </div>
               </a>

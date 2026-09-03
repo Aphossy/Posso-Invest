@@ -1,5 +1,5 @@
 // db\schemas\message-schema.ts
-import { POSSO_MESSAGE_SERVICE_VALUES } from "@/constants/message-services"
+import { ORGANIZATION_MESSAGE_SERVICE_VALUES } from "@/constants/message-services"
 import { relations } from "drizzle-orm"
 import {
   boolean,
@@ -19,7 +19,7 @@ import { z } from "zod"
 
 export const messageServiceEnum = pgEnum(
   "message_service",
-  POSSO_MESSAGE_SERVICE_VALUES
+  ORGANIZATION_MESSAGE_SERVICE_VALUES
 )
 
 export const messageStatusEnum = pgEnum("message_status", [
@@ -198,7 +198,7 @@ export const insertMessageSchema = createInsertSchema(messages).extend({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().optional(),
-  service: z.enum(POSSO_MESSAGE_SERVICE_VALUES).default("other"),
+  service: z.enum(ORGANIZATION_MESSAGE_SERVICE_VALUES).default("other"),
   subject: z.string().min(5, "Subject must be at least 5 characters"),
   message: z.string().min(10, "Message must be at least 10 characters"),
 })

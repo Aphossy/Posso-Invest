@@ -1,4 +1,4 @@
-import { POSSO_MESSAGE_SERVICE_LABELS } from "@/constants/message-services"
+import { ORGANIZATION_MESSAGE_SERVICE_LABELS } from "@/constants/message-services"
 import {
   organisationLogo,
   organisationName,
@@ -32,7 +32,7 @@ interface AdminMessageNotificationEmailProps {
   createdAt: string
 }
 
-const serviceLabels: Record<string, string> = POSSO_MESSAGE_SERVICE_LABELS
+const serviceLabels: Record<string, string> = ORGANIZATION_MESSAGE_SERVICE_LABELS
 
 const formatDate = (value: string) =>
   new Date(value).toLocaleString("en-RW", {

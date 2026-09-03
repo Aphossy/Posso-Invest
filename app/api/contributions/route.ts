@@ -4,7 +4,7 @@ import { db } from "@/db/connection"
 import { contributionOperations } from "@/db/operations/contribution-operations"
 import { penaltyOperations } from "@/db/operations/penalty-operations"
 import { userOperations } from "@/db/operations/user-operations"
-import { member, user as userTable } from "@/db/schemas"
+import { contribution, member, user as userTable } from "@/db/schemas"
 import { insertContributionSchema } from "@/db/schemas/contribution-schema"
 import { inngest } from "@/inngest/client"
 import logger from "@/utils/logger"
@@ -36,12 +36,38 @@ const createSchema = insertContributionSchema
     createdAt: true,
     updatedAt: true,
     organizationId: true,
+    period: true,
   })
   .extend({
     amount: z.coerce.string(),
+    period: z
+      .string()
+      .regex(/^\d{4}-(0[1-9]|1[0-2])$/)
+      .optional(),
+    periods: z
+      .array(z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/))
+      .min(1)
+      .optional(),
     penaltyAmount: z.coerce.string().optional(),
     paidAt: z.coerce.date().optional(),
     dueDate: z.coerce.date().optional(),
+  })
+  .superRefine((value, ctx) => {
+    const periods = value.periods ?? (value.period ? [value.period] : [])
+    if (periods.length === 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["periods"],
+        message: "At least one contribution period is required.",
+      })
+    }
+    if (new Set(periods).size !== periods.length) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["periods"],
+        message: "Contribution periods must be unique.",
+      })
+    }
   })
 
 const contributionNotificationRoles = ["admin", "president"] as const
@@ -301,12 +327,51 @@ export async function POST(request: Request) {
     )
   }
 
-  const created = await contributionOperations.create({
-    ...parsed.data,
-    organizationId: activeOrganizationId,
-    id: crypto.randomUUID(),
-    recordedBy: user.id,
-  })
+  const periods =
+    parsed.data.periods ?? (parsed.data.period ? [parsed.data.period] : [])
+  const {
+    period: _period,
+    periods: _periods,
+    ...contributionData
+  } = parsed.data
+  const existing = await db
+    .select({ period: contribution.period })
+    .from(contribution)
+    .where(
+      and(
+        eq(contribution.organizationId, activeOrganizationId),
+        eq(contribution.memberId, parsed.data.memberId),
+        inArray(contribution.period, periods)
+      )
+    )
+
+  if (existing.length > 0) {
+    return apiError(
+      "DUPLICATE_CONTRIBUTION",
+      "One or more selected periods already have a contribution record.",
+      409,
+      { periods: existing.map((item: { period: string }) => item.period) },
+      "Remove the recorded periods and select unpaid periods only."
+    )
+  }
+
+  const createdRecords = await db
+    .insert(contribution)
+    .values(
+      periods.map((selectedPeriod) => ({
+        ...contributionData,
+        period: selectedPeriod,
+        organizationId: activeOrganizationId,
+        id: crypto.randomUUID(),
+        recordedBy: user.id,
+      }))
+    )
+    .returning()
+  const created = createdRecords[0]
+
+  if (!created) {
+    return apiError("CREATE_FAILED", "Unable to record contribution.", 500)
+  }
 
   const contributionMember = await userOperations.findById(created.memberId)
   const formattedAmount = new Intl.NumberFormat("en-RW").format(
@@ -426,6 +491,27 @@ export async function POST(request: Request) {
         status: "active",
         reason: `Late payment for period ${created.period}`,
         period: created.period,
+      })
+    }
+  }
+
+  if (
+    created.status === "late" &&
+    created.penaltyAmount &&
+    Number(created.penaltyAmount) > 0
+  ) {
+    for (const periodContribution of createdRecords.slice(1)) {
+      await penaltyOperations.create({
+        id: crypto.randomUUID(),
+        organizationId: activeOrganizationId,
+        contributionId: periodContribution.id,
+        memberId: periodContribution.memberId,
+        issuedBy: user.id,
+        amount: periodContribution.penaltyAmount ?? created.penaltyAmount,
+        currency: periodContribution.currency,
+        status: "active",
+        reason: `Late payment for period ${periodContribution.period}`,
+        period: periodContribution.period,
       })
     }
   }

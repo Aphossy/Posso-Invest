@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react"
 import {
-  POSSO_MESSAGE_SERVICE_LABELS,
-  POSSO_MESSAGE_SERVICE_OPTIONS,
+  ORGANIZATION_MESSAGE_SERVICE_LABELS,
+  ORGANIZATION_MESSAGE_SERVICE_OPTIONS,
 } from "@/constants/message-services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -68,9 +68,9 @@ import { Loader } from "@/components/common/loader"
 
 // ─── Service label mapping ────────────────────────────────────────────────────
 export const SERVICE_LABELS: Record<string, string> =
-  POSSO_MESSAGE_SERVICE_LABELS
+  ORGANIZATION_MESSAGE_SERVICE_LABELS
 
-const SERVICE_OPTIONS = POSSO_MESSAGE_SERVICE_OPTIONS
+const SERVICE_OPTIONS = ORGANIZATION_MESSAGE_SERVICE_OPTIONS
 
 // ─── Status helpers ───────────────────────────────────────────────────────────
 const STATUS_BADGE: Record<string, { label: string; className: string }> = {
