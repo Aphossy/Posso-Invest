@@ -17,6 +17,8 @@ export const getRoleIcon = (role: string) => {
       return <Wallet className="h-4 w-4" />
     case "secretary":
       return <ClipboardList className="h-4 w-4" />
+    case "advisor":
+      return <Shield className="h-4 w-4" />
     case "president":
       return <Shield className="h-4 w-4" />
     default:
@@ -34,6 +36,8 @@ export const getRoleBadgeColor = (role: string) => {
       return "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200"
     case "secretary":
       return "bg-violet-100 text-violet-800 dark:bg-violet-900 dark:text-violet-200"
+    case "advisor":
+      return "bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200"
     case "member":
       return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
 

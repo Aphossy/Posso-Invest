@@ -1,15 +1,10 @@
-import { headers } from "next/headers"
 import { NextResponse } from "next/server"
-import { db } from "@/db/connection"
 import { contributionOperations } from "@/db/operations/contribution-operations"
 import { penaltyOperations } from "@/db/operations/penalty-operations"
-import { member } from "@/db/schemas"
 import { insertContributionSchema } from "@/db/schemas/contribution-schema"
-import { extractRoleValue } from "@/utils/role-utils"
-import { and, eq } from "drizzle-orm"
 import { z } from "zod"
 
-import { auth } from "@/lib/auth"
+import { getSessionUserCached } from "@/lib/get-session-cached"
 
 const updateSchema = insertContributionSchema
   .omit({
@@ -25,67 +20,11 @@ const updateSchema = insertContributionSchema
     dueDate: z.coerce.date().optional(),
   })
 
-async function getSessionUser() {
-  const headersList = await headers()
-  const session = await auth.api.getSession({ headers: headersList })
-  const sessionUser = session?.user || null
-  const activeOrganizationId = session?.session?.activeOrganizationId
-
-  let role: string | null = null
-
-  if (sessionUser?.id && activeOrganizationId) {
-    try {
-      const rows = await db
-        .select({ role: member.role })
-        .from(member)
-        .where(
-          and(
-            eq(member.organizationId, activeOrganizationId),
-            eq(member.userId, sessionUser.id)
-          )
-        )
-        .limit(1)
-      role = rows[0]?.role ?? null
-    } catch (error) {
-      console.error("[contributions:id:getSessionUser] member lookup failed", {
-        userId: sessionUser.id,
-        activeOrganizationId,
-        error,
-      })
-    }
-  }
-
-  if (!role) {
-    try {
-      const orgApi = (auth.api as any).organization
-      const roleResponse = orgApi?.getActiveMemberRole
-        ? await orgApi.getActiveMemberRole({ headers: headersList })
-        : null
-      role = extractRoleValue(roleResponse)
-    } catch (error) {
-      console.error(
-        "[contributions:id:getSessionUser] getActiveMemberRole fallback failed",
-        {
-          userId: sessionUser?.id,
-          activeOrganizationId,
-          error,
-        }
-      )
-    }
-  }
-
-  return {
-    user: sessionUser,
-    role,
-    activeOrganizationId,
-  }
-}
-
 export async function GET(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const sessionInfo = await getSessionUser()
+  const sessionInfo = await getSessionUserCached()
   const user = sessionInfo.user
   const role = sessionInfo.role
   if (!user) {
@@ -111,7 +50,7 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const sessionInfo = await getSessionUser()
+  const sessionInfo = await getSessionUserCached()
   const user = sessionInfo.user
   const role = sessionInfo.role
   if (!user) {
@@ -226,7 +165,7 @@ export async function DELETE(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const sessionInfo = await getSessionUser()
+  const sessionInfo = await getSessionUserCached()
   const user = sessionInfo.user
   const role = sessionInfo.role
   if (!user) {

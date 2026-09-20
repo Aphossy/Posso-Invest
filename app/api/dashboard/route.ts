@@ -1,4 +1,3 @@
-import { headers } from "next/headers"
 import type { NextRequest } from "next/server"
 import { siteConfig } from "@/constants/site-config"
 import { db, dbHealthCheck } from "@/db/connection"
@@ -14,7 +13,7 @@ import { attendanceOperations } from "@/db/operations/attendance-operations"
 import { messageOperations } from "@/db/operations/message-operations"
 import { invitation, member, user } from "@/db/schemas"
 import logger from "@/utils/logger"
-import { extractRoleValue, normalizeRoleValue } from "@/utils/role-utils"
+import { normalizeRoleValue } from "@/utils/role-utils"
 import { format, parse, subMonths } from "date-fns"
 import { and, count, eq } from "drizzle-orm"
 
@@ -30,8 +29,11 @@ import {
   unauthorizedResponse,
   withApiResponse,
 } from "@/lib/api-response"
-import { auth } from "@/lib/auth"
-import { getContributionWindow } from "@/lib/contribution-window"
+import {
+  getContributionTrendPeriods,
+  getContributionWindow,
+} from "@/lib/contribution-window"
+import { getSessionUserCached } from "@/lib/get-session-cached"
 import { rateLimit } from "@/lib/rate-limiter"
 
 const toNumber = (value?: string | number | null) => (value ? Number(value) : 0)
@@ -54,12 +56,13 @@ export const GET = withRequestLogging(
       })
     }
 
-    const headersList = await headers()
-    const session = await auth.api.getSession({
-      headers: headersList,
-    })
+    const {
+      user: sessionUser,
+      role: cachedRole,
+      activeOrganizationId,
+    } = await getSessionUserCached()
 
-    if (!session) {
+    if (!sessionUser) {
       return unauthorizedResponse(
         request,
         "Authentication required to access admin dashboard",
@@ -71,7 +74,7 @@ export const GET = withRequestLogging(
     }
 
     const userProfile = await userOperations.getProfileByUserId(
-      session.user.id as string
+      sessionUser.id as string
     )
 
     if (!userProfile) {
@@ -81,47 +84,7 @@ export const GET = withRequestLogging(
       })
     }
 
-    const activeOrganizationId = session?.session?.activeOrganizationId
-    let resolvedRole = normalizeRoleValue(userProfile.role)
-
-    if (userProfile.id && activeOrganizationId) {
-      try {
-        const membershipRows = await db
-          .select({ role: member.role })
-          .from(member)
-          .where(
-            and(
-              eq(member.organizationId, activeOrganizationId),
-              eq(member.userId, userProfile.id)
-            )
-          )
-          .limit(1)
-
-        resolvedRole = normalizeRoleValue(membershipRows[0]?.role) ?? resolvedRole
-      } catch (error) {
-        logger.error("[dashboard:GET] member role lookup failed", {
-          userId: userProfile.id,
-          activeOrganizationId,
-          error,
-        })
-      }
-    }
-
-    if (!resolvedRole || resolvedRole === "member") {
-      try {
-        const orgApi = (auth.api as any).organization
-        const roleResponse = orgApi?.getActiveMemberRole
-          ? await orgApi.getActiveMemberRole({ headers: headersList })
-          : null
-        resolvedRole = normalizeRoleValue(extractRoleValue(roleResponse)) ?? resolvedRole
-      } catch (error) {
-        logger.error("[dashboard:GET] getActiveMemberRole fallback failed", {
-          userId: userProfile.id,
-          activeOrganizationId,
-          error,
-        })
-      }
-    }
+    const resolvedRole = normalizeRoleValue(cachedRole ?? userProfile.role)
 
     if (resolvedRole !== "admin") {
       return unauthorizedResponse(
@@ -243,7 +206,7 @@ export const GET = withRequestLogging(
           ? Math.round((attendancePresent / attendanceTotal) * 100)
           : 0
 
-      const activeOrgId = session?.session?.activeOrganizationId
+      const activeOrgId = activeOrganizationId
       const memberCountQuery = activeOrgId
         ? db
             .select({ count: count() })
@@ -352,19 +315,10 @@ export const GET = withRequestLogging(
         {} as Record<string, number>
       )
 
-      const activePeriodDate = parse(
+      const last6Periods = getContributionTrendPeriods(
         contributionWindow.period,
-        "yyyy-MM",
-        new Date()
+        6
       )
-      const last6Periods: string[] = []
-      for (let i = 5; i >= 0; i--) {
-        const periodDate = subMonths(activePeriodDate, i)
-        const period = `${periodDate.getFullYear()}-${String(
-          periodDate.getMonth() + 1
-        ).padStart(2, "0")}`
-        last6Periods.push(period)
-      }
 
       const monthlyContributions = last6Periods.map((period) => {
         const periodDate = parse(period, "yyyy-MM", new Date())

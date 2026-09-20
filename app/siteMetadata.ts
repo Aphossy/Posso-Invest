@@ -2,7 +2,7 @@
 import type { Metadata } from "next"
 
 const baseUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://possocapital.vercel.app"
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.1010ventures.online"
 
 export const siteMetadata: Metadata = {
   metadataBase: new URL(`${baseUrl}`),

@@ -1,5 +1,7 @@
 import { siteConfig } from "@/constants/site-config"
-import { addMonths, format, isWithinInterval, parse, subMonths } from "date-fns"
+import { addMonths, format, parse, subMonths } from "date-fns"
+
+export const FIRST_CONTRIBUTION_PERIOD = "2026-09"
 
 export interface ContributionWindow {
   isOpen: boolean
@@ -12,12 +14,8 @@ export interface ContributionWindow {
 /**
  * Compute the current contribution window for a given instant (used by API routes).
  *
- * Three cases:
- *   day ≤ endDay   → still in the closing tail of last month's window (open)
- *   day ≥ startDay → this month's window has opened (open)
- *   else           → gap: `label` / `daysUntilNext` point to the upcoming window
- *                    so the UI can show "Opens in Xd", but `period` references
- *                    the most-recently-closed window so payment lookups are correct.
+ * The statute assigns each contribution to a calendar month and gives members
+ * the 1st through 5th of the following month to pay it.
  */
 export function getContributionWindow(now: Date): ContributionWindow {
   const { startDay, endDay } = siteConfig.platform.savings.contributionWindow
@@ -25,28 +23,19 @@ export function getContributionWindow(now: Date): ContributionWindow {
   const month = now.getMonth()
   const day = now.getDate()
 
-  let windowStart: Date
-  let windowEnd: Date
-  let periodStart: Date
-  let isOpen: boolean
-
-  if (day <= endDay) {
-    windowStart = new Date(year, month - 1, startDay)
-    windowEnd = new Date(year, month, endDay)
-    periodStart = windowStart
-    isOpen = true
-  } else if (day >= startDay) {
-    windowStart = new Date(year, month, startDay)
-    windowEnd = new Date(year, month + 1, endDay)
-    periodStart = windowStart
-    isOpen = true
-  } else {
-    // Gap: display the upcoming window in the UI, but period = last closed window
-    windowStart = new Date(year, month, startDay)
-    windowEnd = new Date(year, month + 1, endDay)
-    periodStart = new Date(year, month - 1, startDay)
-    isOpen = false
-  }
+  const currentPeriod = new Date(year, month, 1)
+  const periodStart = day <= endDay ? subMonths(currentPeriod, 1) : currentPeriod
+  const windowStart = new Date(
+    periodStart.getFullYear(),
+    periodStart.getMonth() + 1,
+    startDay
+  )
+  const windowEnd = new Date(
+    periodStart.getFullYear(),
+    periodStart.getMonth() + 1,
+    endDay
+  )
+  const isOpen = day <= endDay
 
   const label = `${windowStart.toLocaleString("default", { month: "short" })} ${windowStart.getDate()} – ${windowEnd.toLocaleString("default", { month: "short" })} ${windowEnd.getDate()}`
 
@@ -66,7 +55,7 @@ export function getContributionWindow(now: Date): ContributionWindow {
 
 /**
  * Given a period string ("yyyy-MM"), return the window start/end dates.
- * Window = startDay of that month → endDay of the following month.
+ * Window = startDay through endDay of the following month.
  */
 export function getWindowForPeriod(period: string): {
   windowStart: Date
@@ -77,8 +66,8 @@ export function getWindowForPeriod(period: string): {
   const nextMonth = addMonths(periodDate, 1)
   return {
     windowStart: new Date(
-      periodDate.getFullYear(),
-      periodDate.getMonth(),
+      nextMonth.getFullYear(),
+      nextMonth.getMonth(),
       startDay
     ),
     windowEnd: new Date(nextMonth.getFullYear(), nextMonth.getMonth(), endDay),
@@ -86,19 +75,34 @@ export function getWindowForPeriod(period: string): {
 }
 
 /**
- * Return the period string whose window contains today.
- * During the gap between windows (after endDay, before startDay), returns the
- * most recently closed window's period so components default to real data
- * instead of an empty future month.
+ * Return the period currently being paid or prepared for.
  */
 export function getActivePeriod(): string {
   const today = new Date()
-  for (const d of [subMonths(today, 1), today, addMonths(today, 1)]) {
-    const p = format(d, "yyyy-MM")
-    const { windowStart, windowEnd } = getWindowForPeriod(p)
-    if (isWithinInterval(today, { start: windowStart, end: windowEnd }))
-      return p
+  if (today.getDate() <= siteConfig.platform.savings.contributionWindow.endDay)
+    return format(subMonths(today, 1), "yyyy-MM")
+  return format(today, "yyyy-MM")
+}
+
+export function getContributionTrendPeriods(
+  activePeriod: string,
+  count = 6
+): string[] {
+  const activePeriodDate = parse(activePeriod, "yyyy-MM", new Date())
+  const firstContributionDate = parse(FIRST_CONTRIBUTION_PERIOD, "yyyy-MM", new Date())
+  const periods: string[] = []
+
+  for (let i = count - 1; i >= 0; i--) {
+    const periodDate = subMonths(activePeriodDate, i)
+    const period = format(periodDate, "yyyy-MM")
+
+    if (periodDate < firstContributionDate) continue
+    periods.push(period)
   }
-  // Gap: return the period whose window most recently closed
-  return format(subMonths(today, 1), "yyyy-MM")
+
+  if (periods.length === 0) {
+    return [FIRST_CONTRIBUTION_PERIOD]
+  }
+
+  return periods
 }

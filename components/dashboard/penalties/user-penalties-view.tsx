@@ -357,11 +357,11 @@ export function UserPenaltiesView() {
             <li>
               Payment window:{" "}
               <span className="font-medium text-foreground">
-                25th of the current month
+                1st of the following month
               </span>{" "}
-              to the{" "}
+              through the{" "}
               <span className="font-medium text-foreground">
-                6th of the following month
+                5th of the following month
               </span>
             </li>
             <li>

@@ -114,7 +114,7 @@ export default function AccountDeletionVerificationEmail({
 
 AccountDeletionVerificationEmail.PreviewProps = {
   userName: "Florence Uwamahoro",
-  deletionUrl: "https://possocapital.vercel.app/account/delete?token=example",
+  deletionUrl: "https://www.1010ventures.online/account/delete?token=example",
 } satisfies AccountDeletionVerificationEmailProps
 
 const main = {

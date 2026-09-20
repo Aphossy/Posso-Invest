@@ -16,8 +16,8 @@ function isRequestFromTrustedSource(request: Request): boolean {
   // Allow requests from:
   // 1. Your production domain
   const trustedDomains = [
-    "https://www.10/10 Ventures-group.rw",
-    "https://10/10 Ventures-group.rw",
+    "https://www.1010ventures.online",
+    "https://1010ventures.online",
     "http://localhost:3000",
     "http://localhost:8081",
   ]

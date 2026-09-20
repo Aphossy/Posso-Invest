@@ -5,7 +5,7 @@ export const organisationSlogan =
   "Save together. Build together."
 export const organisationLogo =
   process.env.NEXT_PUBLIC_ORGANISATION_LOGO ||
-  "https://possocapital.vercel.app/brand/logo.png"
+  "https://www.1010ventures.online/brand/logo.png"
 export const organisationEmail =
   process.env.NEXT_PUBLIC_ORGANISATION_EMAIL || "possowiba01@gmail.com"
 export const organisationCCEmail =
@@ -14,7 +14,7 @@ export const organisationPhone =
   process.env.NEXT_PUBLIC_ORGANISATION_PHONE || "+250 785 251 067"
 export const organisationWebsite =
   process.env.NEXT_PUBLIC_ORGANISATION_WEBSITE ||
-  "https://possocapital.vercel.app"
+  "https://www.1010ventures.online"
 
 export const treasurerEmail =
   process.env.NEXT_PUBLIC_TREASURER_EMAIL || "hakuzweaphossy@gmail.com"

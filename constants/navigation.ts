@@ -40,6 +40,7 @@ export type UserRole =
   | "member"
   | "treasurer"
   | "secretary"
+  | "advisor"
   | "president"
   | "admin"
 
@@ -979,6 +980,7 @@ export function getNavigationByRole(role: UserRole): NavigationGroup[] {
       return TREASURER_NAVIGATION
     case "secretary":
       return SECRETARY_NAVIGATION
+    case "advisor":
     case "member":
       return MEMBER_NAVIGATION
     default:
@@ -1010,6 +1012,15 @@ export function searchNavigationItems(
 // QUICK ACTIONS (For Command Bar)
 // ============================================
 export const QUICK_ACTIONS: Record<UserRole, NavigationItem[]> = {
+  advisor: [
+    {
+      title: "Review Governance",
+      url: "/member/documents/constitution",
+      icon: Shield,
+      description: "Review statutory guidance and leadership succession",
+      shortcut: "mod+g",
+    },
+  ],
   president: [
     {
       title: "Pending Approvals",

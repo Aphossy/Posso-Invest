@@ -49,9 +49,9 @@ interface RecordContributionFormProps {
 
 const currentPeriod = format(new Date(), "yyyy-MM")
 const contributionPeriodOptions: Option[] = Array.from(
-  { length: 25 },
+  { length: 24 },
   (_, index) => {
-    const date = subMonths(addMonths(new Date(), index - 12), 0)
+    const date = new Date(2026, 8 + index, 1)
     return { value: format(date, "yyyy-MM"), label: format(date, "MMMM yyyy") }
   }
 )

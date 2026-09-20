@@ -434,6 +434,7 @@ export type UserRole =
   | "admin"
   | "secretary"
   | "treasurer"
+  | "advisor"
   | "member"
   | "president"
 export type Language = "en" | "rw" | "fr"

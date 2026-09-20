@@ -114,7 +114,7 @@ export default function PasswordResetEmail({
 
 PasswordResetEmail.PreviewProps = {
   userName: "Abel Mutsinzi",
-  resetUrl: "https://possocapital.vercel.app/reset-password?token=example",
+  resetUrl: "https://www.1010ventures.online/reset-password?token=example",
 } satisfies PasswordResetEmailProps
 
 const main = {

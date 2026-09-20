@@ -1,4 +1,3 @@
-import { headers } from "next/headers"
 import { NextResponse } from "next/server"
 import { db } from "@/db/connection"
 import { actionItemOperations } from "@/db/operations/action-item-operations"
@@ -12,7 +11,6 @@ import {
   createBulkNotifications,
   type NotificationPayload,
 } from "@/utils/notification-utils"
-import { extractRoleValue } from "@/utils/role-utils"
 import { and, eq, inArray } from "drizzle-orm"
 import { z } from "zod"
 
@@ -20,7 +18,7 @@ import {
   DOMAIN_NOTIFICATION_TYPE,
   NOTIFICATION_ACTION,
 } from "@/types/notifications"
-import { auth } from "@/lib/auth"
+import { getSessionUserCached } from "@/lib/get-session-cached"
 
 const listSchema = z.object({
   meetingId: z.string().optional(),
@@ -46,66 +44,6 @@ const createSchema = insertActionItemSchema
   })
 
 const actionItemLeadershipRoles = ["admin", "president"] as const
-
-async function getSessionUser() {
-  const headersList = await headers()
-  const session = await auth.api.getSession({ headers: headersList })
-  const sessionUser = session?.user || null
-  const sessionRole = sessionUser?.role ?? null
-  const activeOrganizationId = session?.session?.activeOrganizationId
-
-  let activeRole: string | null = null
-
-  if (sessionUser?.id && activeOrganizationId) {
-    try {
-      const rows = await db
-        .select({ role: member.role })
-        .from(member)
-        .where(
-          and(
-            eq(member.organizationId, activeOrganizationId),
-            eq(member.userId, sessionUser.id)
-          )
-        )
-        .limit(1)
-      activeRole = rows[0]?.role ?? null
-    } catch (error) {
-      console.error("[action-items:getSessionUser] member lookup failed", {
-        userId: sessionUser.id,
-        activeOrganizationId,
-        error,
-      })
-    }
-  }
-
-  if (!activeRole) {
-    try {
-      const orgApi = auth.api as any
-      const roleResponse = orgApi?.organization?.getActiveMemberRole
-        ? await orgApi.organization.getActiveMemberRole({
-            headers: headersList,
-          })
-        : null
-      activeRole = extractRoleValue(roleResponse)
-    } catch (error) {
-      console.error(
-        "[action-items:getSessionUser] getActiveMemberRole fallback failed",
-        {
-          userId: sessionUser?.id,
-          activeOrganizationId,
-          error,
-        }
-      )
-    }
-  }
-
-  return {
-    user: sessionUser,
-    role: activeRole,
-    activeOrganizationId,
-    sessionRole,
-  }
-}
 
 async function getActionItemLeadershipRecipients(
   activeOrganizationId?: string | null
@@ -170,7 +108,7 @@ function apiError(
 }
 
 export async function GET(request: Request) {
-  const { user, role } = await getSessionUser()
+  const { user, role } = await getSessionUserCached()
   if (!user) {
     return apiError(
       "UNAUTHORIZED",
@@ -259,7 +197,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const { user, role, activeOrganizationId, sessionRole } =
-    await getSessionUser()
+    await getSessionUserCached()
   if (!user) {
     return apiError(
       "UNAUTHORIZED",

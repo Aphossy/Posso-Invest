@@ -30,7 +30,10 @@ import {
   withApiResponse,
 } from "@/lib/api-response"
 import { auth } from "@/lib/auth"
-import { getContributionWindow } from "@/lib/contribution-window"
+import {
+  getContributionTrendPeriods,
+  getContributionWindow,
+} from "@/lib/contribution-window"
 import { computeFundPosition } from "@/lib/fund-position"
 import { rateLimit } from "@/lib/rate-limiter"
 
@@ -273,19 +276,10 @@ export const GET = withRequestLogging(
           : 0
 
       // Contribution trends by period (last 6 contribution windows)
-      const activePeriodDate = parse(
+      const last6Periods = getContributionTrendPeriods(
         contributionWindow.period,
-        "yyyy-MM",
-        new Date()
+        6
       )
-      const last6Periods: string[] = []
-      for (let i = 5; i >= 0; i--) {
-        const periodDate = subMonths(activePeriodDate, i)
-        const period = `${periodDate.getFullYear()}-${String(
-          periodDate.getMonth() + 1
-        ).padStart(2, "0")}`
-        last6Periods.push(period)
-      }
 
       const monthlyContributions = last6Periods.map((period) => {
         const periodDate = parse(period, "yyyy-MM", new Date())

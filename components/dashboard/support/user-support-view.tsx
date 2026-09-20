@@ -493,7 +493,7 @@ const FAQ_ITEMS = [
     items: [
       {
         q: "What is the monthly contribution amount?",
-        a: "Each member contributes 80,000 RWF per month. Payments are accepted between the 25th of the current month and the 6th of the following month.",
+        a: "Each member contributes 100,000 RWF per month. Payments are accepted from the 1st through the 5th of the following month.",
       },
       {
         q: "What happens if I pay late?",

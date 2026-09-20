@@ -34,7 +34,7 @@ import { Loader } from "@/components/common/loader"
 const inviteSchema = z.object({
   email: z.string().email("Email is invalid"),
   role: z.enum(
-    ["member", "treasurer", "secretary", "admin", "president"] as const,
+    ["member", "treasurer", "secretary", "advisor", "admin", "president"] as const,
     {
       message: "Role is required",
     }
@@ -165,6 +165,7 @@ export default function InviteUserDialog({
                     <SelectItem value="member">Member</SelectItem>
                     <SelectItem value="treasurer">Treasurer</SelectItem>
                     <SelectItem value="secretary">Secretary</SelectItem>
+                    <SelectItem value="advisor">Advisor</SelectItem>
                     <SelectItem value="admin">Admin</SelectItem>
                     <SelectItem value="president">President</SelectItem>
                   </SelectContent>

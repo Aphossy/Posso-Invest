@@ -1,12 +1,10 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import Link from "next/link"
 import { siteConfig } from "@/constants/site-config"
 import { addMonths, format, isWithinInterval, parse, subMonths } from "date-fns"
 import {
   AlertTriangle,
-  ArrowLeft,
   CalendarDays,
   CheckCircle2,
   ChevronLeft,
@@ -114,10 +112,10 @@ export function TreasurerContributionWindowView() {
     [selectedPeriod]
   )
 
-  const isWindowOpen = useMemo(
-    () => isWithinInterval(today, { start: windowStart, end: windowEnd }),
-    [windowStart, windowEnd]
-  )
+  const isWindowOpen = isWithinInterval(today, {
+    start: windowStart,
+    end: windowEnd,
+  })
 
   // Only relevant for the active period - windows in the past are always "closed"
   const isCurrentPeriod = selectedPeriod === activePeriod
@@ -268,10 +266,10 @@ export function TreasurerContributionWindowView() {
       <Alert className="border-primary/20 bg-primary/5">
         <CalendarDays className="h-4 w-4 text-primary" />
         <AlertDescription className="text-sm">
-          The monthly contribution window opens on the{" "}
-          <strong>{contributionWindow.startDay}th</strong> of the previous month
-          and closes on the <strong>{contributionWindow.endDay}th</strong> of
-          the current month. Payments outside this window incur a{" "}
+          The monthly contribution window runs from the{" "}
+          <strong>{contributionWindow.startDay}st</strong> through the{" "}
+          <strong>{contributionWindow.endDay}th</strong> of the following month.
+          Payments outside this window incur a{" "}
           <strong>{(latePenaltyRate * 100).toFixed(0)}% late penalty</strong>.
         </AlertDescription>
       </Alert>

@@ -12,6 +12,7 @@ export type UserRole =
   | "member"
   | "treasurer"
   | "secretary"
+  | "advisor"
   | "president"
   | "admin"
 
@@ -227,7 +228,7 @@ function usePresidentBadges(enabled: boolean): NavigationBadges {
  */
 export function useNavigationBadges(role: UserRole): NavigationBadges {
   const adminBadges = useAdminBadges(role === "admin")
-  const memberBadges = useMemberBadges(role === "member")
+  const memberBadges = useMemberBadges(role === "member" || role === "advisor")
   const treasurerBadges = useTreasurerBadges(role === "treasurer")
   const secretaryBadges = useSecretaryBadges(role === "secretary")
   const presidentBadges = usePresidentBadges(role === "president")
@@ -237,6 +238,7 @@ export function useNavigationBadges(role: UserRole): NavigationBadges {
       case "admin":
         return adminBadges
       case "member":
+      case "advisor":
         return memberBadges
       case "treasurer":
         return treasurerBadges

@@ -4,13 +4,13 @@
 
 The model combines monthly savings, strategic reinvestment, and phased business launches across bakery, avocado farming, mushroom cultivation, and a future beetroot-and-grape winery.
 
-> Save 2 Years. Build 3 Years. Benefit for a Lifetime.
+> Save 30 Months. Build for the Long Term. Benefit for a Lifetime.
 
 ---
 
 ## Overview
 
-10/10 Ventures brings together 10 members who contribute 100,000 Frw every month for 24 months, creating a total group capital of 24,000,000 Frw.
+10/10 Ventures Ltd brings together 10 members who contribute 100,000 Frw every month for 30 months, creating a total group capital of 30,000,000 Frw before investment returns.
 
 After the saving phase ends, the capital is deployed into profitable ventures that generate income, build reserves, and create long-term wealth for all members.
 
@@ -18,9 +18,9 @@ After the saving phase ends, the capital is deployed into profitable ventures th
 
 - Members: 10
 - Monthly contribution per person: 100,000 Frw
-- Saving period: 24 months
-- Total group capital: 24,000,000 Frw
-- Total personal contribution per member: 2,400,000 Frw
+- Saving period: 30 months
+- Total group capital: 30,000,000 Frw
+- Total personal contribution per member: 3,000,000 Frw
 - First member distributions: Year 5
 - Long-term focus: bakery, avocado farm, mushroom cultivation, and winery
 
@@ -44,9 +44,9 @@ The group aims to:
 
 ### 1. Savings Engine
 
-Each member contributes 100,000 Frw monthly for 24 months.
+Each member contributes 100,000 Frw monthly for 30 months as set out in the Group Statute.
 
-This creates a total pool of 24,000,000 Frw, which is then used to launch and grow the group’s ventures.
+This creates a total group savings pool of 30,000,000 Frw before investment returns, which is then used to launch and grow the group’s ventures.
 
 ### 2. Year 1 Investments
 
@@ -65,7 +65,7 @@ The second 12,000,000 Frw is used to:
 
 ### 4. Years 3–4 Growth Phase
 
-No further member savings are required. Profits are reinvested to:
+The 30-month savings phase is complete. No further member savings are required. Profits are reinvested to:
 
 - grow bakery operations
 - develop avocado production
@@ -136,7 +136,7 @@ These figures are based on the group’s projected business performance and rein
 
 Members commit to:
 
-- contributing 100,000 Frw monthly for 24 months
+- contributing 100,000 Frw monthly for 30 months
 - maintaining active participation in meetings and decisions
 - supporting the group’s collective goals
 - upholding strong standards of integrity and confidentiality
@@ -147,7 +147,7 @@ Members commit to:
 
 The group will operate with clear rules for:
 
-- leadership roles and responsibilities
+- leadership roles and responsibilities under the three-year officer/advisor succession model
 - internal loans
 - monthly reporting
 - profit distribution

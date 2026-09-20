@@ -145,8 +145,8 @@ OrganizationInvitationEmail.PreviewProps = {
   roleLabel: "member",
   expiresAt: "Mar 11, 2026, 6:00 PM",
   invitationUrl:
-    "https://possocapital.vercel.app/accept-invitation?invitationId=abc",
-  loginUrl: "https://possocapital.vercel.app/",
+    "https://www.1010ventures.online/accept-invitation?invitationId=abc",
+  loginUrl: "https://www.1010ventures.online/",
   supportEmail: "possowiba01@gmail.com",
   recipientEmail: "invitee@example.com",
 } satisfies OrganizationInvitationEmailProps

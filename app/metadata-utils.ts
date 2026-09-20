@@ -30,7 +30,7 @@ export function createMetadata({
   locale?: "en" | "fr"
 }): Metadata {
   const BASE_URL =
-    process.env.NEXT_PUBLIC_APP_URL || "https://possocapital.vercel.app"
+    process.env.NEXT_PUBLIC_APP_URL || "https://www.1010ventures.online"
 
   // Ensure base URL has proper protocol
   const baseUrl = BASE_URL.startsWith("http") ? BASE_URL : `https://${BASE_URL}`
@@ -146,7 +146,7 @@ export function createPageJsonLd({
   image?: string
 }) {
   const BASE_URL =
-    process.env.NEXT_PUBLIC_APP_URL || "https://possocapital.vercel.app"
+    process.env.NEXT_PUBLIC_APP_URL || "https://www.1010ventures.online"
   const url = `${BASE_URL}${path}`
 
   const baseJsonLd: Record<string, any> = {
@@ -195,7 +195,7 @@ export function createBreadcrumbSchema(
   items: Array<{ name: string; path: string }>
 ) {
   const BASE_URL =
-    process.env.NEXT_PUBLIC_APP_URL || "https://possocapital.vercel.app"
+    process.env.NEXT_PUBLIC_APP_URL || "https://www.1010ventures.online"
 
   return {
     "@context": "https://schema.org",
@@ -230,7 +230,7 @@ export function createFAQSchema(
 // Helper to generate organization schema
 export function createOrganizationSchema() {
   const BASE_URL =
-    process.env.NEXT_PUBLIC_APP_URL || "https://possocapital.vercel.app"
+    process.env.NEXT_PUBLIC_APP_URL || "https://www.1010ventures.online"
 
   return {
     "@context": "https://schema.org",

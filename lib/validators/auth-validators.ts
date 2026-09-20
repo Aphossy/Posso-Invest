@@ -164,7 +164,9 @@ export const SettingsValidation = z
     email: z.optional(z.string().email("Invalid email")),
     password: z.optional(validatePassword),
     newPassword: z.optional(validatePassword),
-    role: z.enum(["member", "treasurer", "secretary", "admin"]).optional(),
+    role: z
+      .enum(["member", "treasurer", "secretary", "advisor", "admin"])
+      .optional(),
     isTwoFactorEnabled: z.optional(z.boolean()),
   })
   .refine(

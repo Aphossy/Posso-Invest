@@ -37,20 +37,20 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 // ─── Static data ────────────────────────────────────────────────────────────
 
 const docMeta = [
-  { label: "Group Name", value: "10/10 Ventures", icon: BookOpen },
+  { label: "Legal Name", value: "10/10 Ventures Ltd", icon: BookOpen },
   {
     label: "Type",
-    value: "10/10 Ventures - Savings & Investment Group",
+    value: "Member-owned savings and investment company",
     icon: Building2,
   },
-  { label: "Established", value: "August 01, 2026", icon: Calendar },
+  { label: "Effective", value: "September 01, 2026", icon: Calendar },
   {
     label: "Address",
     value: "Kacyiru Sector, Gasabo District, Rwanda",
     icon: MapPin,
   },
-  { label: "Founding Members", value: "Eleven (11)", icon: Users },
-  { label: "Version", value: "Version 1.0 - August 2026", icon: ScrollText },
+  { label: "Founding Members", value: "Ten (10)", icon: Users },
+  { label: "Document", value: "Organizational Statute (Bylaws)", icon: ScrollText },
 ]
 
 const keyTerms = [
@@ -84,8 +84,8 @@ const keyTerms = [
   },
   { label: "Audit Cadence", value: "Every 4 months", icon: FileText },
   { label: "Meeting Quorum", value: "2/3 of registered members", icon: Users },
-  { label: "Leadership Term", value: "1 year, max 2 consecutive", icon: Award },
-  { label: "Amendment Threshold", value: "2/3 majority vote", icon: Gavel },
+  { label: "Leadership Term", value: "3 years", icon: Award },
+  { label: "Investment Threshold", value: "5,000,000 RWF", icon: Gavel },
 ]
 
 const articles = [
@@ -219,9 +219,8 @@ const articles = [
       {
         title: "8.1 Monthly Contributions",
         items: [
-          "Each registered member slot shall contribute between 100,000 RWF and 200,000 RWF per month.",
-          "The minimum contribution is 100,000 RWF and the maximum is 200,000 RWF per registered slot per month.",
-          "Contributions shall be made between the 25th of the current month and the 6th of the following month.",
+          "Each member shall contribute 100,000 RWF per month during the 30-month savings phase.",
+          "Contributions shall be made from the 1st through the 5th of the following month for the applicable contribution period.",
           "Contributions shall be deposited directly to the Group's official Equity Bank Rwanda account.",
         ],
       },
@@ -298,12 +297,12 @@ const articles = [
     title: "Leadership and Management",
     icon: Award,
     summary:
-      "Elected President, Secretary, Treasurer, Advisor. 1-year terms, max 2 consecutive. Removal by 2/3 majority.",
+      "Three elected Officers with paired Advisors; each role serves a 3-year term with succession and removal by 2/3 majority.",
     sections: [
       {
         title: "10.2 Term of Office",
         items: [
-          "Each elected leader shall serve a term of one (1) year from the date of election.",
+          "Each elected officer and advisor shall serve a three (3) year term from the date of election or appointment.",
           "Leaders may be re-elected for a maximum of two (2) consecutive terms.",
           "After two consecutive terms, a leader must step down for at least one (1) full term before standing again.",
         ],
@@ -370,11 +369,11 @@ const articles = [
     title: "Decision Making",
     icon: Gavel,
     summary:
-      "Consensus preferred. Simple majority generally. 2/3 for financial decisions over 500,000 RWF and constitutional changes.",
+      "Ordinary resolutions use a simple majority. Special resolutions require two-thirds of all members in good standing.",
     content: [
       "Decisions shall be made by consensus where possible.",
       "When consensus cannot be reached, decisions shall be made by a simple majority vote (more than 50% of members present).",
-      "Financial decisions exceeding 500,000 RWF shall require a two-thirds (2/3) majority vote.",
+      "No new venture or capital commitment exceeding 5,000,000 RWF may proceed without a special resolution of the General Assembly.",
       "Constitutional amendments require a two-thirds (2/3) majority vote (see Article 16).",
       "The President shall have a casting vote in the event of a tie.",
       "All votes and their outcomes shall be recorded in the meeting minutes.",
@@ -469,9 +468,9 @@ const articles = [
     title: "Adoption and Entry into Force",
     icon: CheckCircle2,
     summary:
-      "Adopted August 01, 2026 at the Inaugural Meeting. Enters into force upon all member signatures and notarization.",
+      "Effective September 01, 2026. This Statute governs membership, leadership, meetings, discipline, and dispute resolution.",
     content: [
-      "This Constitution was adopted on August 01, 2026, at a duly convened Inaugural Meeting of 10/10 Ventures, Republic of Rwanda.",
+      "This Organizational Statute took effect on September 01, 2026, for 10/10 Ventures Ltd in Kigali, Rwanda.",
       "This Constitution enters into force immediately upon signing by all founding members and certification by a duly authorized Notary of the Republic of Rwanda.",
     ],
     numbered: true,
@@ -585,11 +584,11 @@ export function ConstitutionView() {
         <div>
           <div className="mb-1 flex items-center gap-2">
             <ScrollText className="h-5 w-5 text-primary" />
-            <h1 className="text-2xl font-semibold">Constitution & Policies</h1>
+            <h1 className="text-2xl font-semibold">Organizational Statute</h1>
           </div>
           <p className="text-sm text-muted-foreground">
             The supreme governing document of 10/10 Ventures - Version
-            1.0, adopted August 1, 2026.
+            effective September 1, 2026.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -599,8 +598,8 @@ export function ConstitutionView() {
           </Button>
           <Button size="sm" asChild>
             <a
-              href="/doc/10-10-Ventures-Constitution.pdf"
-              download="10-10-Ventures-Constitution.pdf">
+              href="/doc/10_10_Ventures_Organizational_Statute.pdf"
+              download="10_10_Ventures_Organizational_Statute.pdf">
               <Download className="h-4 w-4" />
               Download PDF
             </a>
@@ -646,7 +645,7 @@ export function ConstitutionView() {
       <Tabs defaultValue="overview" className="w-full">
         <TabsList className="flex-wrap">
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="articles">Articles (18)</TabsTrigger>
+          <TabsTrigger value="articles">Statute Articles</TabsTrigger>
           <TabsTrigger value="members">Founding Members</TabsTrigger>
           <TabsTrigger value="leadership">Leadership</TabsTrigger>
         </TabsList>
@@ -772,7 +771,7 @@ export function ConstitutionView() {
                 </div>
                 <div>
                   <p className="text-sm font-medium">
-                    Adopted August 1, 2026
+                    Effective September 1, 2026
                   </p>
                   <p className="text-xs text-muted-foreground">
                     Kacyiru Sector, Gasabo District, Republic of Rwanda
@@ -781,8 +780,8 @@ export function ConstitutionView() {
               </div>
               <Button variant="outline" size="sm" asChild>
                 <a
-                  href="/doc/10-10-Ventures-Constitution.pdf"
-                  download="10-10-Ventures-Constitution.pdf">
+                  href="/doc/10_10_Ventures_Organizational_Statute.pdf"
+                  download="10_10_Ventures_Organizational_Statute.pdf">
                   <Download className="h-4 w-4" />
                   Download Full PDF
                 </a>
@@ -796,7 +795,7 @@ export function ConstitutionView() {
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="text-base font-semibold">
-                All 18 Articles
+                Statute and governance articles
               </CardTitle>
               <p className="text-sm text-muted-foreground">
                 Click any article to expand its full content.
@@ -845,8 +844,8 @@ export function ConstitutionView() {
                 Founding Members
               </CardTitle>
               <p className="text-sm text-muted-foreground">
-                Eleven (11) founding members of 10/10 Ventures - authorized
-                bank signatories (Article 7.2 & 15).
+                Ten founding members of 10/10 Ventures Ltd. New members require
+                a special resolution and the prescribed admission process.
               </p>
             </CardHeader>
             <CardContent>
@@ -870,9 +869,8 @@ export function ConstitutionView() {
               </div>
               <Separator className="my-4" />
               <p className="text-xs text-muted-foreground">
-                All eleven founding members hold equal rights and obligations
-                within the Group&apos;s internal governance, and are authorized
-                signatories on the Group&apos;s Equity Bank Rwanda account.
+                Founding members hold equal governance rights. Each member has
+                one vote, and proxy voting is not permitted.
               </p>
             </CardContent>
           </Card>
@@ -886,8 +884,8 @@ export function ConstitutionView() {
                 Leadership Committee
               </CardTitle>
               <p className="text-sm text-muted-foreground">
-                Elected August 1, 2026. Mandate: August 01, 2026 - August
-                10, 2027 (Article 10).
+                Officer and advisor appointments follow the three-year terms
+                defined by the Organizational Statute.
               </p>
             </CardHeader>
             <CardContent>
@@ -925,7 +923,7 @@ export function ConstitutionView() {
                 {[
                   {
                     label: "Term Duration",
-                    value: "1 year from election date",
+                    value: "3 years",
                   },
                   { label: "Max Consecutive Terms", value: "2 terms" },
                   {

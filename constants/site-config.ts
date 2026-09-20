@@ -2,11 +2,12 @@
 
 export const siteConfig = {
   name: "10/10 Ventures",
-  title: "10/10 Ventures - Professional Ventures Group for Dental Therapy Graduates",
+  legalName: "10/10 Ventures Ltd",
+  title: "10/10 Ventures Ltd - Member-Owned Savings and Investment Company",
   description:
     "10/10 Ventures is a transparent Ventures Group that empowers members to save, invest, and build a modern dental clinic together.",
-  url: "https://possocapital.vercel.app",
-  ogImage: "https://possocapital.vercel.app/og.jpg",
+  url: "https://www.1010ventures.online",
+  ogImage: "https://www.1010ventures.online/og.jpg",
   tagline: "Save together. Build together.",
   keywords: [
     "Ventures Group",
@@ -36,9 +37,10 @@ export const siteConfig = {
   platform: {
     savings: {
       monthlyContributionRwf: 100000,
+      savingsCommitmentMonths: 30,
       contributionWindow: {
-        startDay: 5,
-        endDay: 1,
+        startDay: 1,
+        endDay: 5,
       },
       latePenaltyRate: 0.1,
     },
@@ -53,9 +55,11 @@ export const siteConfig = {
       auditCadenceMonths: 4,
     },
     governance: {
-      membershipCount: 10,
+      membershipCount: 12,
       quorumRatio: 0.67,
-      leadershipTermMonths: 12,
+      leadershipTermMonths: 36,
+      investmentSpecialResolutionThresholdRwf: 5000000,
+      foundingCohortDeadline: "2026-09-01",
     },
   },
 
@@ -123,11 +127,11 @@ export const siteConfig = {
     openGraph: {
       type: "website",
       locale: "en_US",
-      url: "https://possocapital.vercel.app",
+      url: "https://www.1010ventures.online",
       siteName: "10/10 Ventures",
       images: [
         {
-          url: "https://possocapital.vercel.app/og.jpg",
+          url: "https://www.1010ventures.online/og.jpg",
           width: 1200,
           height: 630,
           alt: "10/10 Ventures",

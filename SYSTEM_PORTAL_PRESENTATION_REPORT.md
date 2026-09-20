@@ -25,7 +25,7 @@ The system supports the group's operating model:
 - Loan disbursement targeted within **3 business days** after approval.
 - Meeting participation, minutes, decisions, action tracking, and attendance records.
 - Periodic financial review and audit preparation every **4 months**.
-- A governance model based on a **two-thirds quorum** and one-year leadership terms.
+- A governance model based on a **two-thirds quorum** and the adopted **three-year officer/advisor succession model** defined in the 10/10 Ventures Statute.
 
 The portal is therefore both a member service and an internal control system: it helps people know what they owe, what has been recorded, what decisions were made, and what must happen next.
 
@@ -329,7 +329,7 @@ The repository contains several conflicting organization facts that should be ma
 
 - **Member count:** The README describes 10 members, the constitution view lists 11 founding members, and a brand asset references eight founding members.
 - **Location:** Current references include Kigali/Kacyiru/Gasabo and Nyamata/Bugesera.
-- **Establishment date:** References include January 2026 and August 1, 2026.
+- **Establishment date:** References consistently place the organization’s start in September 2026.
 - **Organization naming:** Some legacy strings refer to “Trustlink” or “Possocapital,” while the primary product name is 10/10 Ventures.
 - **Business focus:** The README describes bakery, avocado, mushroom, and winery ventures, while the constitution and metadata emphasize a future dental clinic.
 - **Contact details:** Multiple email addresses and phone numbers appear in configuration and brand assets.

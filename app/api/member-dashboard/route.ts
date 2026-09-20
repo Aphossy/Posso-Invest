@@ -1,7 +1,5 @@
-import { headers } from "next/headers"
 import type { NextRequest } from "next/server"
 import { siteConfig } from "@/constants/site-config"
-import { db } from "@/db/connection"
 import {
   announcementOperations,
   contributionOperations,
@@ -11,10 +9,9 @@ import {
 } from "@/db/operations"
 import { attendanceOperations } from "@/db/operations/attendance-operations"
 import { penaltyOperations } from "@/db/operations/penalty-operations"
-import { member } from "@/db/schemas"
 import logger from "@/utils/logger"
-import { extractRoleValue, normalizeRoleValue } from "@/utils/role-utils"
-import { and, eq } from "drizzle-orm"
+import { normalizeRoleValue } from "@/utils/role-utils"
+import { format, parse } from "date-fns"
 
 import {
   generateETag,
@@ -28,67 +25,19 @@ import {
   unauthorizedResponse,
   withApiResponse,
 } from "@/lib/api-response"
-import { auth } from "@/lib/auth"
-import { getContributionWindow } from "@/lib/contribution-window"
+import {
+  getContributionTrendPeriods,
+  getContributionWindow,
+} from "@/lib/contribution-window"
+import { getSessionUserCached } from "@/lib/get-session-cached"
 import { rateLimit } from "@/lib/rate-limiter"
 
 async function getResolvedRole() {
-  const headersList = await headers()
-  const session = await auth.api.getSession({ headers: headersList })
-  const sessionUser = session?.user || null
-  const sessionRole = normalizeRoleValue(sessionUser?.role)
-  const activeOrganizationId = session?.session?.activeOrganizationId
-
-  let activeRole: string | null = null
-
-  if (sessionUser?.id && activeOrganizationId) {
-    try {
-      const rows = await db
-        .select({ role: member.role })
-        .from(member)
-        .where(
-          and(
-            eq(member.organizationId, activeOrganizationId),
-            eq(member.userId, sessionUser.id)
-          )
-        )
-        .limit(1)
-      activeRole = normalizeRoleValue(rows[0]?.role ?? null)
-    } catch (error) {
-      logger.error("[member-dashboard:getResolvedRole] member lookup failed", {
-        userId: sessionUser.id,
-        activeOrganizationId,
-        error,
-      })
-    }
-  }
-
-  if (!activeRole) {
-    try {
-      const orgApi = auth.api as any
-      const roleResponse = orgApi?.organization?.getActiveMemberRole
-        ? await orgApi.organization.getActiveMemberRole({
-            headers: headersList,
-          })
-        : null
-      activeRole = extractRoleValue(roleResponse)
-    } catch (error) {
-      logger.error(
-        "[member-dashboard:getResolvedRole] getActiveMemberRole fallback failed",
-        {
-          userId: sessionUser?.id,
-          activeOrganizationId,
-          error,
-        }
-      )
-    }
-  }
-
+  const session = await getSessionUserCached()
   return {
-    user: sessionUser,
-    role: normalizeRoleValue(activeRole ?? sessionRole),
-    activeOrganizationId,
-    sessionRole,
+    ...session,
+    role: normalizeRoleValue(session.role ?? session.sessionRole),
+    sessionRole: normalizeRoleValue(session.sessionRole),
   }
 }
 
@@ -231,28 +180,38 @@ export const GET = withRequestLogging(
         (c) => c.status === "waived"
       ).length
 
-      // Monthly history (last 6 months, excluding months whose window hasn't opened yet)
+      // Monthly history (last 6 months, anchored to the first contribution month)
       const { startDay } = siteConfig.platform.savings.contributionWindow
-      const monthlyContributions = []
-      for (let i = 5; i >= 0; i--) {
-        const month = new Date(currentYear, currentMonth - i, 1)
-        // Skip if this month's contribution window hasn't opened yet
-        const windowOpenDate = new Date(
-          month.getFullYear(),
-          month.getMonth(),
-          startDay
-        )
-        if (windowOpenDate > now) continue
-        const monthLabel = month.toLocaleString("default", { month: "short" })
-        const period = `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, "0")}`
-        const monthContribs = myContributions.filter((c) => c.period === period)
-        const amount = monthContribs.reduce(
-          (sum, c) => sum + toNumber(c.amount),
-          0
-        )
-        const status = monthContribs[0]?.status || null
-        monthlyContributions.push({ month: monthLabel, period, amount, status })
-      }
+      const trendingPeriods = getContributionTrendPeriods(
+        contributionWindow.period,
+        6
+      )
+      const monthlyContributions = trendingPeriods
+        .map((period) => {
+          const periodDate = parse(period, "yyyy-MM", new Date())
+          const monthLabel = format(periodDate, "MMM")
+          const month = new Date(
+            periodDate.getFullYear(),
+            periodDate.getMonth(),
+            1
+          )
+          const windowOpenDate = new Date(
+            month.getFullYear(),
+            month.getMonth(),
+            startDay
+          )
+
+          if (windowOpenDate > now) return null
+
+          const monthContribs = myContributions.filter((c) => c.period === period)
+          const amount = monthContribs.reduce(
+            (sum, c) => sum + toNumber(c.amount),
+            0
+          )
+          const status = monthContribs[0]?.status || null
+          return { month: monthLabel, period, amount, status }
+        })
+        .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
 
       // Streak: consecutive confirmed periods (most recent first)
       let streak = 0

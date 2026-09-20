@@ -77,8 +77,8 @@ function addCorsHeaders(headers: Headers, request: NextRequest): void {
 
   // Allow requests from the mobile app and development servers
   const allowedOrigins = [
-    "https://www.10/10 Ventures-group.rw",
-    "https://10/10 Ventures-group.rw",
+    "https://www.1010ventures.online",
+    "https://1010ventures.online",
     "http://localhost:3000",
     "http://localhost:8081",
   ]

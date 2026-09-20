@@ -1,7 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
   siteUrl:
-    process.env.NEXT_PUBLIC_SITE_URL || "https://www.aphrodis.online",
+    process.env.NEXT_PUBLIC_SITE_URL || "https://www.1010ventures.online",
   generateRobotsTxt: true,
   generateIndexSitemap: false,
   changefreq: "daily",

@@ -122,7 +122,7 @@ export const AccountVerificationEmail = ({
 
 AccountVerificationEmail.PreviewProps = {
   userName: "Sandrine Mukandayisenga",
-  verificationUrl: "https://10/10 Ventures-group.rw/verify?token=example",
+  verificationUrl: "https://www.1010ventures.online/verify?token=example",
   expiresInHours: 24,
 } satisfies AccountVerificationEmailProps
 

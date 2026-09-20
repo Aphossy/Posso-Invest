@@ -180,7 +180,7 @@ UnverifiedAccountEmail.PreviewProps = {
     browser: "Chrome",
     os: "Windows",
   },
-  verificationUrl: "https://possocapital.vercel.app/verify?token=example",
+  verificationUrl: "https://www.1010ventures.online/verify?token=example",
   supportEmail: "possowiba01@gmail.com",
 } satisfies UnverifiedAccountEmailProps
 

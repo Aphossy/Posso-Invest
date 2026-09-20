@@ -1,14 +1,9 @@
-import { headers } from "next/headers"
 import { NextResponse } from "next/server"
-import { db } from "@/db/connection"
 import { minutesOperations } from "@/db/operations/minutes-operations"
-import { member } from "@/db/schemas"
 import { insertMeetingMinutesSchema } from "@/db/schemas/minutes-schema"
-import { extractRoleValue } from "@/utils/role-utils"
-import { and, eq } from "drizzle-orm"
 import { z } from "zod"
 
-import { auth } from "@/lib/auth"
+import { getSessionUserCached } from "@/lib/get-session-cached"
 
 const updateSchema = insertMeetingMinutesSchema
   .omit({
@@ -20,66 +15,6 @@ const updateSchema = insertMeetingMinutesSchema
   .extend({
     publishedAt: z.coerce.date().optional(),
   })
-
-async function getSessionUser() {
-  const headersList = await headers()
-  const session = await auth.api.getSession({ headers: headersList })
-  const sessionUser = session?.user || null
-  const sessionRole = sessionUser?.role ?? null
-  const activeOrganizationId = session?.session?.activeOrganizationId
-
-  let activeRole: string | null = null
-
-  if (sessionUser?.id && activeOrganizationId) {
-    try {
-      const rows = await db
-        .select({ role: member.role })
-        .from(member)
-        .where(
-          and(
-            eq(member.organizationId, activeOrganizationId),
-            eq(member.userId, sessionUser.id)
-          )
-        )
-        .limit(1)
-      activeRole = rows[0]?.role ?? null
-    } catch (error) {
-      console.error("[minutes:id:getSessionUser] member lookup failed", {
-        userId: sessionUser.id,
-        activeOrganizationId,
-        error,
-      })
-    }
-  }
-
-  if (!activeRole) {
-    try {
-      const orgApi = auth.api as any
-      const roleResponse = orgApi?.organization?.getActiveMemberRole
-        ? await orgApi.organization.getActiveMemberRole({
-            headers: headersList,
-          })
-        : null
-      activeRole = extractRoleValue(roleResponse)
-    } catch (error) {
-      console.error(
-        "[minutes:id:getSessionUser] getActiveMemberRole fallback failed",
-        {
-          userId: sessionUser?.id,
-          activeOrganizationId,
-          error,
-        }
-      )
-    }
-  }
-
-  return {
-    user: sessionUser,
-    role: activeRole,
-    activeOrganizationId,
-    sessionRole,
-  }
-}
 
 function apiError(
   code: string,
@@ -102,7 +37,7 @@ export async function GET(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { user, role } = await getSessionUser()
+  const { user, role } = await getSessionUserCached()
   if (!user) {
     return apiError(
       "UNAUTHORIZED",
@@ -145,7 +80,7 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { user, role, activeOrganizationId, sessionRole } =
-    await getSessionUser()
+    await getSessionUserCached()
   if (!user) {
     return apiError(
       "UNAUTHORIZED",
@@ -210,7 +145,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { user, role, activeOrganizationId, sessionRole } =
-    await getSessionUser()
+    await getSessionUserCached()
   if (!user) {
     return apiError(
       "UNAUTHORIZED",

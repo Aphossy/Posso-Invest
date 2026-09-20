@@ -37,7 +37,7 @@ const LEADERSHIP_TEAM = [
     phone: "078 111 111",
     icon: Crown,
     responsibilities:
-      "Chairs meetings, represents the Group externally, and has a casting vote in case of tie.",
+      "Chairs the General Assembly, directs the Lead Team, and casts the deciding vote only in a tie.",
   },
   {
     position: "Secretary",
@@ -45,7 +45,7 @@ const LEADERSHIP_TEAM = [
     phone: "0780 XXX XXX",
     icon: ClipboardList,
     responsibilities:
-      "Keeps records, prepares minutes, and manages official correspondence.",
+      "Schedules meetings, records minutes, maintains the attendance register, and preserves governance records.",
   },
   {
     position: "Treasurer",
@@ -53,7 +53,7 @@ const LEADERSHIP_TEAM = [
     phone: "0787 XXX XXX",
     icon: Wallet,
     responsibilities:
-      "Manages funds, maintains accounts, and presents financial reports to members.",
+      "Oversees contributions, loan administration, financial reports, and the fund tracker.",
   },
   {
     position: "Advisor",
@@ -62,21 +62,20 @@ const LEADERSHIP_TEAM = [
     icon: ShieldAlert,
 
     responsibilities:
-      "Provides strategic guidance and support to the leadership team.",
+      "Shadows the paired officer, supports succession, and prepares to assume the office in the next term.",
   },
 ] as const
 
 const TERM_RULES = [
-  "Each elected leader serves a one-year term from the date of election.",
-  "Leaders may serve at most two consecutive terms.",
-  "After two consecutive terms, the leader must step down for one full term before contesting again.",
+  "Each Officer and paired Advisor serves a three-year term from the date of election.",
+  "The three Advisors are the presumptive candidates to become the next three Officers after a term ends.",
+  "No individual may serve two consecutive terms in the same office, and a new Advisor slate is elected for the coming term.",
 ] as const
 
 const ELECTION_RULES = [
-  "Leadership elections are held annually at a duly constituted General Meeting.",
-  "Any member in good standing can nominate themselves or another member.",
-  "Election can be by secret ballot or show of hands, as agreed at the meeting.",
-  "A simple majority of members present elects the leader.",
+  "The General Assembly confirms outgoing Advisors as incoming Officers by Ordinary Resolution, then elects three new Advisors.",
+  "Any Member in Good Standing for at least twelve months may stand for election as Officer or Advisor.",
+  "Votes are taken by the General Assembly; ordinary resolutions require a simple majority and special resolutions require two-thirds of all members.",
 ] as const
 
 const REMOVAL_RULES = [
@@ -234,12 +233,12 @@ export function AdminLeadershipView() {
           <CardContent className="space-y-3 text-sm">
             <div className="rounded-md border p-3">
               <p className="font-medium">Term Length</p>
-              <p className="text-muted-foreground">1 year per elected term</p>
+              <p className="text-muted-foreground">Three years per elected term</p>
             </div>
             <div className="rounded-md border p-3">
-              <p className="font-medium">Consecutive Terms</p>
+              <p className="font-medium">Succession Model</p>
               <p className="text-muted-foreground">
-                Maximum of 2 consecutive terms
+                Advisors precede the next Officer slate for each role
               </p>
             </div>
             <div className="rounded-md border p-3">

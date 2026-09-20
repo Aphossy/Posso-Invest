@@ -57,17 +57,6 @@ const EMAIL_EVENT = {
 // Date / period helpers
 // ---------------------------------------------------------------------------
 
-function getCurrentPeriod(): string {
-  const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Africa/Kigali",
-    year: "numeric",
-    month: "2-digit",
-  }).formatToParts(new Date())
-  const year = parts.find((p) => p.type === "year")?.value ?? ""
-  const month = parts.find((p) => p.type === "month")?.value ?? ""
-  return `${year}-${month}`
-}
-
 function getPreviousPeriod(): string {
   const now = new Date()
   const kigaliStr = now.toLocaleString("en-US", { timeZone: "Africa/Kigali" })
@@ -101,8 +90,8 @@ function getWindowDates(period: string): {
   daysRemainingFromNow: number
 } {
   const [y, m] = period.split("-").map(Number)
-  const windowStartDate = new Date(y, m - 1, 25)
-  const windowEndDate = new Date(y, m, 6)
+  const windowStartDate = new Date(y, m, 1)
+  const windowEndDate = new Date(y, m, 5)
   const nowMs = Date.now()
   const daysRemainingFromNow = Math.max(
     0,
@@ -262,7 +251,7 @@ async function applyLatePenalties(
 }
 
 // ---------------------------------------------------------------------------
-// Function 1 - Window opened (cron: 25th of every month)
+// Function 1 - Window opened (cron: 1st of every month)
 // ---------------------------------------------------------------------------
 
 export const contributionWindowOpenedNotifier = inngest.createFunction(
@@ -270,10 +259,10 @@ export const contributionWindowOpenedNotifier = inngest.createFunction(
     id: "ventures-contribution-window-opened-notifier",
     retries: 3,
     concurrency: 1,
-    triggers: [{ cron: "TZ=Africa/Kigali 0 8 25 * *" }],
+    triggers: [{ cron: "TZ=Africa/Kigali 0 8 1 * *" }],
   },
   async ({ step, notificationOperations, logger }) => {
-    const period = await step.run("resolve-period", getCurrentPeriod)
+    const period = await step.run("resolve-period", getPreviousPeriod)
     const orgId = await step.run("resolve-organization", resolveOrganizationId)
     const label = periodLabel(period)
     const { windowStart, windowEnd, daysRemainingFromNow } =
@@ -731,7 +720,7 @@ export const contributionWindowReminderNotifier = inngest.createFunction(
 )
 
 // ---------------------------------------------------------------------------
-// Function 3 - Last day (cron: 6th of every month)
+// Function 3 - Last day (cron: 5th of every month)
 // ---------------------------------------------------------------------------
 
 export const contributionWindowLastDayNotifier = inngest.createFunction(
@@ -739,7 +728,7 @@ export const contributionWindowLastDayNotifier = inngest.createFunction(
     id: "ventures-contribution-window-last-day-notifier",
     retries: 3,
     concurrency: 1,
-    triggers: [{ cron: "TZ=Africa/Kigali 0 8 6 * *" }],
+    triggers: [{ cron: "TZ=Africa/Kigali 0 8 5 * *" }],
   },
   async ({ step, notificationOperations, logger }) => {
     const period = await step.run("resolve-period", getPreviousPeriod)
@@ -974,7 +963,7 @@ export const contributionWindowLastDayNotifier = inngest.createFunction(
 )
 
 // ---------------------------------------------------------------------------
-// Function 4 - Deadline passed (cron: 7th of every month)
+// Function 4 - Deadline passed (cron: 6th of every month)
 // ---------------------------------------------------------------------------
 
 export const contributionDeadlinePassedNotifier = inngest.createFunction(
@@ -982,7 +971,7 @@ export const contributionDeadlinePassedNotifier = inngest.createFunction(
     id: "ventures-contribution-deadline-passed-notifier",
     retries: 3,
     concurrency: 1,
-    triggers: [{ cron: "TZ=Africa/Kigali 0 8 7 * *" }],
+    triggers: [{ cron: "TZ=Africa/Kigali 0 8 6 * *" }],
   },
   async ({ step, notificationOperations, logger }) => {
     const period = await step.run("resolve-period", getPreviousPeriod)

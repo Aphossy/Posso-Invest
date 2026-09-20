@@ -32,6 +32,7 @@ const roleDescriptions: Record<UserRole, string> = {
   admin: "Full access to organization settings and member management.",
   treasurer: "Manages contributions, loans, and financial reporting.",
   secretary: "Manages meeting records, attendance, and member updates.",
+  advisor: "Supports a paired officer with governance oversight and succession preparation.",
   member: "Standard access for personal contributions and profile updates.",
   president: "Oversees organization operations and leads meetings.",
 }
@@ -81,6 +82,7 @@ export default function RolesPage() {
     admin: 0,
     treasurer: 0,
     secretary: 0,
+    advisor: 0,
     member: 0,
     president: 0,
   })
@@ -109,6 +111,7 @@ export default function RolesPage() {
         admin: 0,
         treasurer: 0,
         secretary: 0,
+        advisor: 0,
         member: 0,
         president: 0,
       }

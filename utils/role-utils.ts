@@ -4,6 +4,7 @@ export const ROLE_HIERARCHY: Record<UserRole, number> = {
   member: 1,
   secretary: 2,
   treasurer: 2,
+  advisor: 2,
   president: 3,
   admin: 4,
 }
@@ -22,6 +23,13 @@ export const ROLE_PERMISSIONS = {
     "manage_contributions",
     "manage_loans",
     "view_reports",
+  ],
+  advisor: [
+    "read_own_profile",
+    "update_own_profile",
+    "view_contributions",
+    "view_reports",
+    "view_analytics",
   ],
   president: [
     "read_own_profile",
@@ -58,7 +66,9 @@ export function isMemberOrLeadershipRole(role?: string | null): boolean {
   if (normalizedRoles.length === 0) return false
 
   return normalizedRoles.some((candidate) =>
-    ["member", "secretary", "treasurer", "president"].includes(candidate)
+    ["member", "secretary", "treasurer", "advisor", "president"].includes(
+      candidate
+    )
   )
 }
 
@@ -91,6 +101,7 @@ export function getRoleDisplayName(role: UserRole): string {
     member: "Member",
     treasurer: "Treasurer",
     secretary: "Secretary",
+    advisor: "Advisor",
     president: "President",
     admin: "Admin",
   }
@@ -102,6 +113,7 @@ export function getRoleBadgeColor(role: UserRole): string {
     member: "bg-blue-100 text-blue-800 border border-blue-300",
     secretary: "bg-emerald-100 text-emerald-800 border border-emerald-300",
     treasurer: "bg-amber-100 text-amber-800 border border-amber-300",
+    advisor: "bg-cyan-100 text-cyan-800 border border-cyan-300",
     president: "bg-purple-100 text-purple-800 border border-purple-300",
     admin: "bg-red-100 text-red-800 border border-red-300",
   }
@@ -119,6 +131,7 @@ export function getDefaultRedirect(role: string): string {
       return "/treasurer/dashboard"
     case "secretary":
       return "/secretary/dashboard"
+    case "advisor":
     case "member":
       return "/member/dashboard"
     default:
@@ -136,6 +149,7 @@ export function getRoleDashboard(role: string): string {
       return "/treasurer/dashboard"
     case "secretary":
       return "/secretary/dashboard"
+    case "advisor":
     case "member":
       return "/member/dashboard"
     default:
@@ -148,6 +162,7 @@ export const roleRoutes: Record<string, string[]> = {
   president: ["/president", "/user"],
   treasurer: ["/treasurer", "/user"],
   secretary: ["/secretary", "/user"],
+  advisor: ["/member", "/user"],
   member: ["/member", "/user"],
 }
 
@@ -155,6 +170,7 @@ const rolePriority: Record<string, number> = {
   member: 1,
   secretary: 2,
   treasurer: 2,
+  advisor: 2,
   president: 3,
   admin: 4,
 }

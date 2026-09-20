@@ -26,7 +26,7 @@ const pendingApprovals = [
     id: "TXN-011",
     type: "Fund Transfer",
     member: "Group Account",
-    amount: "80,000 RWF",
+    amount: "100,000 RWF",
     requestedBy: "Treasurer",
     date: "April 28, 2026",
     status: "Awaiting President",

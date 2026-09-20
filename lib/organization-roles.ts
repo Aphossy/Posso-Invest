@@ -57,6 +57,15 @@ export const organizationRoles = {
     loan: ["read"],
     contribution: ["read"],
   }),
+  advisor: organizationAccess.newRole({
+    member: ["read"],
+    financial: ["read"],
+    meeting: ["read", "update"],
+    announcement: ["read"],
+    report: ["read"],
+    loan: ["read"],
+    contribution: ["read"],
+  }),
   member: organizationAccess.newRole({
     member: ["read"],
     financial: ["read"],

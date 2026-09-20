@@ -42,6 +42,7 @@ const ROLE_LABELS: Record<string, string> = {
   president: "President",
   treasurer: "Treasurer",
   secretary: "Secretary",
+  advisor: "Advisor",
   member: "Member",
 }
 
@@ -63,11 +64,11 @@ function formatMemberId(id: string) {
 }
 
 function formatJoinDate(date: Date | string | null | undefined) {
-  if (!date) return "Jan 2026"
+  if (!date) return "Sep 2026"
   try {
     return format(new Date(date), "MMM yyyy")
   } catch {
-    return "Jan 2026"
+    return "Sep 2026"
   }
 }
 

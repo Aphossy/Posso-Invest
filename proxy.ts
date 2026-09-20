@@ -43,7 +43,7 @@ export async function proxy(request: NextRequest) {
 
     // List of allowed origins
     const allowedOrigins = [
-      process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000", // Your Next.js app
+      process.env.NEXT_PUBLIC_SITE_URL || "https://www.1010ventures.online", // Your Next.js app
       // Add more origins as needed for production
     ]
 
