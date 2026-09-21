@@ -59,6 +59,7 @@ export const siteConfig = {
       quorumRatio: 0.67,
       leadershipTermMonths: 36,
       investmentSpecialResolutionThresholdRwf: 5000000,
+      foundingDate: "2026-09-01",
       foundingCohortDeadline: "2026-09-01",
     },
   },

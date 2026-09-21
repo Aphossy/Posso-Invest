@@ -157,8 +157,8 @@ export default function MeetingsMinutesPage() {
 function getInitialMinutes(): EnrichedMinute[] {
   return [
     {
-      id: "inaugural-jan-2026",
-      meetingId: "meeting-inaugural-jan-2026",
+      id: "inaugural-sep-2026",
+      meetingId: "meeting-inaugural-sep-2026",
       status: "published" as const,
       summary:
         "Official inaugural (constitutive) meeting of 10/10 Ventures - Ventures Savings & Investment Group.",
@@ -177,25 +177,25 @@ function getInitialMinutes(): EnrichedMinute[] {
           {
             task: "Finalize Constitution draft for all member signatures",
             owner: "Leadership Committee",
-            dueDate: "2026-02-28",
+            dueDate: "2026-09-15",
             status: "in-progress",
           },
           {
             task: "Sign legal documents before Notary (all members)",
             owner: "All Members",
-            dueDate: "2026-03-15",
+            dueDate: "2026-09-20",
             status: "pending",
           },
           {
             task: "Open official Equity Bank Rwanda group account",
             owner: "President & Treasurer",
-            dueDate: "2026-03-31",
+            dueDate: "2026-09-30",
             status: "pending",
           },
           {
             task: "First monthly contribution (80,000–160,000 RWF)",
             owner: "All Members",
-            dueDate: "2026-04-06",
+            dueDate: "2026-10-05",
             status: "pending",
           },
         ],
@@ -214,11 +214,11 @@ function getInitialMinutes(): EnrichedMinute[] {
       },
       recordedBy: null,
       approvedBy: null,
-      publishedAt: new Date("2026-01-10"),
-      createdAt: new Date("2026-01-10"),
-      updatedAt: new Date("2026-01-10"),
+      publishedAt: new Date("2026-09-01"),
+      createdAt: new Date("2026-09-01"),
+      updatedAt: new Date("2026-09-01"),
       meetingTitle: "Inaugural (Constitutive) Meeting",
-      meetingDate: "2026-01-10",
+      meetingDate: "2026-09-01",
     },
   ]
 }

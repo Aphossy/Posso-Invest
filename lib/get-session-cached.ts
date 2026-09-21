@@ -60,6 +60,24 @@ export const getSessionUserCached = cache(async (): Promise<SessionInfo> => {
     }
   }
 
+  // Some sessions do not carry an active organization yet. Resolve the
+  // member role from the user's membership so profile updates still work.
+  if (!activeRole && sessionUser?.id) {
+    try {
+      const rows = await db
+        .select({ role: member.role })
+        .from(member)
+        .where(eq(member.userId, sessionUser.id))
+        .limit(1)
+      activeRole = rows[0]?.role ?? null
+    } catch (error) {
+      console.error("[getSessionUserCached] user membership lookup failed", {
+        userId: sessionUser.id,
+        error,
+      })
+    }
+  }
+
   // Fallback to organization API if member role not found
   if (!activeRole && sessionUser?.id) {
     try {

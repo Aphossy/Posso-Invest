@@ -9,7 +9,6 @@ import {
   Edit,
   HandCoins,
   Save,
-  ShieldCheck,
   Smartphone,
   UserRound,
   X,
@@ -45,13 +44,6 @@ type MobileMoneyProvider = NonNullable<
   VenturesProfileMetadata["mobileMoneyProvider"]
 >
 
-const VENTURES_ALLOWED_ROLES = new Set([
-  "member",
-  "treasurer",
-  "president",
-  "admin",
-])
-
 function maskAccountNumber(value?: string) {
   if (!value) return "Not provided"
   const normalized = value.trim()
@@ -69,7 +61,7 @@ export function ProfileVenturesInfo({
   profile,
   onUpdate,
 }: ProfileVenturesInfoProps) {
-  const { role, session } = useActiveRole()
+  const { session } = useActiveRole()
   const [isEditing, setIsEditing] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -116,7 +108,7 @@ export function ProfileVenturesInfo({
 
   const hasChanges = JSON.stringify(formData) !== JSON.stringify(originalData)
   const isOwner = session?.user?.id === profile.id
-  const canEditVentures = isOwner && !!role && VENTURES_ALLOWED_ROLES.has(role)
+  const canEditVentures = isOwner
 
   const navGuard = useNavigationGuard({
     enabled: isEditing && hasChanges && canEditVentures,

@@ -16,53 +16,62 @@ import {
 } from "lucide-react"
 
 import { useCountdown } from "@/hooks/use-countdown"
+import { siteConfig } from "@/constants/site-config"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Separator } from "@/components/ui/separator"
 
+const CURRENT_TERM_START = new Date(
+  `${siteConfig.platform.governance.foundingDate}T00:00:00+02:00`
+)
+const CURRENT_TERM_END = new Date(CURRENT_TERM_START)
+CURRENT_TERM_END.setMonth(
+  CURRENT_TERM_END.getMonth() + siteConfig.platform.governance.leadershipTermMonths
+)
+
 const CURRENT_TERM = {
-  startDate: "2026-01-10T00:00:00+02:00",
-  endDate: "2027-01-10T00:00:00+02:00",
+  startDate: CURRENT_TERM_START.toISOString(),
+  endDate: CURRENT_TERM_END.toISOString(),
 }
 
 const NEXT_ELECTION = {
-  electionDate: "2027-01-10T00:00:00+02:00",
+  electionDate: CURRENT_TERM.endDate,
 }
 
 const LEADERSHIP_TEAM = [
   {
     position: "President",
-    name: "PRESIDENT Name",
-    phone: "078 111 111",
+    name: "Sosthene NIYONSHUTI",
+    phone: "0787 861 158",
     icon: Crown,
     responsibilities:
       "Chairs the General Assembly, directs the Lead Team, and casts the deciding vote only in a tie.",
   },
   {
     position: "Secretary",
-    name: "SECRETARY Name",
-    phone: "0780 XXX XXX",
+    name: "Jean Paul RUKEBA",
+    phone: "0783 485 154",
     icon: ClipboardList,
     responsibilities:
       "Schedules meetings, records minutes, maintains the attendance register, and preserves governance records.",
   },
   {
     position: "Treasurer",
-    name: "TREASURER Name",
-    phone: "0787 XXX XXX",
+    name: "Gabriel TWAMBAZIMANA",
+    phone: "0785 743 404",
     icon: Wallet,
     responsibilities:
       "Oversees contributions, loan administration, financial reports, and the fund tracker.",
   },
   {
-    position: "Advisor",
-    name: "ADVISOR Name",
-    phone: "0785 XXX XXX",
+    position: "Conflict Resolution",
+    name: "Marius Ishimwe",
+    phone: "+90 539 101 39 63",
     icon: ShieldAlert,
 
     responsibilities:
-      "Shadows the paired officer, supports succession, and prepares to assume the office in the next term.",
+      "Mediates disputes, ensures compliance with the constitution, and safeguards member trust.",
   },
 ] as const
 

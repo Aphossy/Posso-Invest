@@ -14,7 +14,7 @@ import {
 import { member } from "@/db/schemas"
 import logger from "@/utils/logger"
 import { extractRoleValue, normalizeRoleValue } from "@/utils/role-utils"
-import { format, parse, subMonths } from "date-fns"
+import { format, parse } from "date-fns"
 import { and, count, eq } from "drizzle-orm"
 
 import {
@@ -158,10 +158,9 @@ export const GET = withRequestLogging(
 
     try {
       const now = new Date()
-      const currentYear = now.getFullYear()
 
       const { monthlyContributionRwf } = siteConfig.platform.savings
-      const { membershipCount, leadershipTermMonths } =
+      const { membershipCount, leadershipTermMonths, foundingDate } =
         siteConfig.platform.governance
       const contributionWindow = getContributionWindow(now)
 
@@ -314,8 +313,8 @@ export const GET = withRequestLogging(
         pendingUsers.map((u) => [u.id, u.name || u.email])
       )
 
-      // Leadership term calc
-      const termStart = new Date(currentYear, 0, 10) // Jan 10 of current year (approximation)
+      // The founding committee was elected when the venture started.
+      const termStart = new Date(`${foundingDate}T00:00:00+02:00`)
       const termEnd = new Date(
         termStart.getFullYear(),
         termStart.getMonth() + leadershipTermMonths,

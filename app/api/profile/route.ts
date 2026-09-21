@@ -16,6 +16,7 @@ import {
 } from "@/lib/api-response"
 import { auth } from "@/lib/auth"
 import { getAuthSession } from "@/lib/auth-helpers"
+import { getEffectiveRole } from "@/lib/get-session-cached"
 import { rateLimit } from "@/lib/rate-limiter"
 
 const VENTURES_ALLOWED_ROLES = new Set([
@@ -249,7 +250,7 @@ export async function PATCH(request: NextRequest) {
 
     const hasVenturesUpdate = updates.metadata?.venturesProfile !== undefined
     if (hasVenturesUpdate) {
-      let resolvedRole = session.user?.role ?? null
+      let resolvedRole = await getEffectiveRole()
 
       try {
         const orgApi = (auth.api as any).organization

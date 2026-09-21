@@ -11,7 +11,7 @@ export const organisationEmail =
 export const organisationCCEmail =
   process.env.NEXT_PUBLIC_CC_EMAIL || "hakuzweaphossy@gmail.com"
 export const organisationPhone =
-  process.env.NEXT_PUBLIC_ORGANISATION_PHONE || "+250 785 251 067"
+  process.env.NEXT_PUBLIC_ORGANISATION_PHONE || "+250 784 343 073"
 export const organisationWebsite =
   process.env.NEXT_PUBLIC_ORGANISATION_WEBSITE ||
   "https://www.1010ventures.online"

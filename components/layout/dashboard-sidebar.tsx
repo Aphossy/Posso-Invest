@@ -53,8 +53,8 @@ export function DashboardSidebar() {
           <Image
             src="/brand/logo.png"
             alt="10/10 Ventures Group logo"
-            width={200}
-            height={300}
+            width={500}
+            height={500}
             className="rounded-lg size-10"
           />
           <div className="grid flex-1 text-left text-sm">

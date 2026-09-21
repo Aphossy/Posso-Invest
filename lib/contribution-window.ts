@@ -1,5 +1,5 @@
 import { siteConfig } from "@/constants/site-config"
-import { addMonths, format, parse, subMonths } from "date-fns"
+import { addMonths, endOfDay, format, parse, subMonths } from "date-fns"
 
 export const FIRST_CONTRIBUTION_PERIOD = "2026-09"
 
@@ -15,27 +15,30 @@ export interface ContributionWindow {
  * Compute the current contribution window for a given instant (used by API routes).
  *
  * The statute assigns each contribution to a calendar month and gives members
- * the 1st through 5th of the following month to pay it.
+ * the 1st of that month through the 5th of the following month to pay it.
  */
 export function getContributionWindow(now: Date): ContributionWindow {
   const { startDay, endDay } = siteConfig.platform.savings.contributionWindow
-  const year = now.getFullYear()
-  const month = now.getMonth()
-  const day = now.getDate()
-
-  const currentPeriod = new Date(year, month, 1)
-  const periodStart = day <= endDay ? subMonths(currentPeriod, 1) : currentPeriod
+  const currentPeriod = new Date(now.getFullYear(), now.getMonth(), 1)
+  const currentMonthWindowEnd = endOfDay(new Date(
+    currentPeriod.getFullYear(),
+    currentPeriod.getMonth(),
+    endDay
+  ))
+  const periodStart =
+    now <= currentMonthWindowEnd ? subMonths(currentPeriod, 1) : currentPeriod
+  const isOpen = true
   const windowStart = new Date(
     periodStart.getFullYear(),
-    periodStart.getMonth() + 1,
+    periodStart.getMonth(),
     startDay
   )
-  const windowEnd = new Date(
-    periodStart.getFullYear(),
-    periodStart.getMonth() + 1,
+  const followingPeriod = addMonths(periodStart, 1)
+  const windowEnd = endOfDay(new Date(
+    followingPeriod.getFullYear(),
+    followingPeriod.getMonth(),
     endDay
-  )
-  const isOpen = day <= endDay
+  ))
 
   const label = `${windowStart.toLocaleString("default", { month: "short" })} ${windowStart.getDate()} – ${windowEnd.toLocaleString("default", { month: "short" })} ${windowEnd.getDate()}`
 
@@ -55,7 +58,7 @@ export function getContributionWindow(now: Date): ContributionWindow {
 
 /**
  * Given a period string ("yyyy-MM"), return the window start/end dates.
- * Window = startDay through endDay of the following month.
+ * Window = startDay of the period through endDay of the following month.
  */
 export function getWindowForPeriod(period: string): {
   windowStart: Date
@@ -66,11 +69,13 @@ export function getWindowForPeriod(period: string): {
   const nextMonth = addMonths(periodDate, 1)
   return {
     windowStart: new Date(
-      nextMonth.getFullYear(),
-      nextMonth.getMonth(),
+      periodDate.getFullYear(),
+      periodDate.getMonth(),
       startDay
     ),
-    windowEnd: new Date(nextMonth.getFullYear(), nextMonth.getMonth(), endDay),
+    windowEnd: endOfDay(
+      new Date(nextMonth.getFullYear(), nextMonth.getMonth(), endDay)
+    ),
   }
 }
 
@@ -79,9 +84,17 @@ export function getWindowForPeriod(period: string): {
  */
 export function getActivePeriod(): string {
   const today = new Date()
-  if (today.getDate() <= siteConfig.platform.savings.contributionWindow.endDay)
-    return format(subMonths(today, 1), "yyyy-MM")
-  return format(today, "yyyy-MM")
+  const periodDate = new Date(today.getFullYear(), today.getMonth(), 1)
+  const currentMonthWindowEnd = endOfDay(new Date(
+    periodDate.getFullYear(),
+    periodDate.getMonth(),
+    siteConfig.platform.savings.contributionWindow.endDay
+  ))
+
+  return format(
+    today <= currentMonthWindowEnd ? subMonths(periodDate, 1) : periodDate,
+    "yyyy-MM"
+  )
 }
 
 export function getContributionTrendPeriods(

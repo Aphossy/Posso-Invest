@@ -504,8 +504,9 @@ export function MemberDashboardContent() {
               </p>
               {!isVenturesAlertCollapsed && (
                 <AlertDescription className="mt-1">
-                  The committee needs your payout information to disburse loans
-                  and matching records. Please{" "}
+                  You are responsible for keeping your payout information up to
+                  date so the committee can disburse loans and matching records.
+                  Please{" "}
                   <Link
                     href="/member/profile?tab=ventures"
                     className="font-medium underline underline-offset-2">
