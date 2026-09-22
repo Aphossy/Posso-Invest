@@ -214,7 +214,7 @@ export default async function FinancialAuditsPage({
               </select>
             </div>
 
-            <div className="min-w-0 space-y-1">
+            {/* <div className="min-w-0 space-y-1">
               <label
                 htmlFor="action"
                 className="text-xs font-medium text-muted-foreground">
@@ -232,7 +232,7 @@ export default async function FinancialAuditsPage({
                   </option>
                 ))}
               </select>
-            </div>
+            </div> */}
 
             <div className="min-w-0 space-y-1">
               <label
