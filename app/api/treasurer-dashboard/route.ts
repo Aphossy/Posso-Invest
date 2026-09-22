@@ -34,68 +34,16 @@ import {
   getContributionWindow,
 } from "@/lib/contribution-window"
 import { computeFundPosition } from "@/lib/fund-position"
+import { getSessionUserCached } from "@/lib/get-session-cached"
 import { rateLimit } from "@/lib/rate-limiter"
 
 async function getResolvedRole() {
-  const headersList = await headers()
-  const session = await auth.api.getSession({ headers: headersList })
-  const sessionUser = session?.user || null
-  const sessionRole = normalizeRoleValue(sessionUser?.role)
-  const activeOrganizationId = session?.session?.activeOrganizationId
-
-  let activeRole: string | null = null
-
-  if (sessionUser?.id && activeOrganizationId) {
-    try {
-      const rows = await db
-        .select({ role: member.role })
-        .from(member)
-        .where(
-          and(
-            eq(member.organizationId, activeOrganizationId),
-            eq(member.userId, sessionUser.id)
-          )
-        )
-        .limit(1)
-      activeRole = normalizeRoleValue(rows[0]?.role ?? null)
-    } catch (error) {
-      logger.error(
-        "[treasurer-dashboard:getResolvedRole] member lookup failed",
-        {
-          userId: sessionUser.id,
-          activeOrganizationId,
-          error,
-        }
-      )
-    }
-  }
-
-  if (!activeRole) {
-    try {
-      const orgApi = auth.api as any
-      const roleResponse = orgApi?.organization?.getActiveMemberRole
-        ? await orgApi.organization.getActiveMemberRole({
-            headers: headersList,
-          })
-        : null
-      activeRole = extractRoleValue(roleResponse)
-    } catch (error) {
-      logger.error(
-        "[treasurer-dashboard:getResolvedRole] getActiveMemberRole fallback failed",
-        {
-          userId: sessionUser?.id,
-          activeOrganizationId,
-          error,
-        }
-      )
-    }
-  }
+  const session = await getSessionUserCached()
 
   return {
-    user: sessionUser,
-    role: normalizeRoleValue(activeRole ?? sessionRole),
-    activeOrganizationId,
-    sessionRole,
+    ...session,
+    role: normalizeRoleValue(session.role ?? session.sessionRole),
+    sessionRole: normalizeRoleValue(session.sessionRole),
   }
 }
 

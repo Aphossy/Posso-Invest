@@ -26,17 +26,8 @@ export function useOAuthLoginTracker() {
         const isOAuthCallback =
           params.has("state") || params.has("code") || params.has("oauth")
 
-        // Also check if user just signed in (within last 10 seconds)
-        const sessionCreatedAt = session.user.createdAt
-          ? new Date(session.user.createdAt)
-          : null
-        const now = new Date()
-        const isNewSession =
-          sessionCreatedAt && now.getTime() - sessionCreatedAt.getTime() < 10000
-
-        // If this looks like an OAuth callback or new session, update last login
-        if (isOAuthCallback || isNewSession || true) {
-          // Always update on page load if authenticated
+        // Only track logins that came through an OAuth callback.
+        if (isOAuthCallback) {
           await updateLastLogin()
           // Send login notification email
           await sendLoginNotification()

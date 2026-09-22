@@ -1,9 +1,6 @@
 // app/(auth)/login/page.tsx
-import type { Metadata, Route } from "next"
-import { headers } from "next/headers"
-import { redirect } from "next/navigation"
+import type { Metadata } from "next"
 
-import { auth } from "@/lib/auth"
 import LoginPageComponent from "@/components/auth-pages/login-form"
 
 // Map raw error codes to user-friendly messages
@@ -28,14 +25,6 @@ interface LoginPageProps {
 
 async function LoginPage({ searchParams }: LoginPageProps) {
   const searchParamsResolved = await searchParams
-
-  const session = await auth.api.getSession({ headers: await headers() })
-  if (session?.user) {
-    const redirectTo = searchParamsResolved.from
-      ? `/redirect?from=${encodeURIComponent(searchParamsResolved.from)}`
-      : "/redirect"
-    redirect(redirectTo as Route)
-  }
 
   // Handle error param
   let rawError: string | undefined

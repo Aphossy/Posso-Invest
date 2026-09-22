@@ -12,10 +12,8 @@ import { toast } from "sonner"
 import * as z from "zod"
 
 import { messageVariants, staggerContainer } from "@/lib/animations"
-import { sendLoginNotification, updateLastLogin } from "@/lib/auth-actions"
 import { authClient, isOneTapEnabled } from "@/lib/auth-client"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { useOAuthLoginTracker } from "@/hooks/use-oauth-login-tracker"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -46,7 +44,6 @@ import { AnimatedOTPInput } from "@/components/auth/animated-otp-input"
 import { AnimatedPasswordField } from "@/components/auth/animated-password-field"
 
 import { AnimatedSocialButtons } from "../auth/animated-social-login-buttons"
-import { Loader } from "../common/loader"
 
 const TUTORIAL_URL = "https://youtu.be/Lrf3ECWCfDM"
 
@@ -129,9 +126,6 @@ export default function LoginPageComponent({ error }: LoginPageComponentProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)")
   const [guideOpen, setGuideOpen] = useState(false)
 
-  // Track OAuth logins and update last login
-  useOAuthLoginTracker()
-
   useEffect(() => {
     if (error) {
       toast.error(error)
@@ -169,21 +163,39 @@ export default function LoginPageComponent({ error }: LoginPageComponentProps) {
     if (!isOneTapEnabled || twoFactorRequired || session?.user) return
     if (hasRequestedOneTap.current) return
 
-    hasRequestedOneTap.current = true
-    const redirectUrl = redirectFrom
-      ? `/redirect?from=${encodeURIComponent(redirectFrom)}`
-      : "/redirect"
+    const startOneTap = () => {
+      hasRequestedOneTap.current = true
+      const redirectUrl = redirectFrom
+        ? `/redirect?from=${encodeURIComponent(redirectFrom)}`
+        : "/redirect"
 
-    void authClient
-      .oneTap({
-        callbackURL: redirectUrl,
-      })
-      .catch((oneTapError) => {
-        // AbortError is expected when FedCM prompt is dismissed or navigated away
-        if (oneTapError?.name !== "AbortError") {
-          console.error("Google One Tap initialization failed:", oneTapError)
-        }
-      })
+      void authClient
+        .oneTap({
+          callbackURL: redirectUrl,
+        })
+        .catch((oneTapError) => {
+          // AbortError is expected when FedCM prompt is dismissed or navigated away
+          if (oneTapError?.name !== "AbortError") {
+            console.error("Google One Tap initialization failed:", oneTapError)
+          }
+        })
+    }
+
+    const idleCallback = window.requestIdleCallback?.(startOneTap, {
+      timeout: 1500,
+    })
+    const timeoutId = idleCallback === undefined
+      ? window.setTimeout(startOneTap, 1000)
+      : undefined
+
+    return () => {
+      if (idleCallback !== undefined) {
+        window.cancelIdleCallback(idleCallback)
+      }
+      if (timeoutId !== undefined) {
+        window.clearTimeout(timeoutId)
+      }
+    }
   }, [redirectFrom, session?.user, twoFactorRequired])
 
   // Cooldown timer for resend
@@ -293,22 +305,10 @@ export default function LoginPageComponent({ error }: LoginPageComponentProps) {
               return
             }
 
-            setSuccessMessage("Signed in successfully! Redirecting...")
-
-            // Update last login timestamp
-            try {
-              await updateLastLogin()
-              // Send login notification email
-              await sendLoginNotification()
-            } catch (error) {
-              console.error("Failed to update last login:", error)
-              // Don't fail login if this fails
-            }
-
             const redirectUrl = redirectFrom
               ? `/redirect?from=${encodeURIComponent(redirectFrom)}`
               : "/redirect"
-            void router.push(redirectUrl as Route)
+            void router.replace(redirectUrl as Route)
           },
           onError: (ctx) => {
             const errorMessage = ctx.error.message || "Login failed"
@@ -348,7 +348,7 @@ export default function LoginPageComponent({ error }: LoginPageComponentProps) {
     setErrors((prev) => ({ ...prev, code: undefined }))
 
     try {
-      const { data, error } = await authClient.twoFactor.verifyOtp({
+      const { error } = await authClient.twoFactor.verifyOtp({
         code,
         // trustDevice: formData.rememberMe,
         trustDevice: false,
@@ -367,24 +367,11 @@ export default function LoginPageComponent({ error }: LoginPageComponentProps) {
       // Verification successful
       setSuccessMessage("Verified successfully!")
 
-      // Update last login timestamp
-      try {
-        await updateLastLogin()
-        // Send login notification email
-        await sendLoginNotification()
-      } catch (error) {
-        console.error("Failed to update last login:", error)
-        // Don't fail login if this fails
-      }
-
       const redirectUrl = redirectFrom
         ? `/redirect?from=${encodeURIComponent(redirectFrom)}`
         : "/redirect"
 
-      // Small delay to show success message
-      setTimeout(() => {
-        void router.push(redirectUrl as Route)
-      }, 500)
+      void router.replace(redirectUrl as Route)
 
       return true
     } catch (error: any) {
