@@ -70,10 +70,23 @@ void validateBetterAuthSchema().catch((error) => {
   )
 })
 
+const trustedOrigins = [
+  "https://www.1010ventures.online",
+  "https://1010ventures.online",
+  "http://localhost:3000",
+  "http://localhost:8081",
+  "http://127.0.0.1:3000",
+  "https://127.0.0.1:3000",
+  ...(process.env.BETTER_AUTH_TRUSTED_ORIGINS?.split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean) ?? []),
+]
+
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
   }),
+  trustedOrigins,
   user: {
     deleteUser: {
       enabled: true,

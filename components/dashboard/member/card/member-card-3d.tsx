@@ -104,87 +104,57 @@ interface MemberCard3DProps extends CardData {
 function CardTexture({ name, role, memberId, joinDate }: CardData) {
   return (
     <>
-      {/* Isolated camera for the RenderTexture scene */}
       <PerspectiveCamera makeDefault manual position={[0, 0, 3.8]} fov={52} />
 
-      {/* ── Background layers ── */}
-      {/* Main gradient background */}
       <mesh>
         <planeGeometry args={[2.4, 3.1]} />
-        <meshBasicMaterial color="#0a1528" />
+        <meshBasicMaterial color="#f6f8f6" />
       </mesh>
 
-      {/* Gradient overlay from top */}
-      <mesh position={[0, 1.3, 0.0005]}>
-        <planeGeometry args={[2.4, 2.2]} />
-        <meshBasicMaterial color="#152d50" transparent opacity={0.4} />
+      <mesh position={[0, 1.14, 0.001]}>
+        <planeGeometry args={[2.4, 1.38]} />
+        <meshBasicMaterial color="#004225" />
       </mesh>
 
-      {/* Enhanced depth overlay - bottom */}
-      <mesh position={[0, -0.8, 0.0005]}>
-        <planeGeometry args={[2.4, 1.5]} />
-        <meshBasicMaterial color="#081020" transparent opacity={0.3} />
+      <mesh position={[0, 1.54, 0.002]}>
+        <planeGeometry args={[2.4, 0.07]} />
+        <meshBasicMaterial color="#004225" />
       </mesh>
 
-      {/* Subtle diagonal stripes */}
-      {[-1.0, -0.5, 0.0, 0.5, 1.0].map((x, i) => (
-        <mesh key={i} position={[x, 0, 0.001]} rotation={[0, 0, Math.PI / 6]}>
-          <planeGeometry args={[0.018, 5.5]} />
-          <meshBasicMaterial color="#d4af37" transparent opacity={0.08} />
-        </mesh>
-      ))}
-
-      {/* ── Premium accent bars ── */}
-      {/* Top accent bar - more refined */}
-      <mesh position={[0, 1.48, 0.002]}>
-        <planeGeometry args={[2.4, 0.22]} />
-        <meshBasicMaterial color="#d4af37" />
+      <mesh position={[0.8, 1.14, 0.003]}>
+        <circleGeometry args={[0.3, 32]} />
+        <meshBasicMaterial color="#ffffff" />
       </mesh>
 
-      {/* Thin highlight line below top bar */}
-      <mesh position={[0, 1.35, 0.002]}>
-        <planeGeometry args={[2.4, 0.02]} />
-        <meshBasicMaterial color="#f4e4c1" transparent opacity={0.6} />
+      <mesh position={[0.8, 1.14, 0.005]}>
+        <ringGeometry args={[0.18, 0.24, 32]} />
+        <meshBasicMaterial color="#004225" />
       </mesh>
 
-      {/* Bottom accent bar */}
-      <mesh position={[0, -1.48, 0.002]}>
-        <planeGeometry args={[2.4, 0.12]} />
-        <meshBasicMaterial color="#d4af37" />
-      </mesh>
-
-      {/* ── Premium Branding ── */}
       <Text
-        position={[0, 1.16, 0.003]}
-        fontSize={0.14}
-        color="#f4e4c1"
-        anchorX="center"
+        position={[-0.6, 1.15, 0.003]}
+        fontSize={0.15}
+        color="#ffffff"
+        anchorX="left"
         anchorY="middle"
-        letterSpacing={0.14}>
+        letterSpacing={0.02}>
         10/10 Ventures
       </Text>
 
       <Text
-        position={[0, 0.87, 0.003]}
+        position={[-0.6, 0.82, 0.003]}
         fontSize={0.08}
-        color="#96b8d4"
-        anchorX="center"
+        color="#dfece3"
+        anchorX="left"
         anchorY="middle"
-        letterSpacing={0.1}>
+        letterSpacing={0.08}>
         MEMBERSHIP CARD
       </Text>
 
-      {/* Refined gold divider */}
-      <mesh position={[0, 0.7, 0.002]}>
-        <planeGeometry args={[2.2, 0.008]} />
-        <meshBasicMaterial color="#d4af37" transparent opacity={0.65} />
-      </mesh>
-
-      {/* ── Enhanced Member Info ── */}
       <Text
-        position={[0, 0.31, 0.003]}
+        position={[0, 0.15, 0.003]}
         fontSize={0.16}
-        color="#ffffff"
+        color="#0f1f1a"
         anchorX="center"
         anchorY="middle"
         maxWidth={2.2}
@@ -193,83 +163,64 @@ function CardTexture({ name, role, memberId, joinDate }: CardData) {
       </Text>
 
       <Text
-        position={[0, 0.05, 0.003]}
-        fontSize={0.09}
-        color="#d4af37"
+        position={[0, -0.18, 0.003]}
+        fontSize={0.085}
+        color="#004225"
         anchorX="center"
         anchorY="middle"
         letterSpacing={0.08}>
-        {`◈  ${role.toUpperCase()}  ◈`}
+        {role.toUpperCase()}
       </Text>
 
-      {/* Divider line */}
-      <mesh position={[0, -0.15, 0.002]}>
-        <planeGeometry args={[2.2, 0.005]} />
-        <meshBasicMaterial color="#1a3a5f" />
+      <mesh position={[0, -0.52, 0.002]}>
+        <planeGeometry args={[2.2, 0.006]} />
+        <meshBasicMaterial color="#d7e4dc" />
       </mesh>
 
-      {/* Vertical separator */}
-      <mesh position={[0, -0.65, 0.002]}>
-        <planeGeometry args={[0.005, 0.62]} />
-        <meshBasicMaterial color="#1a3a5f" />
-      </mesh>
-
-      {/* MEMBER SINCE - Left */}
       <Text
-        position={[-0.58, -0.36, 0.003]}
-        fontSize={0.068}
-        color="#96b8d4"
+        position={[-0.58, -0.82, 0.003]}
+        fontSize={0.062}
+        color="#4a5d55"
         anchorX="center"
         anchorY="middle"
         letterSpacing={0.06}>
         MEMBER SINCE
       </Text>
       <Text
-        position={[-0.58, -0.56, 0.003]}
-        fontSize={0.105}
-        color="#ffffff"
+        position={[-0.58, -1.08, 0.003]}
+        fontSize={0.1}
+        color="#0f1f1a"
         anchorX="center"
         anchorY="middle">
         {joinDate}
       </Text>
 
-      {/* MEMBER ID - Right */}
       <Text
-        position={[0.58, -0.36, 0.003]}
-        fontSize={0.068}
-        color="#96b8d4"
+        position={[0.58, -0.82, 0.003]}
+        fontSize={0.062}
+        color="#4a5d55"
         anchorX="center"
         anchorY="middle"
         letterSpacing={0.06}>
         MEMBER ID
       </Text>
       <Text
-        position={[0.58, -0.56, 0.003]}
-        fontSize={0.088}
-        color="#ffffff"
+        position={[0.58, -1.08, 0.003]}
+        fontSize={0.09}
+        color="#0f1f1a"
         anchorX="center"
         anchorY="middle"
         letterSpacing={0.04}>
         {memberId}
       </Text>
 
-      {/* Footer branding */}
       <Text
-        position={[0, -0.96, 0.003]}
-        fontSize={0.07}
-        color="#96b8d4"
+        position={[0, -1.46, 0.003]}
+        fontSize={0.065}
+        color="#5b6e67"
         anchorX="center"
         anchorY="middle">
         10/10 Ventures - Savings & Investment Group
-      </Text>
-      <Text
-        position={[0, -1.18, 0.003]}
-        fontSize={0.067}
-        color="#d4af37"
-        anchorX="center"
-        anchorY="middle"
-        letterSpacing={0.07}>
-        KIGALI · RWANDA
       </Text>
     </>
   )
