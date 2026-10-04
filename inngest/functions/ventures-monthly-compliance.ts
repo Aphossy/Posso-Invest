@@ -25,6 +25,7 @@ import {
   monthlyMemberSummaryEmailEvent,
 } from "@/inngest/events"
 import { generateUUID } from "@/utils/generate-id"
+import { MEMBER_ROLES } from "@/utils/role-utils"
 import { render } from "@react-email/components"
 import { and, eq, inArray } from "drizzle-orm"
 
@@ -123,7 +124,10 @@ export const monthlyComplianceDispatcher = inngest.createFunction(
           .from(member)
           .innerJoin(user, eq(member.userId, user.id))
           .where(
-            and(eq(member.organizationId, orgId), eq(member.role, "member"))
+            and(
+              eq(member.organizationId, orgId),
+              inArray(member.role, [...MEMBER_ROLES])
+            )
           )
         // Deduplicate by userId
         const deduped = new Map<string, MemberRow>()

@@ -13,9 +13,13 @@ import {
 } from "@/db/operations"
 import { member } from "@/db/schemas"
 import logger from "@/utils/logger"
-import { extractRoleValue, normalizeRoleValue } from "@/utils/role-utils"
+import {
+  extractRoleValue,
+  MEMBER_ROLES,
+  normalizeRoleValue,
+} from "@/utils/role-utils"
 import { format, parse } from "date-fns"
-import { and, count, eq } from "drizzle-orm"
+import { and, count, eq, inArray } from "drizzle-orm"
 
 import {
   generateETag,
@@ -185,7 +189,7 @@ export const GET = withRequestLogging(
               .where(
                 and(
                   eq(member.organizationId, activeOrganizationId),
-                  eq(member.role, "member")
+                  inArray(member.role, [...MEMBER_ROLES])
                 )
               )
           : Promise.resolve([{ value: 0 }]),

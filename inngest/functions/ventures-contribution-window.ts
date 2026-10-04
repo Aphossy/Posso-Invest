@@ -19,6 +19,7 @@ import {
   markEmailSent,
 } from "@/inngest/email-log-helpers"
 import { generateUUID } from "@/utils/generate-id"
+import { MEMBER_ROLES } from "@/utils/role-utils"
 import { render } from "@react-email/components"
 import { and, eq, inArray } from "drizzle-orm"
 
@@ -134,7 +135,10 @@ async function loadContributionMembers(
     .from(member)
     .innerJoin(user, eq(member.userId, user.id))
     .where(
-      and(eq(member.organizationId, organizationId), eq(member.role, "member"))
+      and(
+        eq(member.organizationId, organizationId),
+        inArray(member.role, [...MEMBER_ROLES])
+      )
     )
 
   const deduped = new Map<string, MemberRow>()

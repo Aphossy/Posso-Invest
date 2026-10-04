@@ -6,6 +6,7 @@ import { db } from "@/db/connection"
 import { loanRepaymentOperations } from "@/db/operations/loan-repayment-operations"
 import { contribution, loan, member, penalty, user } from "@/db/schemas"
 import { computeLoanTotals, computeOutstanding } from "@/utils/loan-finance"
+import { MEMBER_ROLES } from "@/utils/role-utils"
 import { and, eq, inArray, sql } from "drizzle-orm"
 
 export interface ShareOutAllocationPreview {
@@ -50,7 +51,10 @@ export async function computeShareOutAllocations(
     .from(member)
     .innerJoin(user, eq(member.userId, user.id))
     .where(
-      and(eq(member.organizationId, organizationId), eq(member.role, "member"))
+      and(
+        eq(member.organizationId, organizationId),
+        inArray(member.role, [...MEMBER_ROLES])
+      )
     )
 
   const memberIds = members.map((m) => m.memberId)

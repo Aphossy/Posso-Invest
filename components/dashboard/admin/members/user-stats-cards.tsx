@@ -4,6 +4,7 @@
 import { Activity, TrendingUp, Users } from "lucide-react"
 
 import type { AdminUser } from "@/types/admin-users"
+import { isMemberOrLeadershipRole } from "@/utils/role-utils"
 import { Badge } from "@/components/ui/badge"
 import {
   Card,
@@ -29,7 +30,9 @@ export function UserStatsCards({ users, loading }: UserStatsCardsProps) {
   const treasurerUsers = users.filter((u) => u.role === "treasurer").length
   const secretaryUsers = users.filter((u) => u.role === "secretary").length
   const presidentUsers = users.filter((u) => u.role === "president").length
-  const memberUsers = users.filter((u) => u.role === "member").length
+  const memberUsers = users.filter((u) =>
+    isMemberOrLeadershipRole(u.role)
+  ).length
   const recentUsers = users.filter((u) => new Date(u.createdAt) > weekAgo).length
   const recentMonthUsers = users.filter(
     (u) => new Date(u.createdAt) > monthAgo

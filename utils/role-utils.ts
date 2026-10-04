@@ -9,6 +9,14 @@ export const ROLE_HIERARCHY: Record<UserRole, number> = {
   admin: 4,
 }
 
+export const MEMBER_ROLES = [
+  "member",
+  "treasurer",
+  "president",
+  "secretary",
+  "advisor",
+] as const
+
 export const ROLE_PERMISSIONS = {
   member: ["read_own_profile", "update_own_profile", "view_contributions"],
   secretary: [
@@ -66,9 +74,7 @@ export function isMemberOrLeadershipRole(role?: string | null): boolean {
   if (normalizedRoles.length === 0) return false
 
   return normalizedRoles.some((candidate) =>
-    ["member", "secretary", "treasurer", "advisor", "president"].includes(
-      candidate
-    )
+    MEMBER_ROLES.includes(candidate as (typeof MEMBER_ROLES)[number])
   )
 }
 
