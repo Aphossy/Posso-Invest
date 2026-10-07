@@ -1,5 +1,6 @@
 import {
   contributionDeadlinePassedNotifier,
+  contributionCatchupReminderNotifier,
   contributionWindowLastDayNotifier,
   contributionWindowOpenedNotifier,
   contributionWindowReminderNotifier,
@@ -42,6 +43,7 @@ export const inngestFunctions = [
   contributionWindowReminderNotifier,
   contributionWindowLastDayNotifier,
   contributionDeadlinePassedNotifier,
+  contributionCatchupReminderNotifier,
   systemFunctionFailureAlert,
   systemDataCleanup,
 ]

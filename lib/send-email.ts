@@ -38,8 +38,8 @@ interface EmailOptions {
 
 interface SendEmailResult {
   success: boolean
-  error?: any
-  data?: any
+  error?: unknown
+  data?: unknown
 }
 
 const sendEmail = async ({
@@ -55,7 +55,7 @@ const sendEmail = async ({
   }
 
   try {
-    await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: `${senderName} <${senderEmail}>`,
       to,
       replyTo: replyToEmail,
@@ -64,7 +64,11 @@ const sendEmail = async ({
       react,
       html,
     })
-    return { success: true }
+    if (error) {
+      console.error(`Failed to send email to ${to}:`, error)
+      return { success: false, error }
+    }
+    return { success: true, data }
   } catch (error) {
     console.error(`Failed to send email to ${to}:`, error)
     return { success: false, error }

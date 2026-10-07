@@ -44,28 +44,32 @@ export function ContributionWindowLastDayMemberEmail({
     <Html lang="en">
       <Head />
       <Preview>
-        LAST DAY: Pay your {periodLabel} contribution today or face a 10%
-        penalty.
+        DEADLINE TOMORROW: Pay your {periodLabel} contribution by {windowEnd} to
+        avoid a 10% penalty.
       </Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={header}>
             <Text style={brand}>{organisationName}</Text>
-            <Text style={subtitle}>🚨 Last Day - Contribution Deadline</Text>
+            <Text style={subtitle}>
+              🚨 Final Reminder - Contribution Deadline
+            </Text>
           </Section>
 
           <Section style={content}>
-            <Heading style={heading}>Today is the last day to pay</Heading>
+            <Heading style={heading}>The deadline is tomorrow</Heading>
             <Text style={paragraph}>Muraho {memberName},</Text>
             <Text style={paragraph}>
               This is your final reminder. The contribution window for{" "}
-              <strong>{periodLabel}</strong> closes <strong>today</strong>,{" "}
-              {windowEnd}. After today, a 10% late penalty will be applied
-              automatically.
+              <strong>{periodLabel}</strong> closes tomorrow,{" "}
+              <strong>{windowEnd}</strong>. After the deadline, a 10% late
+              penalty will be applied automatically.
             </Text>
 
             <Section style={urgentBox}>
-              <Text style={urgentTitle}>⚡ Act now - window closes today!</Text>
+              <Text style={urgentTitle}>
+                ⚡ Pay by tomorrow to avoid a penalty!
+              </Text>
               <table style={urgentTable}>
                 <tbody>
                   <tr>
@@ -91,8 +95,9 @@ export function ContributionWindowLastDayMemberEmail({
             </Section>
 
             <Text style={infoText}>
-              Pay <strong>today</strong> to avoid the penalty. Notify your
-              treasurer once payment is made so it can be confirmed promptly.
+              Pay by <strong>{windowEnd}</strong> to avoid the penalty. Notify
+              your treasurer once payment is made so it can be confirmed
+              promptly.
             </Text>
 
             <Section style={buttonSection}>

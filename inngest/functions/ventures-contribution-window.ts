@@ -10,6 +10,7 @@ import { ContributionWindowOpenedMemberEmail } from "@/emails/contribution-windo
 import { ContributionWindowOpenedTreasurerEmail } from "@/emails/contribution-window-opened-treasurer"
 import { ContributionWindowReminderMemberEmail } from "@/emails/contribution-window-reminder-member"
 import { ContributionWindowReminderTreasurerEmail } from "@/emails/contribution-window-reminder-treasurer"
+import { ContributionCatchupReminder } from "@/emails/contribution-catchup-reminder"
 import { inngest } from "@/inngest/client"
 import {
   ensureEmailLogRecord,
@@ -200,6 +201,49 @@ async function loadContributionsForPeriod(
         inArray(contribution.memberId, memberIds)
       )
     )
+}
+
+async function waiveAutoSeptemberPenalties(
+  organizationId: string
+): Promise<number> {
+  const reason =
+    "Waived because the group did not have a bank account for September 2026 contributions."
+  const autoPenalties: Awaited<
+    ReturnType<typeof penaltyOperations.findMany>
+  > = []
+  let offset = 0
+
+  while (true) {
+    const penalties = await penaltyOperations.findMany({
+      filters: {
+        organizationId,
+        period: "2026-09",
+        status: "active",
+      },
+      limit: 100,
+      offset,
+    })
+    if (penalties.length === 0) break
+
+    autoPenalties.push(
+      ...penalties.filter((penalty) =>
+        (penalty.notes ?? "").includes(AUTO_LATE_PENALTY_MARKER)
+      )
+    )
+
+    if (penalties.length < 100) break
+    offset += penalties.length
+  }
+
+  for (const penalty of autoPenalties) {
+    await penaltyOperations.updateById(penalty.id, {
+      status: "waived",
+      waivedAt: new Date(),
+      waivedReason: reason,
+    })
+  }
+
+  return autoPenalties.length
 }
 
 // ---------------------------------------------------------------------------
@@ -724,7 +768,7 @@ export const contributionWindowReminderNotifier = inngest.createFunction(
 )
 
 // ---------------------------------------------------------------------------
-// Function 3 - Last day (cron: 5th of every month)
+// Function 3 - Final reminder (cron: 4th of every month)
 // ---------------------------------------------------------------------------
 
 export const contributionWindowLastDayNotifier = inngest.createFunction(
@@ -732,7 +776,7 @@ export const contributionWindowLastDayNotifier = inngest.createFunction(
     id: "ventures-contribution-window-last-day-notifier",
     retries: 3,
     concurrency: 1,
-    triggers: [{ cron: "TZ=Africa/Kigali 0 8 5 * *" }],
+    triggers: [{ cron: "TZ=Africa/Kigali 0 8 4 * *" }],
   },
   async ({ step, notificationOperations, logger }) => {
     const period = await step.run("resolve-period", getPreviousPeriod)
@@ -800,7 +844,7 @@ export const contributionWindowLastDayNotifier = inngest.createFunction(
 
         const result = await sendEmail({
           to: m.email,
-          subject: `🚨 Last day to pay your ${label} contribution - pay now or face a penalty`,
+          subject: `🚨 Contribution deadline tomorrow - pay your ${label} contribution`,
           html,
         })
 
@@ -855,7 +899,7 @@ export const contributionWindowLastDayNotifier = inngest.createFunction(
 
           const result = await sendEmail({
             to: m.email,
-            subject: `🚨 Last day to pay your ${label} contribution - pay now or face a penalty`,
+            subject: `🚨 Contribution deadline tomorrow - pay your ${label} contribution`,
             html,
           })
 
@@ -879,8 +923,8 @@ export const contributionWindowLastDayNotifier = inngest.createFunction(
         id: generateUUID(),
         userId: m.userId,
         type: "contribution" as const,
-        title: `Last day - ${label} contribution`,
-        message: `Today is the last day to pay your ${label} contribution (${CURRENCY} ${fmtAmount(monthlyContributionRwf)}). A ${PENALTY_RATE_LABEL} penalty applies if you miss the deadline.`,
+        title: `Contribution deadline tomorrow - ${label}`,
+        message: `The deadline to pay your ${label} contribution (${CURRENCY} ${fmtAmount(monthlyContributionRwf)}) is tomorrow. A ${PENALTY_RATE_LABEL} penalty applies after the deadline.`,
         channel: "in_app" as const,
         actionUrl: "/member/contributions",
         actionLabel: "Pay Now",
@@ -927,7 +971,7 @@ export const contributionWindowLastDayNotifier = inngest.createFunction(
             )
             await sendEmail({
               to: t.email,
-              subject: `[Treasurer] 🚨 Last day - ${unpaidMembers.length} members still unpaid (${label})`,
+              subject: `[Treasurer] 🚨 Contribution deadline tomorrow - ${unpaidMembers.length} members unpaid (${label})`,
               html,
             })
           }),
@@ -949,7 +993,7 @@ export const contributionWindowLastDayNotifier = inngest.createFunction(
             )
             await sendEmail({
               to: l.email,
-              subject: `[Leadership] 🚨 Last day - ${unpaidMembers.length} members still unpaid (${label})`,
+              subject: `[Leadership] 🚨 Contribution deadline tomorrow - ${unpaidMembers.length} members unpaid (${label})`,
               html,
             })
           }),
@@ -979,6 +1023,13 @@ export const contributionDeadlinePassedNotifier = inngest.createFunction(
   },
   async ({ step, notificationOperations, logger }) => {
     const period = await step.run("resolve-period", getPreviousPeriod)
+    if (period === "2026-09") {
+      logger.info("Skipping September 2026 deadline penalties and notices", {
+        period,
+      })
+      return { period, overdue: 0, skipped: true }
+    }
+
     const orgId = await step.run("resolve-organization", resolveOrganizationId)
     const label = periodLabel(period)
     const { windowEnd } = getWindowDates(period)
@@ -1233,5 +1284,151 @@ export const contributionDeadlinePassedNotifier = inngest.createFunction(
       paidOnTime: paidOnTimeCount,
       penaltiesCreated,
     }
+  }
+)
+
+// ---------------------------------------------------------------------------
+// One-time 2026 catch-up reminder (cron: October 8 at 08:00 Kigali time)
+// ---------------------------------------------------------------------------
+
+export const contributionCatchupReminderNotifier = inngest.createFunction(
+  {
+    id: "ventures-contribution-catchup-reminder-2026",
+    retries: 3,
+    concurrency: 1,
+    triggers: [{ cron: "TZ=Africa/Kigali 0 8 8 10 *" }],
+  },
+  async ({ step, logger }) => {
+    const yearInKigali = Number(
+      new Intl.DateTimeFormat("en", {
+        timeZone: "Africa/Kigali",
+        year: "numeric",
+      }).format(new Date())
+    )
+    if (yearInKigali !== 2026) {
+      logger.info("Skipping catch-up reminder outside 2026", { yearInKigali })
+      return { notified: 0, skipped: true }
+    }
+
+    const organizationId = await step.run(
+      "resolve-organization",
+      resolveOrganizationId
+    )
+    const waivedPenalties = await step.run(
+      "waive-auto-september-penalties",
+      () => waiveAutoSeptemberPenalties(organizationId)
+    )
+    const members = await step.run("load-contribution-members", () =>
+      loadContributionMembers(organizationId)
+    )
+
+    if (members.length === 0) {
+      logger.info("No members found for catch-up reminder")
+      return { notified: 0, waivedPenalties }
+    }
+
+    const memberIds = members.map((m) => m.userId)
+    const periodContributions = await step.run(
+      "load-september-october-contributions",
+      async () =>
+        Promise.all(
+          ["2026-09", "2026-10"].map(async (period) => ({
+            period,
+            contributions: await loadContributionsForPeriod(period, memberIds),
+          }))
+        )
+    )
+
+    const outstandingByMember = new Map(
+      members.map((m) => [m.userId, [] as string[]])
+    )
+    for (const { period, contributions } of periodContributions) {
+      const settledIds = new Set(
+        contributions
+          .filter((c) => SETTLED_STATUSES.includes(c.status))
+          .map((c) => c.memberId)
+      )
+      for (const member of members) {
+        if (!settledIds.has(member.userId)) {
+          outstandingByMember.get(member.userId)?.push(
+            period === "2026-09" ? "September" : "October"
+          )
+        }
+      }
+    }
+
+    const recipients = members.filter(
+      (m) => (outstandingByMember.get(m.userId)?.length ?? 0) > 0
+    )
+    if (recipients.length === 0) {
+      logger.info("All members have paid September and October contributions", {
+        waivedPenalties,
+      })
+      return { notified: 0, waivedPenalties }
+    }
+
+    const eventType = "contribution_catchup_reminder" as const
+    const refId = "2026-10"
+    const sendToMember = async (m: MemberRow) => {
+      await ensureEmailLogRecord(m.userId, m.email, eventType, refId)
+      if ((await getEmailLogStatus(m.userId, eventType, refId)) === "sent") {
+        return
+      }
+
+      const periodsDue = outstandingByMember.get(m.userId) ?? []
+      const html = await render(
+        ContributionCatchupReminder({
+          memberName: m.name || "Member",
+          periodsDue,
+          amountPerMonth: fmtAmount(monthlyContributionRwf),
+          totalDue: fmtAmount(monthlyContributionRwf * periodsDue.length),
+          currency: CURRENCY,
+        })
+      )
+      const result = await sendEmail({
+        to: m.email,
+        subject: "Reminder: September and October 2026 contributions",
+        html,
+      })
+
+      if (result.success) {
+        await markEmailSent(m.userId, eventType, refId)
+      } else {
+        await markEmailFailed(
+          m.userId,
+          eventType,
+          refId,
+          String(result.error)
+        )
+      }
+    }
+
+    for (const m of recipients) {
+      await step.run(`send-catchup-reminder-${m.userId}`, () =>
+        sendToMember(m)
+      )
+    }
+
+    const failedUserIds = await step.run("find-failed-reminders", () =>
+      findFailedEmailLogs(eventType, refId)
+    )
+    if (failedUserIds.length > 0) {
+      await step.sleep("wait-before-catchup-retry", "5 minutes")
+      const memberById = new Map(recipients.map((m) => [m.userId, m]))
+      for (const userId of failedUserIds) {
+        const member = memberById.get(userId)
+        if (member) {
+          await step.run(`retry-catchup-reminder-${userId}`, () =>
+            sendToMember(member)
+          )
+        }
+      }
+    }
+
+    logger.info("September-October catch-up reminders sent", {
+      notified: recipients.length,
+      waivedPenalties,
+    })
+    return { notified: recipients.length, waivedPenalties }
   }
 )

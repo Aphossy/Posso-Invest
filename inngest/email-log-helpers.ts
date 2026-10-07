@@ -21,6 +21,7 @@ export type EmailEventType =
   | "contribution_window_reminder"
   | "contribution_window_last_day"
   | "contribution_deadline_passed"
+  | "contribution_catchup_reminder"
   // Monthly compliance (refId = period "YYYY-MM")
   | "monthly_compliance_summary"
   // Member-facing triggered events (refId = entity ID)

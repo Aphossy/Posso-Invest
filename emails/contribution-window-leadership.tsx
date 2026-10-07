@@ -51,7 +51,7 @@ export function ContributionWindowLeadershipEmail({
     <Html lang="en">
       <Head />
       <Preview>
-        {`${daysRemaining} days left - ${unpaidCount} members have not paid for ${periodLabel}.`}
+        {`${daysRemaining} ${daysRemaining === 1 ? "day" : "days"} left - ${unpaidCount} members have not paid for ${periodLabel}.`}
       </Preview>
       <Body style={main}>
         <Container style={container}>
@@ -62,7 +62,8 @@ export function ContributionWindowLeadershipEmail({
 
           <Section style={content}>
             <Heading style={heading}>
-              ⏰ {String(daysRemaining)} days until window closes
+              ⏰ {String(daysRemaining)} {daysRemaining === 1 ? "day" : "days"}{" "}
+              until window closes
             </Heading>
             <Text style={paragraph}>Muraho {leaderName},</Text>
             <Text style={paragraph}>
@@ -90,7 +91,10 @@ export function ContributionWindowLeadershipEmail({
                   <tr>
                     <td style={labelCell}>Days remaining</td>
                     <td style={valueCell}>
-                      <strong>{String(daysRemaining)} days</strong>
+                      <strong>
+                        {String(daysRemaining)}{" "}
+                        {daysRemaining === 1 ? "day" : "days"}
+                      </strong>
                     </td>
                   </tr>
                   <tr>

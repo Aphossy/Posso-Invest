@@ -58,24 +58,23 @@ export function ContributionWindowLastDayTreasurerEmail({
     <Html lang="en">
       <Head />
       <Preview>
-        {`🚨 Today is the last day - ${unpaidCount} members still unpaid for ${periodLabel}.`}
+        {`🚨 Contribution deadline tomorrow - ${unpaidCount} members still unpaid for ${periodLabel}.`}
       </Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={header}>
             <Text style={brand}>{organisationName}</Text>
-            <Text style={subtitle}>Treasurer - Final Day Alert</Text>
+            <Text style={subtitle}>Treasurer - Final Reminder</Text>
           </Section>
 
           <Section style={content}>
-            <Heading style={heading}>🚨 Window closes today</Heading>
+            <Heading style={heading}>🚨 Window closes tomorrow</Heading>
             <Text style={paragraph}>Muraho {treasurerName},</Text>
             <Text style={paragraph}>
-              Today, <strong>{windowEnd}</strong>, is the last day of the
-              contribution window for <strong>{periodLabel}</strong>. Members
-              who do not pay today will have their contributions marked as{" "}
-              <strong>late</strong> and a 10% penalty will be applied starting
-              tomorrow.
+              The contribution window for <strong>{periodLabel}</strong> closes
+              tomorrow, <strong>{windowEnd}</strong>. Members who do not pay by
+              then will have their contributions marked as <strong>late</strong>
+              and a 10% penalty will be applied after the deadline.
             </Text>
 
             <Section style={statsGrid}>
@@ -112,7 +111,7 @@ export function ContributionWindowLastDayTreasurerEmail({
                   <tr>
                     <td style={labelCell}>Deadline</td>
                     <td style={valueCell}>
-                      <strong>{windowEnd} (today)</strong>
+                      <strong>{windowEnd} (tomorrow)</strong>
                     </td>
                   </tr>
                   <tr>
@@ -148,7 +147,8 @@ export function ContributionWindowLastDayTreasurerEmail({
             {unpaidMembers.length > 0 && (
               <Section style={unpaidBox}>
                 <Text style={sectionTitle}>
-                  Still unpaid - final day ({String(unpaidCount)} members)
+                  Still unpaid - deadline tomorrow ({String(unpaidCount)}{" "}
+                  members)
                 </Text>
                 {unpaidMembers.map((m, i) => (
                   <Text key={i} style={memberRow}>
@@ -156,8 +156,8 @@ export function ContributionWindowLastDayTreasurerEmail({
                   </Text>
                 ))}
                 <Text style={penaltyNote}>
-                  ⚠️ If these members do not pay today, each will incur a
-                  penalty of {currency} {penaltyPerMember} starting tomorrow.
+                  ⚠️ If these members do not pay by {windowEnd}, each will incur
+                  a penalty of {currency} {penaltyPerMember} after the deadline.
                 </Text>
               </Section>
             )}
