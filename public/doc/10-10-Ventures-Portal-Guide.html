@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The 10/10 Ventures Portal, explained</title>
+    <style>
+      :root {
+        --navy: #004225;
+        --green: #007952;
+        --green-dark: #004225;
+        --ink: #1c2434;
+        --muted: #5e6878;
+        --pale: #f2f5f6;
+        --line: #dce3e6;
+      }
+      @page { size: A4 portrait; margin: 0; }
+      * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      html, body { margin: 0; padding: 0; background: #e9edef; color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
+      .page {
+        position: relative;
+        width: 210mm;
+        height: 297mm;
+        margin: 0 auto 8mm;
+        padding: 18mm 19mm 18mm;
+        overflow: hidden;
+        background: #fff;
+        page-break-after: always;
+        break-after: page;
+      }
+      .page:last-child { page-break-after: auto; break-after: auto; }
+      .running-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 5mm;
+        border-bottom: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 8pt;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+      }
+      .running-head .brand { display: flex; align-items: center; gap: 7px; color: var(--green-dark); letter-spacing: .5px; }
+      .running-head img { width: 19px; height: 19px; object-fit: contain; }
+      .page-content { padding-top: 9mm; padding-bottom: 12mm; }
+      .eyebrow { margin: 0 0 3mm; color: var(--green); font-size: 8pt; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; }
+      h1, h2, h3, p { margin-top: 0; }
+      h1 { margin-bottom: 4mm; color: var(--navy); font-size: 27pt; line-height: 1.07; letter-spacing: -.65px; }
+      h2 { margin-bottom: 3mm; color: var(--navy); font-size: 16pt; line-height: 1.18; }
+      h3 { margin: 0 0 1.5mm; color: var(--green-dark); font-size: 10pt; line-height: 1.25; }
+      p { margin-bottom: 3mm; color: var(--muted); font-size: 9.2pt; line-height: 1.48; }
+      ul, ol { margin: 0 0 4mm; padding-left: 5mm; color: var(--muted); }
+      li { margin: 0 0 1.6mm; padding-left: 1mm; font-size: 9pt; line-height: 1.38; }
+      strong { color: var(--ink); }
+      .lead { max-width: 155mm; font-size: 11pt; line-height: 1.5; }
+      .header-rule { width: 19mm; height: 1.5mm; margin: 0 0 6mm; background: var(--green); }
+      .footer {
+        position: absolute;
+        right: 19mm;
+        bottom: 9mm;
+        left: 19mm;
+        display: flex;
+        justify-content: space-between;
+        padding-top: 3mm;
+        border-top: 1px solid var(--line);
+        color: #7b8490;
+        font-size: 7.5pt;
+      }
+      .footer b { color: var(--green-dark); }
+      .cover { padding: 20mm 18mm 0; }
+      .cover-logo { display: block; width: 38mm; height: 38mm; margin: 0 0 4mm; object-fit: contain; }
+      .cover-org { margin: 0 0 15mm; color: var(--navy); font-size: 9pt; font-weight: 700; }
+      .cover .eyebrow { margin-bottom: 5mm; }
+      .cover h1 { max-width: 155mm; margin-bottom: 5mm; font-size: 34pt; }
+      .cover .lead { max-width: 145mm; margin-bottom: 11mm; }
+      .cover-meta { color: var(--green-dark); font-size: 8pt; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; }
+      .cover-band {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        min-height: 84mm;
+        padding: 12mm 18mm 13mm;
+        border-top: 2mm solid var(--green);
+        background: var(--navy);
+        color: #fff;
+      }
+      .cover-band h2 { margin-bottom: 5mm; color: #fff; font-size: 10pt; letter-spacing: 1.4px; text-transform: uppercase; }
+      .cover-list { display: grid; grid-template-columns: 1fr 1fr; gap: 2mm 12mm; margin: 0; padding: 0; list-style: none; }
+      .cover-list li { display: flex; gap: 3mm; margin: 0; color: #f5f6ff; font-size: 8.5pt; }
+      .cover-list span { color: #92d0b1; font-weight: 700; }
+      .cover-band .cover-date { position: absolute; right: 18mm; bottom: 7mm; color: #e6f4ed; font-size: 7pt; }
+      .contents-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm 8mm; margin-top: 8mm; }
+      .contents-item { display: flex; gap: 3mm; padding: 3mm 0; border-bottom: 1px solid var(--line); }
+      .contents-no { min-width: 8mm; color: var(--green); font-size: 9pt; font-weight: 700; }
+      .contents-item b { display: block; margin-bottom: 1mm; color: var(--navy); font-size: 9pt; }
+      .contents-item small { color: var(--muted); font-size: 7.5pt; line-height: 1.35; }
+      .note { margin: 4mm 0; padding: 4mm 5mm; border-left: 1.2mm solid var(--green); border-radius: 0 2mm 2mm 0; background: var(--pale); }
+      .note p { margin: 0; font-size: 8.5pt; }
+      .note strong { color: var(--green-dark); }
+      .warn { border-left-color: var(--green); background: #e6f4ed; }
+      .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin: 4mm 0; }
+      .card { padding: 4mm; border: 1px solid var(--line); border-radius: 2mm; background: #fff; }
+      .card p { margin: 0; font-size: 8.4pt; }
+      .role-list { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin: 4mm 0; }
+      .role { padding: 3.5mm 4mm; border-radius: 2mm; background: var(--pale); }
+      .role p { margin: 0; font-size: 8.1pt; }
+      .steps { counter-reset: step; margin: 4mm 0; padding: 0; list-style: none; }
+      .steps li { position: relative; min-height: 8mm; margin: 0 0 3mm; padding: 0 0 0 10mm; }
+      .steps li::before { position: absolute; top: -.5mm; left: 0; width: 7mm; height: 7mm; border-radius: 50%; background: var(--green); color: #fff; content: counter(step); counter-increment: step; font-size: 8pt; font-weight: 700; line-height: 7mm; text-align: center; }
+      .status-row { display: flex; gap: 2mm; margin: 3mm 0 4mm; }
+      .status { padding: 2mm 3mm; border-radius: 9mm; background: var(--pale); color: var(--navy); font-size: 7.5pt; font-weight: 700; }
+      .status.green { background: #e7f4ee; color: var(--green-dark); }
+      .status.gold { background: #e6f4ed; color: var(--green-dark); }
+      .table { width: 100%; margin: 4mm 0; border-collapse: collapse; }
+      .table th { padding: 2.5mm 3mm; background: var(--navy); color: #fff; font-size: 7.8pt; text-align: left; }
+      .table td { padding: 2.5mm 3mm; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 8pt; line-height: 1.35; vertical-align: top; }
+      .table td:first-child { color: var(--navy); font-weight: 700; }
+      .small { font-size: 8pt; }
+      .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 7mm; }
+      .checklist { margin-top: 3mm; padding: 4mm 5mm; border: 1px solid var(--line); border-radius: 2mm; }
+      .checklist p { margin: 0 0 2mm; font-size: 8pt; }
+      .checklist p:last-child { margin-bottom: 0; }
+      @media screen {
+        .page { box-shadow: 0 2mm 7mm #15202b22; }
+      }
+      @media print {
+        html, body { background: #fff; }
+        .page { margin: 0; box-shadow: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="page cover">
+      <img class="cover-logo" src="../brand/logo.png" alt="10/10 Ventures logo">
+      <p class="cover-org">10/10 Ventures</p>
+      <p class="eyebrow">Portal guide · Version 1.0</p>
+      <div class="header-rule"></div>
+      <h1>The 10/10 Ventures Portal, explained</h1>
+      <p class="lead">A practical guide to the member portal and staff workspace: where to find your records, how to follow group activity, and how role-based teams keep work moving.</p>
+      <p class="cover-meta">Member edition + staff workflows</p>
+      <div class="cover-band">
+        <h2>Inside this guide</h2>
+        <ul class="cover-list">
+          <li><span>01</span> Your portal at a glance</li>
+          <li><span>08</span> Meetings, records &amp; communication</li>
+          <li><span>02</span> Roles and access</li>
+          <li><span>09</span> Treasurer workspace</li>
+          <li><span>03</span> Signing in and getting started</li>
+          <li><span>10</span> Secretary workspace</li>
+          <li><span>04</span> Finding your way around</li>
+          <li><span>11</span> President workspace</li>
+          <li><span>05</span> Savings and contributions</li>
+          <li><span>12</span> Administrator workspace</li>
+          <li><span>06</span> Loan requests</li>
+          <li><span>13</span> Reports and financial records</li>
+          <li><span>07</span> Share-out and penalties</li>
+          <li><span>14</span> Good practice and getting help</li>
+        </ul>
+        <span class="cover-date">OCTOBER 2026</span>
+      </div>
+    </section>
+
+    <section class="page">
+      <header class="running-head"><span class="brand"><img src="../brand/logo.png" alt="">10/10 Ventures</span><span>Start here</span></header>
+      <main class="page-content">
+        <p class="eyebrow">A quick orientation</p>
+        <h1>How to use this guide</h1>
+        <p class="lead">The portal brings member information, group activity and committee work into one secure online workspace. Your menu is shaped by your assigned role, so you may not see every page described here.</p>
+        <div class="header-rule"></div>
+        <div class="contents-grid">
+          <div class="contents-item"><span class="contents-no">01</span><div><b>Your portal at a glance</b><small>Purpose, role-based access and the teams behind the work.</small></div></div>
+          <div class="contents-item"><span class="contents-no">08</span><div><b>Meetings, records &amp; communication</b><small>Activities, minutes, actions, announcements and documents.</small></div></div>
+          <div class="contents-item"><span class="contents-no">02</span><div><b>Roles and access</b><small>What members and committee roles generally use.</small></div></div>
+          <div class="contents-item"><span class="contents-no">09</span><div><b>Treasurer workspace</b><small>Contribution recording, loans, expenses and reporting.</small></div></div>
+          <div class="contents-item"><span class="contents-no">03</span><div><b>Signing in and getting started</b><small>Invitation, sign-in, verification and account recovery.</small></div></div>
+          <div class="contents-item"><span class="contents-no">10</span><div><b>Secretary workspace</b><small>Schedules, attendance, minutes, actions and correspondence.</small></div></div>
+          <div class="contents-item"><span class="contents-no">04</span><div><b>Finding your way around</b><small>Dashboard, sidebar, account menu and notifications.</small></div></div>
+          <div class="contents-item"><span class="contents-no">11</span><div><b>President workspace</b><small>Governance, group health and financial oversight.</small></div></div>
+          <div class="contents-item"><span class="contents-no">05</span><div><b>Savings and contributions</b><small>Member contribution history, calendar and receipts.</small></div></div>
+          <div class="contents-item"><span class="contents-no">12</span><div><b>Administrator workspace</b><small>Member records, organization setup and oversight.</small></div></div>
+          <div class="contents-item"><span class="contents-no">06</span><div><b>Loan requests</b><small>Request, review statuses and repayment tracking.</small></div></div>
+          <div class="contents-item"><span class="contents-no">13</span><div><b>Reports and financial records</b><small>Fund tracking, summaries, audit preparation and files.</small></div></div>
+          <div class="contents-item"><span class="contents-no">07</span><div><b>Share-out and penalties</b><small>Where to review year-end distribution and penalty records.</small></div></div>
+          <div class="contents-item"><span class="contents-no">14</span><div><b>Good practice and getting help</b><small>Protect your account and resolve common issues.</small></div></div>
+        </div>
+        <div class="note"><p><strong>Keep in mind.</strong> The portal displays and tracks records; it does not replace the constitution, approved group decisions or current instructions from the committee. For policies, amounts, deadlines or eligibility, refer to the latest official notice.</p></div>
+      </main>
+      <footer class="footer"><span>10/10 VENTURES · PORTAL GUIDE</span><span>02 / 14</span></footer>
+    </section>
+
+    <section class="page">
+      <header class="running-head"><span class="brand"><img src="../brand/logo.png" alt="">10/10 Ventures</span><span>01 · At a glance</span></header>
+      <main class="page-content">
+        <p class="eyebrow">One workspace, different responsibilities</p>
+        <h1>Your portal at a glance</h1>
+        <p class="lead">10/10 Ventures uses the portal to make member records, group communications, governance and financial tracking easier to find and maintain.</p>
+        <div class="header-rule"></div>
+        <h2>What you can do</h2>
+        <div class="cards">
+          <div class="card"><h3>Stay informed</h3><p>Read announcements, upcoming activities, meeting details and shared documents.</p></div>
+          <div class="card"><h3>Follow your records</h3><p>Review your contribution history, receipts, loan requests, attendance and assigned actions.</p></div>
+          <div class="card"><h3>Coordinate group work</h3><p>Authorized officers record contributions, maintain meeting records, publish notices and track follow-ups.</p></div>
+          <div class="card"><h3>Review the bigger picture</h3><p>Committee dashboards and reports summarize group activity for users with the relevant access.</p></div>
+        </div>
+        <h2>Role-based access</h2>
+        <p>Your role determines the pages and actions shown in your workspace. Common roles include:</p>
+        <div class="role-list">
+          <div class="role"><h3>Member</h3><p>Personal savings, contributions, loans, meetings, documents and group notices.</p></div>
+          <div class="role"><h3>Treasurer</h3><p>Contribution and loan records, receipts, expenses, financial files and reports.</p></div>
+          <div class="role"><h3>Secretary</h3><p>Schedules, attendance, minutes, action items, announcements and group documents.</p></div>
+          <div class="role"><h3>President</h3><p>Governance, member standing, group health and financial oversight.</p></div>
+          <div class="role"><h3>Administrator</h3><p>Platform and organization management, member records and broad oversight.</p></div>
+          <div class="role"><h3>Advisor</h3><p>Uses the member-facing workspace, subject to the access assigned to the account.</p></div>
+        </div>
+        <div class="note"><p><strong>Not seeing a page?</strong> It may not be part of your assigned role, or the group may not have enabled that workflow. Contact an authorized officer rather than using another person's account.</p></div>
+      </main>
+      <footer class="footer"><span>10/10 VENTURES · PORTAL GUIDE</span><span>03 / 14</span></footer>
+    </section>
+
+    <section class="page">
+      <header class="running-head"><span class="brand"><img src="../brand/logo.png" alt="">10/10 Ventures</span><span>02 · Access</span></header>
+      <main class="page-content">
+        <p class="eyebrow">Your first visit</p>
+        <h1>Signing in and getting started</h1>
+        <p class="lead">Portal access is intended for invited or approved users. Use the email address associated with your account and keep your sign-in details private.</p>
+        <div class="header-rule"></div>
+        <h2>Accept an invitation</h2>
+        <ol class="steps">
+          <li><strong>Find the invitation email.</strong> Check your inbox and Spam/Junk folder. Confirm which email address the invitation was sent to.</li>
+          <li><strong>Sign in with that account.</strong> Use the sign-in option offered on the portal. If you choose Google, use the same email address as the invitation.</li>
+          <li><strong>Return to the invitation.</strong> Open the accept-invitation link from your email and follow the on-screen instructions.</li>
+          <li><strong>Confirm your workspace.</strong> After access is granted, you are routed to the workspace associated with your role.</li>
+        </ol>
+        <h2>Returning to the portal</h2>
+        <p>Open <strong>1010ventures.online</strong> and choose the portal sign-in link, or use the sign-in link supplied by the group. Depending on account setup, sign-in may use email and password or Google. Some accounts may be asked for a six-digit email verification code as an additional sign-in step.</p>
+        <div class="two-col">
+          <div><h3>Forgot your password?</h3><p>Choose the password-recovery link on the sign-in page and follow the email instructions. Use the newest recovery link and do not forward it to anyone.</p></div>
+          <div><h3>Account not verified?</h3><p>Follow the verification prompt to request a new verification email. If it does not arrive, check Spam/Junk and confirm the email address is correct.</p></div>
+        </div>
+        <div class="note warn"><p><strong>Invitation trouble?</strong> Ask the administrator or officer who manages access to check the invitation and email address. Do not create a second account or share a sign-in with another member.</p></div>
+        <h2>First-minute checklist</h2>
+        <div class="checklist">
+          <p>□ Confirm your name and email in the account menu.</p>
+          <p>□ Review your profile and account settings.</p>
+          <p>□ Open your dashboard and read recent announcements.</p>
+          <p>□ Save the portal address as a bookmark on your own device.</p>
+        </div>
+      </main>
+      <footer class="footer"><span>10/10 VENTURES · PORTAL GUIDE</span><span>04 / 14</span></footer>
+    </section>
+
+    <section class="page">
+      <header class="running-head"><span class="brand"><img src="../brand/logo.png" alt="">10/10 Ventures</span><span>03 · Navigation</span></header>
+      <main class="page-content">
+        <p class="eyebrow">A familiar starting point</p>
+        <h1>Finding your way around</h1>
+        <p class="lead">Your dashboard is the home base for the role assigned to you. Use the labeled sidebar to move between tasks; the available sections differ by role.</p>
+        <div class="header-rule"></div>
+        <table class="table">
+          <thead><tr><th>Area</th><th>What to look for</th></tr></thead>
+          <tbody>
+            <tr><td>Dashboard</td><td>A summary of relevant records, recent activity and links to common tasks.</td></tr>
+            <tr><td>Sidebar</td><td>Grouped links for your role, such as Contributions, Meetings, Reports or Documents.</td></tr>
+            <tr><td>Account menu</td><td>Your profile, settings, homepage link and sign-out controls.</td></tr>
+            <tr><td>Notifications</td><td>Alerts and shortcuts for items that may need your attention.</td></tr>
+            <tr><td>Page actions</td><td>Buttons to view, refresh, record, update or download information when your role allows it.</td></tr>
+          </tbody>
+        </table>
+        <h2>Useful navigation habits</h2>
+        <ul>
+          <li>Check the page heading before entering or editing a record.</li>
+          <li>Use the sidebar labels rather than guessing a web address.</li>
+          <li>When a list has filters, confirm the selected period or status before drawing conclusions.</li>
+          <li>Use Refresh if the page offers it and you expect a recently updated record.</li>
+          <li>Sign out when you finish, especially on a shared or public device.</li>
+        </ul>
+        <div class="note"><p><strong>Role changes.</strong> The portal displays menus based on the role assigned to your account. If you believe your access is incorrect, ask an administrator to review it; do not use a colleague's credentials.</p></div>
+        <h2>Personal settings</h2>
+        <p>Use your profile page to review the personal information available to you. Account settings may include preferences and security controls. If a detail is locked or incorrect, ask the officer responsible for member records to update it.</p>
+      </main>
+      <footer class="footer"><span>10/10 VENTURES · PORTAL GUIDE</span><span>05 / 14</span></footer>
+    </section>
+
+    <section class="page">
+      <header class="running-head"><span class="brand"><img src="../brand/logo.png" alt="">10/10 Ventures</span><span>04 · Contributions</span></header>
+      <main class="page-content">
+        <p class="eyebrow">Member workspace</p>
+        <h1>Savings and contributions</h1>
+        <p class="lead">Use your member pages to follow contribution periods, check recorded payments and find available receipts. A portal record is useful for tracking, but always retain the proof of payment provided by your bank or payment service.</p>
+        <div class="header-rule"></div>
+        <h2>Review your contribution record</h2>
+        <ol class="steps">
+          <li>Open <strong>My Contributions</strong> or <strong>My Savings</strong> from the member navigation.</li>
+          <li>Check the period, amount, date recorded and current status for each entry.</li>
+          <li>Open a record to see its details. Where a receipt is available, check its number and download or save it for your records.</li>
+          <li>Compare the entry with your own payment confirmation. If something does not match, contact the treasurer with the period, amount and proof.</li>
+        </ol>
+        <h2>Understand the labels</h2>
+        <div class="status-row"><span class="status green">Confirmed</span><span class="status gold">Pending</span><span class="status">Late</span><span class="status">Waived</span></div>
+        <p>A status describes how a contribution is recorded in the portal; it does not replace the group's approved rules. A pending entry may still need officer review. Ask the treasurer if the status or amount is unclear.</p>
+        <div class="cards">
+          <div class="card"><h3>Contribution Calendar</h3><p>Review the periods and payment-window information shown to members.</p></div>
+          <div class="card"><h3>Group Bank Accounts</h3><p>Check the official account details before making a transfer. Follow the latest instructions from the group.</p></div>
+          <div class="card"><h3>Contribution History</h3><p>Review past entries, status labels and receipt information in one place.</p></div>
+          <div class="card"><h3>My Savings</h3><p>See your savings summary where records are available for your account.</p></div>
+        </div>
+        <div class="note warn"><p><strong>Payment safety.</strong> Verify the destination account and any reference instructions through an official group channel before sending money. Never rely on a changed account detail sent in an unexpected message.</p></div>
+      </main>
+      <footer class="footer"><span>10/10 VENTURES · PORTAL GUIDE</span><span>06 / 14</span></footer>
+    </section>
+
+    <section class="page">
+      <header class="running-head"><span class="brand"><img src="../brand/logo.png" alt="">10/10 Ventures</span><span>05 · Loans</span></header>
+      <main class="page-content">
+        <p class="eyebrow">Member workspace</p>
+        <h1>Loan requests</h1>
+        <p class="lead">The member loan page lets you submit a request and follow its status. Decisions, rates, eligibility and repayment conditions are governed by current group policy and the authorized review process.</p>
+        <div class="header-rule"></div>
+        <h2>Submit carefully</h2>
+        <ol class="steps">
+          <li>Open <strong>Loans</strong> from your member menu and choose the request action.</li>
+          <li>Enter the requested amount and any required term or supporting details. Check every field before submitting.</li>
+          <li>Review the summary and submit once. Keep a note of the request details for reference.</li>
+          <li>Return to your loan list to follow the status and open a request for details.</li>
+        </ol>
+        <h2>Track progress</h2>
+        <p>Your loan list may show statuses such as requested, approved, disbursed, repaying, overdue, repaid or rejected. A status is a record of the workflow—not a guarantee that funds have been or will be transferred. Check the request details and contact the reviewing officer if you need clarification.</p>
+        <div class="cards">
+          <div class="card"><h3>Requested</h3><p>The request has been submitted and may be awaiting review.</p></div>
+          <div class="card"><h3>Approved / disbursed</h3><p>Review the approved amount and terms; confirm transfer details with the treasurer.</p></div>
+          <div class="card"><h3>Repaying</h3><p>Use the repayment details and history shown in the record to track progress.</p></div>
+          <div class="card"><h3>Overdue / repaid / rejected</h3><p>Read the record and follow up with the responsible officer if the outcome needs explanation.</p></div>
+        </div>
+        <div class="note"><p><strong>Before you submit.</strong> Confirm the requested amount, repayment term and any displayed estimates. The portal's displayed figures are based on the saved record; ask the treasurer to confirm the approved terms.</p></div>
+        <p>While a request is still in the requested state, the page may offer options to edit or delete it. Once the request moves to another status, those options may no longer be available. Avoid submitting duplicate requests if the page appears slow; refresh and check your list first.</p>
+      </main>
+      <footer class="footer"><span>10/10 VENTURES · PORTAL GUIDE</span><span>07 / 14</span></footer>
+    </section>
+
+    <section class="page">
+      <header class="running-head"><span class="brand"><img src="../brand/logo.png" alt="">10/10 Ventures</span><span>06 · Share-out &amp; penalties</span></header>
+      <main class="page-content">
+        <p class="eyebrow">Member workspace</p>
+        <h1>Share-out and penalties</h1>
+        <p class="lead">These sections help members review the records used for year-end distribution and any penalty entries associated with their account.</p>
+        <div class="header-rule"></div>
+        <div class="two-col">
+          <div>
+            <h2>My Share-out</h2>
+            <p>Open the share-out page to review the distribution information available to you. If a period, amount or status is missing, it may not yet have been prepared or published.</p>
+            <ul>
+              <li>Confirm the period and figures shown on your record.</li>
+              <li>Read any accompanying explanation or committee notice.</li>
+              <li>Ask the treasurer about calculations or payment status.</li>
+              <li>Ask the president or committee about an approved policy decision.</li>
+            </ul>
+          </div>
+          <div>
+            <h2>My Penalties</h2>
+            <p>Use the penalties page to review entries recorded against your account. The page may display status or waiver information; the official group policy determines how a penalty is applied.</p>
+            <ul>
+              <li>Check the period, reason and amount shown.</li>
+              <li>Compare the entry with the relevant notice or attendance/payment record.</li>
+              <li>Contact the treasurer promptly if you believe a record is incorrect.</li>
+              <li>Keep any response or evidence with your own records.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="note warn"><p><strong>Don't infer a rule from a screen.</strong> Eligibility, due dates, penalty rates, waivers and distribution calculations come from approved group decisions—not from this guide. Refer to the constitution and current committee communication.</p></div>
+        <h2>Useful supporting pages</h2>
+        <div class="cards">
+          <div class="card"><h3>Constitution &amp; Policies</h3><p>Read the governance documents available to members.</p></div>
+          <div class="card"><h3>Announcements</h3><p>Check for current instructions and dates published by the group.</p></div>
+          <div class="card"><h3>Group Bank Accounts</h3><p>Verify official account information using the portal and trusted channels.</p></div>
+          <div class="card"><h3>Messages / Support</h3><p>Send a question through the help option available in your workspace.</p></div>
+        </div>
+      </main>
+      <footer class="footer"><span>10/10 VENTURES · PORTAL GUIDE</span><span>08 / 14</span></footer>
+    </section>
+
+    <section class="page">
+      <header class="running-head"><span class="brand"><img src="../brand/logo.png" alt="">10/10 Ventures</span><span>07 · Participation</span></header>
+      <main class="page-content">
+        <p class="eyebrow">Member workspace</p>
+        <h1>Meetings, records &amp; communication</h1>
+        <p class="lead">The member workspace connects you to group schedules, decisions and shared information. Check the portal and official announcements before each activity so you have the latest details.</p>
+        <div class="header-rule"></div>
+        <table class="table">
+          <thead><tr><th>Page</th><th>Use it to</th></tr></thead>
+          <tbody>
+            <tr><td>Planned Activities</td><td>See upcoming group activities published by the secretary.</td></tr>
+            <tr><td>Meeting Schedule</td><td>Check meeting dates, locations and details available to members.</td></tr>
+            <tr><td>Minutes &amp; Resolutions</td><td>Review published meeting records and decisions.</td></tr>
+            <tr><td>My Attendance</td><td>Review your attendance history and raise a correction if needed.</td></tr>
+            <tr><td>My Action Items</td><td>Track tasks assigned to you and follow up on due work.</td></tr>
+            <tr><td>Announcements</td><td>Read notices and updates shared with the group.</td></tr>
+            <tr><td>Files &amp; Shared Assets</td><td>Find group documents, media and files shared with members.</td></tr>
+          </tbody>
+        </table>
+        <h2>Stay in the loop</h2>
+        <ul>
+          <li>Check meeting dates and location before travelling; contact the secretary if details conflict.</li>
+          <li>Read minutes for recorded decisions rather than relying only on informal summaries.</li>
+          <li>Review your action items after a meeting and ask the owner if responsibility or timing is unclear.</li>
+          <li>Use the available messages or support page to ask for help. Include the page name and relevant period.</li>
+        </ul>
+        <div class="note"><p><strong>Shared files.</strong> Download or share group documents only for their intended purpose. Some documents may contain personal or financial information; handle them respectfully and follow committee guidance.</p></div>
+      </main>
+      <footer class="footer"><span>10/10 VENTURES · PORTAL GUIDE</span><span>09 / 14</span></footer>
+    </section>
+
+    <section class="page">
+      <header class="running-head"><span class="brand"><img src="../brand/logo.png" alt="">10/10 Ventures</span><span>08 · Treasurer</span></header>
+      <main class="page-content">
+        <p class="eyebrow">Staff workspace</p>
+        <h1>Treasurer workspace</h1>
+        <p class="lead">The treasurer's workspace centralizes financial record-keeping. Use the portal to maintain a clear record trail and follow the group's approved controls for handling funds.</p>
+        <div class="header-rule"></div>
+        <h2>Common workflow</h2>
+        <ol class="steps">
+          <li><strong>Set the contribution window.</strong> Review the period, dates and published instructions before opening or closing a window.</li>
+          <li><strong>Record contributions.</strong> Match the member, period and amount to the available payment evidence before saving.</li>
+          <li><strong>Issue receipts.</strong> Confirm the contribution record and receipt details, then make the receipt available to the member.</li>
+          <li><strong>Review exceptions.</strong> Check late or penalty records, and apply changes only where authorized under group policy.</li>
+          <li><strong>Follow loans and expenses.</strong> Review requests, disbursements, repayments and expense records using the appropriate pages.</li>
+          <li><strong>Reconcile and report.</strong> Compare portal records to source statements and keep supporting financial documents together.</li>
+        </ol>
+        <div class="cards">
+          <div class="card"><h3>Contribution Window</h3><p>Control the payment period and its member-facing information.</p></div>
+          <div class="card"><h3>Member Contributions / Receipts</h3><p>Record and verify payments, then issue or find receipts.</p></div>
+          <div class="card"><h3>Loan Requests / Repayments</h3><p>Review the workflow and track payout and repayment records.</p></div>
+          <div class="card"><h3>Expenses / Penalties</h3><p>Track operational expenses and penalty entries under approved procedures.</p></div>
+        </div>
+        <div class="note warn"><p><strong>Good control practice.</strong> Verify the source document, member, amount and period before changing a record. Follow the group's approval and separation-of-duties rules; a portal action does not itself authorize a transaction.</p></div>
+      </main>
+      <footer class="footer"><span>10/10 VENTURES · PORTAL GUIDE</span><span>10 / 14</span></footer>
+    </section>
+
+    <section class="page">
+      <header class="running-head"><span class="brand"><img src="../brand/logo.png" alt="">10/10 Ventures</span><span>09 · Secretary</span></header>
+      <main class="page-content">
+        <p class="eyebrow">Staff workspace</p>
+        <h1>Secretary workspace</h1>
+        <p class="lead">The secretary workspace supports the group's meeting rhythm and shared records, from publishing a schedule to documenting decisions and tracking follow-up.</p>
+        <div class="header-rule"></div>
+        <h2>Before, during and after a meeting</h2>
+        <div class="cards">
+          <div class="card"><h3>Before</h3><p>Add or update the meeting schedule and planned activities. Confirm the date, time, venue and member-facing details before publishing.</p></div>
+          <div class="card"><h3>During</h3><p>Use the attendance register to record who attended. Capture notes and decisions in line with the group's record-keeping practice.</p></div>
+          <div class="card"><h3>After</h3><p>Publish minutes, create or update action items, assign owners and record agreed follow-up information.</p></div>
+          <div class="card"><h3>Between meetings</h3><p>Share announcements, respond to member correspondence and maintain the document library and formal letters.</p></div>
+        </div>
+        <h2>Keep records useful</h2>
+        <ul>
+          <li>Use clear titles and dates so members can find the correct meeting or file.</li>
+          <li>Separate confirmed decisions from discussion notes and proposed actions.</li>
+          <li>Check action owners and follow-up details before publishing minutes.</li>
+          <li>Correct attendance or meeting details promptly when reliable information is provided.</li>
+          <li>Store documents in the appropriate library and respect access and privacy expectations.</li>
+        </ul>
+        <div class="note"><p><strong>Coordination tip.</strong> The treasurer may need approved minutes or decisions to support financial records. Share the official record through the portal's appropriate document area rather than relying on an informal message alone.</p></div>
+      </main>
+      <footer class="footer"><span>10/10 VENTURES · PORTAL GUIDE</span><span>11 / 14</span></footer>
+    </section>
+
+    <section class="page">
+      <header class="running-head"><span class="brand"><img src="../brand/logo.png" alt="">10/10 Ventures</span><span>10 · President</span></header>
+      <main class="page-content">
+        <p class="eyebrow">Staff workspace</p>
+        <h1>President workspace</h1>
+        <p class="lead">The president's workspace provides a view of governance, member participation and financial activity to support oversight and follow-through.</p>
+        <div class="header-rule"></div>
+        <table class="table">
+          <thead><tr><th>Area</th><th>Oversight use</th></tr></thead>
+          <tbody>
+            <tr><td>Dashboard &amp; Group Health</td><td>Review summary indicators across activity, contributions, loans and governance.</td></tr>
+            <tr><td>Meetings &amp; Planned Activities</td><td>Review the meeting schedule and upcoming group activities.</td></tr>
+            <tr><td>Member Directory &amp; Attendance</td><td>Review membership information and attendance records relevant to governance.</td></tr>
+            <tr><td>Action Items</td><td>Follow up on decisions and committee responsibilities.</td></tr>
+            <tr><td>Financial Overview</td><td>Review group fund summaries and trends, and discuss discrepancies with the treasurer.</td></tr>
+            <tr><td>Loan Overview &amp; Contributions</td><td>Review savings and loan activity through the views available to the role.</td></tr>
+            <tr><td>Share-out &amp; Penalties</td><td>Review records and coordinate questions with the responsible officers.</td></tr>
+          </tbody>
+        </table>
+        <h2>Use oversight views responsibly</h2>
+        <ul>
+          <li>Use a summary as a prompt for follow-up, not as a substitute for source records.</li>
+          <li>Route payment-record questions to the treasurer and meeting-record questions to the secretary.</li>
+          <li>Use official minutes and approved notices to confirm decisions and delegated authority.</li>
+          <li>Handle member and financial details as confidential group information.</li>
+        </ul>
+        <div class="note warn"><p><strong>Decisions and approvals.</strong> The portal supports visibility and record-keeping. Follow the group's constitution and approval procedures for decisions; do not treat a dashboard value as an authorization.</p></div>
+      </main>
+      <footer class="footer"><span>10/10 VENTURES · PORTAL GUIDE</span><span>12 / 14</span></footer>
+    </section>
+
+    <section class="page">
+      <header class="running-head"><span class="brand"><img src="../brand/logo.png" alt="">10/10 Ventures</span><span>11 · Administrator</span></header>
+      <main class="page-content">
+        <p class="eyebrow">Staff workspace</p>
+        <h1>Administrator workspace</h1>
+        <p class="lead">Administrator access covers platform and organization-level tasks. Because these pages can affect member access and official records, use them only for authorized work.</p>
+        <div class="header-rule"></div>
+        <h2>Key areas</h2>
+        <div class="cards">
+          <div class="card"><h3>Members</h3><p>Maintain member records and handle access-related tasks available to administrators.</p></div>
+          <div class="card"><h3>Organization &amp; Leadership</h3><p>Review organization information and committee-term records.</p></div>
+          <div class="card"><h3>Financial Oversight</h3><p>Review contributions, loans, penalties, share-out and audit information.</p></div>
+          <div class="card"><h3>Legal, Banking &amp; Files</h3><p>Maintain relevant registration information, bank-account details and shared records.</p></div>
+          <div class="card"><h3>Communication &amp; Governance</h3><p>Coordinate messages, announcements, attendance and action items.</p></div>
+          <div class="card"><h3>Platform Health</h3><p>Review dashboard and health information and report technical problems to the appropriate support contact.</p></div>
+        </div>
+        <h2>Before changing a member or organization record</h2>
+        <ol class="steps">
+          <li>Confirm the request came from an authorized source and applies to the correct person or organization.</li>
+          <li>Review the current record before editing; check identifiers to avoid changing the wrong entry.</li>
+          <li>Make only the change required and confirm that the saved details are correct.</li>
+          <li>Where appropriate, record the reason through the group's established process and notify the affected officer.</li>
+        </ol>
+        <div class="note warn"><p><strong>Protect access.</strong> Grant, change or remove access only under the group's approval process. Never share administrator credentials or leave an administrator session open on a shared device.</p></div>
+      </main>
+      <footer class="footer"><span>10/10 VENTURES · PORTAL GUIDE</span><span>13 / 14</span></footer>
+    </section>
+
+    <section class="page">
+      <header class="running-head"><span class="brand"><img src="../brand/logo.png" alt="">10/10 Ventures</span><span>12 · Reports &amp; support</span></header>
+      <main class="page-content">
+        <p class="eyebrow">Reference &amp; good practice</p>
+        <h1>Reports, records &amp; getting help</h1>
+        <p class="lead">Financial reports help authorized officers review activity over time. Use them alongside source records and approved decisions.</p>
+        <div class="header-rule"></div>
+        <h2>Reports available to financial staff</h2>
+        <table class="table">
+          <thead><tr><th>Report / area</th><th>Typical use</th></tr></thead>
+          <tbody>
+            <tr><td>Fund Tracker</td><td>Review income, expenses and the displayed net balance.</td></tr>
+            <tr><td>Monthly Summary</td><td>Review recorded income and outflows for a period.</td></tr>
+            <tr><td>Audit Prep</td><td>Gather information for the group's periodic review.</td></tr>
+            <tr><td>Projections</td><td>Review forward-looking estimates alongside their underlying assumptions.</td></tr>
+            <tr><td>Financial Files</td><td>Find reports, statements and financial proofs shared with the role.</td></tr>
+          </tbody>
+        </table>
+        <p>Check the period, filters and data freshness. Reconcile totals to statements, receipts and portal entries; send discrepancies and supporting evidence to the treasurer or administrator.</p>
+        <h2>When something goes wrong</h2>
+        <div class="checklist">
+          <p><strong>Can't sign in:</strong> confirm your email, reset your password and complete any verification step.</p>
+          <p><strong>Invitation missing:</strong> check Spam/Junk; ask the issuing officer to verify the address.</p>
+          <p><strong>Page won't load:</strong> check your connection and retry. Note the page and time if it persists.</p>
+          <p><strong>Record looks incorrect:</strong> don't duplicate or alter it; send details to the responsible officer.</p>
+          <p><strong>Need help:</strong> use Support or Messages if available, or contact an authorized officer.</p>
+        </div>
+        <h2>Keep your account safe</h2>
+        <ul>
+          <li>Never share your password, sign-in link or one-time verification code.</li>
+          <li>Use a unique password and sign out from shared devices.</li>
+          <li>Be cautious with unexpected requests to change bank details or transfer funds; verify through a trusted channel.</li>
+          <li>Share member and financial information only with people who need it for group work.</li>
+        </ul>
+        <div class="note"><p><strong>Version 1.0 · October 2026.</strong> Portal labels and features may change. For current policies, deadlines, financial terms and decisions, consult the constitution and latest official communication.</p></div>
+      </main>
+      <footer class="footer"><span>10/10 VENTURES · PORTAL GUIDE</span><span>14 / 14</span></footer>
+    </section>
+  </body>
+</html>
