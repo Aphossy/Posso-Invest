@@ -73,8 +73,8 @@ export function UserPenaltiesView() {
             My Penalties
           </h1>
           <p className="mt-0.5 text-sm text-muted-foreground">
-            Your late payment history and penalty status. A 10% penalty applies
-            to contributions paid outside the payment window.
+            Your late payment history and penalty status. The 10% late-payment
+            penalty does not apply to September or October 2026 contributions.
           </p>
         </div>
         <Button

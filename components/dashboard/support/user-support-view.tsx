@@ -497,7 +497,7 @@ const FAQ_ITEMS = [
       },
       {
         q: "What happens if I pay late?",
-        a: "Late payments attract a 10% penalty on the contribution amount. A one-month grace period may be granted with a valid reason and prior notification.",
+        a: "Late payments normally attract a 10% penalty on the contribution amount. September and October 2026 contributions are exempt from this late-payment penalty. A one-month grace period may be granted with a valid reason and prior notification.",
       },
       {
         q: "Can I lose membership for missed contributions?",

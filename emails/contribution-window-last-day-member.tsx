@@ -26,6 +26,7 @@ interface ContributionWindowLastDayMemberEmailProps {
   penaltyAmount: string
   totalIfLate: string
   currency: string
+  penaltyApplies: boolean
 }
 
 export function ContributionWindowLastDayMemberEmail({
@@ -37,6 +38,7 @@ export function ContributionWindowLastDayMemberEmail({
   penaltyAmount,
   totalIfLate,
   currency,
+  penaltyApplies,
 }: ContributionWindowLastDayMemberEmailProps) {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || organisationWebsite
 
@@ -44,8 +46,9 @@ export function ContributionWindowLastDayMemberEmail({
     <Html lang="en">
       <Head />
       <Preview>
-        DEADLINE TOMORROW: Pay your {periodLabel} contribution by {windowEnd} to
-        avoid a 10% penalty.
+        {penaltyApplies
+          ? `DEADLINE TOMORROW: Pay your ${periodLabel} contribution by ${windowEnd} to avoid a 10% penalty.`
+          : `Contribution deadline tomorrow: ${periodLabel} contributions are exempt from late-payment penalties.`}
       </Preview>
       <Body style={main}>
         <Container style={container}>
@@ -62,13 +65,17 @@ export function ContributionWindowLastDayMemberEmail({
             <Text style={paragraph}>
               This is your final reminder. The contribution window for{" "}
               <strong>{periodLabel}</strong> closes tomorrow,{" "}
-              <strong>{windowEnd}</strong>. After the deadline, a 10% late
-              penalty will be applied automatically.
+              <strong>{windowEnd}</strong>.
+              {penaltyApplies
+                ? " After the deadline, a 10% late penalty will be applied automatically."
+                : " No late-payment penalty applies to this period."}
             </Text>
 
             <Section style={urgentBox}>
               <Text style={urgentTitle}>
-                ⚡ Pay by tomorrow to avoid a penalty!
+                {penaltyApplies
+                  ? "⚡ Pay by tomorrow to avoid a penalty!"
+                  : "⚡ Please contribute by the deadline."}
               </Text>
               <table style={urgentTable}>
                 <tbody>
@@ -78,14 +85,20 @@ export function ContributionWindowLastDayMemberEmail({
                       {currency} {amountDue}
                     </td>
                   </tr>
+                  {penaltyApplies && (
+                    <tr>
+                      <td style={urgentLabel}>Penalty if late (10%)</td>
+                      <td style={urgentValueRed}>
+                        + {currency} {penaltyAmount}
+                      </td>
+                    </tr>
+                  )}
                   <tr>
-                    <td style={urgentLabel}>Penalty if late (10%)</td>
-                    <td style={urgentValueRed}>
-                      + {currency} {penaltyAmount}
+                    <td style={urgentLabelTotal}>
+                      {penaltyApplies
+                        ? "Total if paid late"
+                        : "Contribution due"}
                     </td>
-                  </tr>
-                  <tr>
-                    <td style={urgentLabelTotal}>Total if paid late</td>
                     <td style={urgentValueTotal}>
                       {currency} {totalIfLate}
                     </td>
@@ -95,8 +108,10 @@ export function ContributionWindowLastDayMemberEmail({
             </Section>
 
             <Text style={infoText}>
-              Pay by <strong>{windowEnd}</strong> to avoid the penalty. Notify
-              your treasurer once payment is made so it can be confirmed
+              {penaltyApplies
+                ? `Pay by ${windowEnd} to avoid the penalty.`
+                : `Please pay by ${windowEnd}.`}{" "}
+              Notify your treasurer once payment is made so it can be confirmed
               promptly.
             </Text>
 
@@ -142,6 +157,7 @@ ContributionWindowLastDayMemberEmail.PreviewProps = {
   penaltyAmount: "8,000",
   totalIfLate: "88,000",
   currency: "RWF",
+  penaltyApplies: true,
 } satisfies ContributionWindowLastDayMemberEmailProps
 
 export default ContributionWindowLastDayMemberEmail

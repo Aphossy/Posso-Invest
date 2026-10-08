@@ -971,7 +971,8 @@ export function MonthlyReportView() {
                     {formatRwf(contribSummary.penalties)}
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    {(latePenaltyRate * 100).toFixed(0)}% rate on late payments
+                    {(latePenaltyRate * 100).toFixed(0)}% on non-exempt
+                    periods; Sep–Oct 2026 exempt
                   </p>
                 </>
               )}

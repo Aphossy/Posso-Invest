@@ -20,6 +20,7 @@ import {
   NOTIFICATION_ACTION,
 } from "@/types/notifications"
 import { auth } from "@/lib/auth"
+import { isLateContributionPenaltyExempt } from "@/lib/contribution-penalty"
 
 const listSchema = z.object({
   memberId: z.string().optional(),
@@ -236,6 +237,12 @@ export async function POST(request: Request) {
     )
     if (!contrib)
       return apiError("NOT_FOUND", "Linked contribution not found.", 404)
+    if (isLateContributionPenaltyExempt(contrib.period))
+      return apiError(
+        "LATE_PENALTY_EXEMPT",
+        `Late contribution payment penalties do not apply to ${contrib.period}.`,
+        409
+      )
 
     const existing = await penaltyOperations.findByContributionId(
       parsed.data.contributionId

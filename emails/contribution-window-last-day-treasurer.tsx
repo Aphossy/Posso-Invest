@@ -35,6 +35,7 @@ interface ContributionWindowLastDayTreasurerEmailProps {
   totalExpected: string
   penaltyPerMember: string
   currency: string
+  penaltyApplies: boolean
 }
 
 export function ContributionWindowLastDayTreasurerEmail({
@@ -50,6 +51,7 @@ export function ContributionWindowLastDayTreasurerEmail({
   totalExpected,
   penaltyPerMember,
   currency,
+  penaltyApplies,
 }: ContributionWindowLastDayTreasurerEmailProps) {
   const baseUrl = organisationWebsite
   const unpaidCount = totalMembers - paidCount
@@ -74,7 +76,9 @@ export function ContributionWindowLastDayTreasurerEmail({
               The contribution window for <strong>{periodLabel}</strong> closes
               tomorrow, <strong>{windowEnd}</strong>. Members who do not pay by
               then will have their contributions marked as <strong>late</strong>
-              and a 10% penalty will be applied after the deadline.
+              {penaltyApplies
+                ? " and a 10% penalty will be applied after the deadline."
+                : ". No late-payment penalty applies to this period."}
             </Text>
 
             <Section style={statsGrid}>
@@ -134,12 +138,14 @@ export function ContributionWindowLastDayTreasurerEmail({
                       {currency} {totalExpected}
                     </td>
                   </tr>
-                  <tr>
-                    <td style={labelCell}>Penalty per late member (10%)</td>
-                    <td style={valueCellRed}>
-                      {currency} {penaltyPerMember}
-                    </td>
-                  </tr>
+                  {penaltyApplies && (
+                    <tr>
+                      <td style={labelCell}>Penalty per late member (10%)</td>
+                      <td style={valueCellRed}>
+                        {currency} {penaltyPerMember}
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </Section>
@@ -156,8 +162,9 @@ export function ContributionWindowLastDayTreasurerEmail({
                   </Text>
                 ))}
                 <Text style={penaltyNote}>
-                  ⚠️ If these members do not pay by {windowEnd}, each will incur
-                  a penalty of {currency} {penaltyPerMember} after the deadline.
+                  {penaltyApplies
+                    ? `⚠️ If these members do not pay by ${windowEnd}, each will incur a penalty of ${currency} ${penaltyPerMember} after the deadline.`
+                    : "No late contribution payment penalties apply to this period."}
                 </Text>
               </Section>
             )}
@@ -210,6 +217,7 @@ ContributionWindowLastDayTreasurerEmail.PreviewProps = {
   totalExpected: "880,000",
   penaltyPerMember: "8,000",
   currency: "RWF",
+  penaltyApplies: true,
 } satisfies ContributionWindowLastDayTreasurerEmailProps
 
 export default ContributionWindowLastDayTreasurerEmail

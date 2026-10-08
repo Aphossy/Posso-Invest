@@ -1,5 +1,6 @@
 import { siteConfig } from "@/constants/site-config"
 import { db } from "@/db/connection"
+import { contributionOperations } from "@/db/operations/contribution-operations"
 import { penaltyOperations } from "@/db/operations/penalty-operations"
 import { contribution, member, organization, user } from "@/db/schemas"
 import { ContributionCatchupReminder } from "@/emails/contribution-catchup-reminder"
@@ -24,6 +25,7 @@ import { MEMBER_ROLES } from "@/utils/role-utils"
 import { render } from "@react-email/components"
 import { and, eq, inArray } from "drizzle-orm"
 
+import { isLateContributionPenaltyExempt } from "@/lib/contribution-penalty"
 import sendEmail from "@/lib/send-email"
 
 import ContributionWindowLeadershipEmail from "../../emails/contribution-window-leadership"
@@ -222,35 +224,34 @@ async function loadContributionsForPeriod(
     )
 }
 
-async function waiveAutoSeptemberPenalties(
+async function waiveAutoExemptPeriodPenalties(
   organizationId: string
 ): Promise<number> {
   const reason =
-    "Waived because the group did not have a bank account for September 2026 contributions."
+    "Late contribution payment penalties are waived for September and October 2026."
   const autoPenalties: Awaited<ReturnType<typeof penaltyOperations.findMany>> =
     []
-  let offset = 0
+  for (const period of siteConfig.platform.savings.latePenaltyExemptPeriods) {
+    let offset = 0
+    while (true) {
+      const penalties = await penaltyOperations.findMany({
+        filters: { organizationId, period, status: "active" },
+        limit: 100,
+        offset,
+      })
+      if (penalties.length === 0) break
 
-  while (true) {
-    const penalties = await penaltyOperations.findMany({
-      filters: {
-        organizationId,
-        period: "2026-09",
-        status: "active",
-      },
-      limit: 100,
-      offset,
-    })
-    if (penalties.length === 0) break
-
-    autoPenalties.push(
-      ...penalties.filter((penalty) =>
-        (penalty.notes ?? "").includes(AUTO_LATE_PENALTY_MARKER)
+      autoPenalties.push(
+        ...penalties.filter(
+          (penalty) =>
+            (penalty.notes ?? "").includes(AUTO_LATE_PENALTY_MARKER) ||
+            Boolean(penalty.contributionId)
+        )
       )
-    )
 
-    if (penalties.length < 100) break
-    offset += penalties.length
+      if (penalties.length < 100) break
+      offset += penalties.length
+    }
   }
 
   for (const penalty of autoPenalties) {
@@ -259,6 +260,11 @@ async function waiveAutoSeptemberPenalties(
       waivedAt: new Date(),
       waivedReason: reason,
     })
+    if (penalty.contributionId) {
+      await contributionOperations.updateById(penalty.contributionId, {
+        penaltyAmount: "0",
+      })
+    }
   }
 
   return autoPenalties.length
@@ -289,6 +295,8 @@ async function applyLatePenalties(
   label: string,
   overdueMembers: MemberRow[]
 ): Promise<number> {
+  if (isLateContributionPenaltyExempt(period)) return 0
+
   let created = 0
   for (const m of overdueMembers) {
     const existing = await penaltyOperations.findMany({
@@ -332,6 +340,7 @@ export const contributionWindowOpenedNotifier = inngest.createFunction(
       "resolve-period",
       getContributionPeriodForNotification
     )
+    const penaltyApplies = !isLateContributionPenaltyExempt(period)
     const orgId = await step.run("resolve-organization", resolveOrganizationId)
     const label = periodLabel(period)
     const { windowStart, windowEnd, daysRemainingFromNow } =
@@ -377,6 +386,7 @@ export const contributionWindowOpenedNotifier = inngest.createFunction(
             daysRemaining: daysRemainingFromNow,
             amountDue: fmtAmount(monthlyContributionRwf),
             currency: CURRENCY,
+            penaltyApplies,
           })
         )
 
@@ -437,6 +447,7 @@ export const contributionWindowOpenedNotifier = inngest.createFunction(
               daysRemaining: daysRemainingFromNow,
               amountDue: fmtAmount(monthlyContributionRwf),
               currency: CURRENCY,
+              penaltyApplies,
             })
           )
 
@@ -505,6 +516,7 @@ export const contributionWindowOpenedNotifier = inngest.createFunction(
                 amountPerMember: fmtAmount(monthlyContributionRwf),
                 totalExpected: fmtAmount(totalExpected),
                 currency: CURRENCY,
+                penaltyApplies,
               })
             )
             await sendEmail({
@@ -564,6 +576,7 @@ export const contributionWindowReminderNotifier = inngest.createFunction(
       "resolve-period",
       getContributionPeriodForNotification
     )
+    const penaltyApplies = !isLateContributionPenaltyExempt(period)
     const orgId = await step.run("resolve-organization", resolveOrganizationId)
     const label = periodLabel(period)
     const { windowEnd, daysRemainingFromNow } = getWindowDates(period)
@@ -622,6 +635,7 @@ export const contributionWindowReminderNotifier = inngest.createFunction(
             amountDue: fmtAmount(monthlyContributionRwf),
             penaltyAmount: fmtAmount(PENALTY_AMOUNT),
             currency: CURRENCY,
+            penaltyApplies,
           })
         )
 
@@ -677,6 +691,7 @@ export const contributionWindowReminderNotifier = inngest.createFunction(
               amountDue: fmtAmount(monthlyContributionRwf),
               penaltyAmount: fmtAmount(PENALTY_AMOUNT),
               currency: CURRENCY,
+              penaltyApplies,
             })
           )
 
@@ -707,7 +722,9 @@ export const contributionWindowReminderNotifier = inngest.createFunction(
         userId: m.userId,
         type: "contribution" as const,
         title: `${daysRemainingFromNow} days left - ${label} contribution`,
-        message: `Reminder: pay ${CURRENCY} ${fmtAmount(monthlyContributionRwf)} before ${windowEnd}. A ${PENALTY_RATE_LABEL} penalty applies after the deadline.`,
+        message: penaltyApplies
+          ? `Reminder: pay ${CURRENCY} ${fmtAmount(monthlyContributionRwf)} before ${windowEnd}. A ${PENALTY_RATE_LABEL} penalty applies after the deadline.`
+          : `Reminder: pay ${CURRENCY} ${fmtAmount(monthlyContributionRwf)} before ${windowEnd}. No late-payment penalty applies to this period.`,
         channel: "in_app" as const,
         actionUrl: "/member/contributions",
         actionLabel: "Pay Now",
@@ -807,6 +824,7 @@ export const contributionWindowLastDayNotifier = inngest.createFunction(
       "resolve-period",
       getContributionPeriodForNotification
     )
+    const penaltyApplies = !isLateContributionPenaltyExempt(period)
     const orgId = await step.run("resolve-organization", resolveOrganizationId)
     const label = periodLabel(period)
     const { windowEnd } = getWindowDates(period)
@@ -845,7 +863,8 @@ export const contributionWindowLastDayNotifier = inngest.createFunction(
       return { period, notified: 0 }
     }
 
-    const totalIfLate = monthlyContributionRwf + PENALTY_AMOUNT
+    const totalIfLate =
+      monthlyContributionRwf + (penaltyApplies ? PENALTY_AMOUNT : 0)
     const eventType = EMAIL_EVENT.LAST_DAY
 
     // ── Initial send ──────────────────────────────────────────────────────
@@ -866,6 +885,7 @@ export const contributionWindowLastDayNotifier = inngest.createFunction(
             penaltyAmount: fmtAmount(PENALTY_AMOUNT),
             totalIfLate: fmtAmount(totalIfLate),
             currency: CURRENCY,
+            penaltyApplies,
           })
         )
 
@@ -921,6 +941,7 @@ export const contributionWindowLastDayNotifier = inngest.createFunction(
               penaltyAmount: fmtAmount(PENALTY_AMOUNT),
               totalIfLate: fmtAmount(totalIfLate),
               currency: CURRENCY,
+              penaltyApplies,
             })
           )
 
@@ -951,7 +972,9 @@ export const contributionWindowLastDayNotifier = inngest.createFunction(
         userId: m.userId,
         type: "contribution" as const,
         title: `Contribution deadline tomorrow - ${label}`,
-        message: `The deadline to pay your ${label} contribution (${CURRENCY} ${fmtAmount(monthlyContributionRwf)}) is tomorrow. A ${PENALTY_RATE_LABEL} penalty applies after the deadline.`,
+        message: penaltyApplies
+          ? `The deadline to pay your ${label} contribution (${CURRENCY} ${fmtAmount(monthlyContributionRwf)}) is tomorrow. A ${PENALTY_RATE_LABEL} penalty applies after the deadline.`
+          : `The deadline to pay your ${label} contribution (${CURRENCY} ${fmtAmount(monthlyContributionRwf)}) is tomorrow. No late-payment penalty applies to this period.`,
         channel: "in_app" as const,
         actionUrl: "/member/contributions",
         actionLabel: "Pay Now",
@@ -994,6 +1017,7 @@ export const contributionWindowLastDayNotifier = inngest.createFunction(
                 totalExpected,
                 penaltyPerMember: fmtAmount(PENALTY_AMOUNT),
                 currency: CURRENCY,
+                penaltyApplies,
               })
             )
             await sendEmail({
@@ -1053,8 +1077,8 @@ export const contributionDeadlinePassedNotifier = inngest.createFunction(
       "resolve-period",
       getContributionPeriodForNotification
     )
-    if (period === "2026-09") {
-      logger.info("Skipping September 2026 deadline penalties and notices", {
+    if (isLateContributionPenaltyExempt(period)) {
+      logger.info("Skipping deadline penalties and notices for exempt period", {
         period,
       })
       return { period, overdue: 0, skipped: true }
@@ -1345,8 +1369,8 @@ export const contributionCatchupReminderNotifier = inngest.createFunction(
       resolveOrganizationId
     )
     const waivedPenalties = await step.run(
-      "waive-auto-september-penalties",
-      () => waiveAutoSeptemberPenalties(organizationId)
+      "waive-auto-exempt-period-penalties",
+      () => waiveAutoExemptPeriodPenalties(organizationId)
     )
     const members = await step.run("load-contribution-members", () =>
       loadContributionMembers(organizationId)

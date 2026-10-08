@@ -9,6 +9,7 @@ import { format } from "date-fns"
 import { CalendarIcon, ClipboardEdit } from "lucide-react"
 import { toast } from "sonner"
 
+import { isLateContributionPenaltyExempt } from "@/lib/contribution-penalty"
 import { cn } from "@/lib/utils"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { Badge } from "@/components/ui/badge"
@@ -266,17 +267,20 @@ export function UpdateContributionDialog({
               <Input
                 id="upd-penalty"
                 inputMode="numeric"
-                value={penaltyAmount}
+                value={
+                  isLateContributionPenaltyExempt(period) ? "0" : penaltyAmount
+                }
                 onChange={(e) => setPenaltyAmount(e.target.value)}
                 placeholder="e.g. 8000"
                 className="font-mono"
+                disabled={isLateContributionPenaltyExempt(period)}
               />
               <p className="text-xs text-muted-foreground">
-                Typically 10% of the contribution amount (
-                {formatRwf(
-                  Math.round(Number.parseFloat(String(amount || "0")) * 0.1)
-                )}
-                ).
+                {isLateContributionPenaltyExempt(period)
+                  ? `No late-payment penalty applies to ${period}.`
+                  : `Typically 10% of the contribution amount (${formatRwf(
+                      Math.round(Number.parseFloat(String(amount || "0")) * 0.1)
+                    )}).`}
               </p>
             </div>
           )}

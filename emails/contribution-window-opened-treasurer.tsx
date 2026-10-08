@@ -34,6 +34,7 @@ interface ContributionWindowOpenedTreasurerEmailProps {
   amountPerMember: string
   totalExpected: string
   currency: string
+  penaltyApplies: boolean
 }
 
 export function ContributionWindowOpenedTreasurerEmail({
@@ -48,6 +49,7 @@ export function ContributionWindowOpenedTreasurerEmail({
   amountPerMember,
   totalExpected,
   currency,
+  penaltyApplies,
 }: ContributionWindowOpenedTreasurerEmailProps) {
   const baseUrl = organisationWebsite
 
@@ -70,7 +72,7 @@ export function ContributionWindowOpenedTreasurerEmail({
             <Text style={paragraph}>
               The contribution window for <strong>{periodLabel}</strong> is now
               open. All members have been notified by email. Below is a summary
-              and your task list for this cycle. 
+              and your task list for this cycle.
             </Text>
 
             <Section style={windowBox}>
@@ -126,7 +128,9 @@ export function ContributionWindowOpenedTreasurerEmail({
                 ☐ Record late contributions after {windowEnd}
               </Text>
               <Text style={taskItem}>
-                ☐ Apply penalties for late or missing contributions
+                {penaltyApplies
+                  ? "☐ Apply penalties for late or missing contributions"
+                  : "☐ No late contribution payment penalties apply this period"}
               </Text>
               <Text style={taskItem}>
                 ☐ Follow up with members who haven't paid by the 3rd
@@ -194,6 +198,7 @@ ContributionWindowOpenedTreasurerEmail.PreviewProps = {
   amountPerMember: "80,000",
   totalExpected: "880,000",
   currency: "RWF",
+  penaltyApplies: true,
 } satisfies ContributionWindowOpenedTreasurerEmailProps
 
 export default ContributionWindowOpenedTreasurerEmail

@@ -532,7 +532,7 @@ export function AuditReportView() {
                 <p className="text-xs text-muted-foreground">
                   {financialSummary.penaltyCount} late payment
                   {financialSummary.penaltyCount !== 1 ? "s" : ""} ·{" "}
-                  {(latePenaltyRate * 100).toFixed(0)}% rate
+                  {(latePenaltyRate * 100).toFixed(0)}% rate outside exempt periods
                 </p>
               </>
             )}

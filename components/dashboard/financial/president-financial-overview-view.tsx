@@ -1079,7 +1079,8 @@ export function PresidentFinancialOverviewView() {
           <Separator />
           <p>
             <strong className="text-foreground">Late penalty:</strong>{" "}
-            {(latePenaltyRate * 100).toFixed(0)}% of the contribution amount.
+            {(latePenaltyRate * 100).toFixed(0)}% of the contribution amount
+            for non-exempt periods. September and October 2026 are exempt.
             Penalties are added to the general fund.
           </p>
           <Separator />

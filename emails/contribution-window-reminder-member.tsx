@@ -26,6 +26,7 @@ interface ContributionWindowReminderMemberEmailProps {
   amountDue: string
   penaltyAmount: string
   currency: string
+  penaltyApplies: boolean
 }
 
 export function ContributionWindowReminderMemberEmail({
@@ -37,6 +38,7 @@ export function ContributionWindowReminderMemberEmail({
   amountDue,
   penaltyAmount,
   currency,
+  penaltyApplies,
 }: ContributionWindowReminderMemberEmailProps) {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || organisationWebsite
 
@@ -74,19 +76,18 @@ export function ContributionWindowReminderMemberEmail({
               <Text style={urgencyItem}>
                 💰 <strong>Amount due:</strong> {currency} {amountDue}
               </Text>
-              <Text style={urgencyItem}>
-                ⚠️ <strong>Late penalty (10%):</strong> {currency}{" "}
-                {penaltyAmount}
-              </Text>
+              {penaltyApplies && (
+                <Text style={urgencyItem}>
+                  ⚠️ <strong>Late penalty (10%):</strong> {currency}{" "}
+                  {penaltyAmount}
+                </Text>
+              )}
             </Section>
 
             <Text style={warningText}>
-              If you pay after <strong>{windowEnd}</strong>, your contribution
-              will be recorded as <strong>late</strong> and a penalty of{" "}
-              <strong>
-                {currency} {penaltyAmount}
-              </strong>{" "}
-              will be automatically added.
+              {penaltyApplies
+                ? `If you pay after ${windowEnd}, your contribution will be recorded as late and a penalty of ${currency} ${penaltyAmount} will be automatically added.`
+                : `No late-payment penalty applies to the ${periodLabel} contribution period.`}
             </Text>
 
             <Section style={buttonSection}>
@@ -132,6 +133,7 @@ ContributionWindowReminderMemberEmail.PreviewProps = {
   amountDue: "80,000",
   penaltyAmount: "8,000",
   currency: "RWF",
+  penaltyApplies: true,
 } satisfies ContributionWindowReminderMemberEmailProps
 
 export default ContributionWindowReminderMemberEmail

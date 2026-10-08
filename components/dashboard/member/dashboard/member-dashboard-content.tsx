@@ -24,6 +24,7 @@ import {
   type LucideIcon,
 } from "lucide-react"
 
+import { isLateContributionPenaltyExempt } from "@/lib/contribution-penalty"
 import { getDynamicGreeting } from "@/lib/greeting"
 import { useMemberDashboard } from "@/hooks/api/use-member-dashboard"
 import { Alert, AlertDescription } from "@/components/ui/alert"
@@ -122,7 +123,7 @@ function StatCard({
 type ContributionAlertVariant = "info" | "warning" | "destructive" | "success"
 
 interface ContributionAlertState {
-  id: "window-open" | "late" | "paid"
+  id: "window-open" | "upcoming" | "exempt" | "late" | "paid"
   variant: ContributionAlertVariant
   title: string
   message: string
@@ -132,6 +133,7 @@ function getContributionAlertState({
   isWindowOpen,
   daysRemaining,
   daysUntilNext,
+  period,
   thisPeriodStatus,
   thisPeriodAmount,
   monthlyTarget,
@@ -140,6 +142,7 @@ function getContributionAlertState({
   isWindowOpen: boolean
   daysRemaining: number
   daysUntilNext: number
+  period: string
   thisPeriodStatus: string | null
   thisPeriodAmount: number
   monthlyTarget: number
@@ -148,7 +151,9 @@ function getContributionAlertState({
   const dayLabel = (count: number) => `${count} day${count === 1 ? "" : "s"}`
 
   const isContributionSettled =
-    thisPeriodStatus === "confirmed" && thisPeriodAmount >= monthlyTarget
+    ["confirmed", "late", "waived"].includes(thisPeriodStatus ?? "") &&
+    thisPeriodAmount >= monthlyTarget
+  const penaltyExempt = isLateContributionPenaltyExempt(period)
 
   if (isContributionSettled) {
     if (isWindowOpen) {
@@ -163,7 +168,16 @@ function getContributionAlertState({
       id: "paid",
       variant: "success",
       title: "Contribution already recorded",
-      message: `Your ${formatRwf(thisPeriodAmount)} contribution is confirmed for this period.${daysUntilNext > 0 ? ` The next window opens in ${dayLabel(daysUntilNext)}.` : " No action is required now."}`,
+      message: `Your ${formatRwf(thisPeriodAmount)} contribution is recorded for this period.${thisPeriodStatus === "late" && penaltyExempt ? " No late-payment penalty applies to this period." : thisPeriodStatus === "late" ? " Check your penalty record for any late-payment charge." : daysUntilNext > 0 ? ` The next window opens in ${dayLabel(daysUntilNext)}.` : " No action is required now."}`,
+    }
+  }
+
+  if (daysUntilNext > 0) {
+    return {
+      id: "upcoming",
+      variant: "info",
+      title: "Next contribution window is upcoming",
+      message: `The next contribution window opens in ${dayLabel(daysUntilNext)}. No contribution is overdue for this period.`,
     }
   }
 
@@ -172,7 +186,18 @@ function getContributionAlertState({
       id: "window-open",
       variant: "warning",
       title: "Contribution window is open",
-      message: `Please contribute ${formatRwf(monthlyTarget)} within ${dayLabel(daysRemaining)} to avoid penalties.`,
+      message: penaltyExempt
+        ? `Please contribute ${formatRwf(monthlyTarget)} within ${dayLabel(daysRemaining)}. No late-payment penalty applies to this period.`
+        : `Please contribute ${formatRwf(monthlyTarget)} within ${dayLabel(daysRemaining)} to avoid penalties.`,
+    }
+  }
+
+  if (penaltyExempt) {
+    return {
+      id: "exempt",
+      variant: "info",
+      title: "Contribution window has passed",
+      message: `Your contribution of ${formatRwf(monthlyTarget)} remains outstanding. No late-payment penalty applies to this period.`,
     }
   }
 
@@ -202,6 +227,7 @@ export function MemberDashboardContent() {
         isWindowOpen: data.data.window.isOpen,
         daysRemaining: data.data.window.daysRemaining,
         daysUntilNext: data.data.window.daysUntilNext,
+        period: data.data.window.period,
         thisPeriodStatus:
           data.data.contributions.monthly.find(
             (item) => item.period === data.data.window.period
@@ -286,6 +312,7 @@ export function MemberDashboardContent() {
     isWindowOpen: contributionWindow.isOpen,
     daysRemaining: contributionWindow.daysRemaining,
     daysUntilNext: contributionWindow.daysUntilNext,
+    period: contributionWindow.period,
     thisPeriodStatus: currentContribution?.status ?? null,
     thisPeriodAmount: currentContribution?.amount ?? 0,
     monthlyTarget,

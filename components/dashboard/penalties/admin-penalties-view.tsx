@@ -195,8 +195,8 @@ export function AdminPenaltiesView() {
             Penalties Overview
           </h1>
           <p className="mt-0.5 text-sm text-muted-foreground">
-            Group-wide view of all late payment penalties. 10% penalty applies
-            per the Group Constitution.
+            Group-wide view of late payment penalties. September and October
+            2026 contributions are exempt from the 10% late-payment penalty.
           </p>
         </div>
         <Button

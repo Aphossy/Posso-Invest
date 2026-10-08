@@ -19,6 +19,7 @@ import {
   DOMAIN_NOTIFICATION_TYPE,
   NOTIFICATION_ACTION,
 } from "@/types/notifications"
+import { isLateContributionPenaltyExempt } from "@/lib/contribution-penalty"
 import { getSessionUserCached } from "@/lib/get-session-cached"
 import sendEmail from "@/lib/send-email"
 
@@ -114,6 +115,24 @@ export async function PUT(
   const parsed = updateSchema.safeParse(body)
   if (!parsed.success)
     return NextResponse.json({ error: "Invalid payload" }, { status: 400 })
+
+  const isLateContributionPenalty =
+    Boolean(record.contributionId) ||
+    (record.notes ?? "").includes("auto:late_contribution") ||
+    /late[- ]?(payment|contribution)/i.test(record.reason ?? "")
+  if (
+    isLateContributionPenalty &&
+    isLateContributionPenaltyExempt(record.period) &&
+    (parsed.data.status === "active" ||
+      (parsed.data.amount !== undefined && parsed.data.status !== "waived"))
+  ) {
+    return NextResponse.json(
+      {
+        error: `Late contribution payment penalties do not apply to ${record.period}.`,
+      },
+      { status: 409 }
+    )
+  }
 
   const updates: Parameters<typeof penaltyOperations.updateById>[1] = {
     ...parsed.data,

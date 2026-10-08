@@ -16,6 +16,7 @@ import {
   Wallet,
 } from "lucide-react"
 
+import { isLateContributionPenaltyExempt } from "@/lib/contribution-penalty"
 import { getActivePeriod, getWindowForPeriod } from "@/lib/contribution-window"
 import { useContributions } from "@/hooks/api/use-contributions"
 import { Alert, AlertDescription } from "@/components/ui/alert"
@@ -119,6 +120,7 @@ export function TreasurerContributionWindowView() {
 
   // Only relevant for the active period - windows in the past are always "closed"
   const isCurrentPeriod = selectedPeriod === activePeriod
+  const penaltyApplies = !isLateContributionPenaltyExempt(selectedPeriod)
   const isFuturePeriod =
     parse(selectedPeriod, "yyyy-MM", new Date()) >
     new Date(today.getFullYear(), today.getMonth(), 1)
@@ -143,7 +145,9 @@ export function TreasurerContributionWindowView() {
       if (c.status === "late") {
         lateCount++
         const penalty = Number.parseFloat(c.penaltyAmount || "0")
-        penalties += Number.isNaN(penalty) ? 0 : penalty
+        if (penaltyApplies) {
+          penalties += Number.isNaN(penalty) ? 0 : penalty
+        }
       }
       if (c.status === "waived") waivedCount++
     }
@@ -157,7 +161,7 @@ export function TreasurerContributionWindowView() {
       penalties,
       total: contributions.length,
     }
-  }, [contributions])
+  }, [contributions, penaltyApplies])
 
   const isInitialLoading = isPending && contributions.length === 0
 
@@ -269,8 +273,19 @@ export function TreasurerContributionWindowView() {
           The monthly contribution window runs from the{" "}
           <strong>{contributionWindow.startDay}st</strong> through the{" "}
           <strong>{contributionWindow.endDay}th</strong> of the following month.
-          Payments outside this window incur a{" "}
-          <strong>{(latePenaltyRate * 100).toFixed(0)}% late penalty</strong>.
+          {penaltyApplies ? (
+            <>
+              Payments outside this window incur a{" "}
+              <strong>
+                {(latePenaltyRate * 100).toFixed(0)}% late penalty
+              </strong>
+              .
+            </>
+          ) : (
+            <strong>
+              No late contribution payment penalty applies to this period.
+            </strong>
+          )}
         </AlertDescription>
       </Alert>
 
@@ -574,11 +589,14 @@ export function TreasurerContributionWindowView() {
                   Late penalty rate
                 </p>
                 <p className="text-lg font-semibold tabular-nums">
-                  {(latePenaltyRate * 100).toFixed(0)}%
+                  {penaltyApplies
+                    ? `${(latePenaltyRate * 100).toFixed(0)}%`
+                    : "Exempt"}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  {formatRwf(monthlyContributionRwf * latePenaltyRate)} per
-                  missed window
+                  {penaltyApplies
+                    ? `${formatRwf(monthlyContributionRwf * latePenaltyRate)} per missed window`
+                    : "No late-payment penalty this period"}
                 </p>
               </div>
               <div className="rounded-md border p-3">

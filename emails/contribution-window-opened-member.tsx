@@ -26,6 +26,7 @@ interface ContributionWindowOpenedMemberEmailProps {
   daysRemaining: number
   amountDue: string
   currency: string
+  penaltyApplies: boolean
 }
 
 export function ContributionWindowOpenedMemberEmail({
@@ -37,6 +38,7 @@ export function ContributionWindowOpenedMemberEmail({
   daysRemaining,
   amountDue,
   currency,
+  penaltyApplies,
 }: ContributionWindowOpenedMemberEmailProps) {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || organisationWebsite
 
@@ -58,8 +60,10 @@ export function ContributionWindowOpenedMemberEmail({
             <Text style={paragraph}>Muraho {memberName},</Text>
             <Text style={paragraph}>
               The contribution window for <strong>{periodLabel}</strong> is now
-              open. Please make your monthly contribution before the deadline to
-              avoid a late-payment penalty.
+              open. Please make your monthly contribution before the deadline.
+              {penaltyApplies
+                ? " A late-payment penalty applies after the deadline."
+                : " No late-payment penalty applies to this period."}
             </Text>
 
             <Section style={highlightBox}>
@@ -86,9 +90,9 @@ export function ContributionWindowOpenedMemberEmail({
             </Section>
 
             <Text style={warningText}>
-              ⚠️ Contributions received after {windowEnd} will be marked as{" "}
-              <strong>late</strong> and a <strong>10% penalty</strong> will be
-              applied automatically.
+              {penaltyApplies
+                ? `Contributions received after ${windowEnd} will be marked as late and a 10% penalty will be applied automatically.`
+                : `Contributions received after ${windowEnd} may be recorded as late, but no late-payment penalty applies to this period.`}
             </Text>
 
             <Section style={buttonSection}>
@@ -131,6 +135,7 @@ ContributionWindowOpenedMemberEmail.PreviewProps = {
   daysRemaining: 9,
   amountDue: "80,000",
   currency: "RWF",
+  penaltyApplies: true,
 } satisfies ContributionWindowOpenedMemberEmailProps
 
 export default ContributionWindowOpenedMemberEmail

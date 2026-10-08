@@ -11,6 +11,7 @@ import { toast } from "sonner"
 import { z } from "zod"
 
 import { ApiErrorException } from "@/types/api"
+import { isLateContributionPenaltyExempt } from "@/lib/contribution-penalty"
 import { organizationClient } from "@/lib/organization-client"
 import { cn } from "@/lib/utils"
 import {
@@ -109,7 +110,10 @@ const recordContributionSchema = z
       })
     }
 
-    if (values.status === "late") {
+    if (
+      values.status === "late" &&
+      values.periods.some((period) => !isLateContributionPenaltyExempt(period))
+    ) {
       const penalty = values.penaltyAmount
         ? Number(normalizeMoneyInput(values.penaltyAmount))
         : 0
@@ -219,6 +223,12 @@ export function RecordContributionForm({
 
   const selectedMemberId = watch("memberId")
   const selectedPeriods = watch("periods") ?? []
+  const selectedPeriodsAreExempt =
+    selectedPeriods.length > 0 &&
+    selectedPeriods.every(isLateContributionPenaltyExempt)
+  const includesExemptPeriod = selectedPeriods.some(
+    isLateContributionPenaltyExempt
+  )
   const {
     data: memberContributionData,
     isPending: isLoadingMemberContributions,
@@ -625,7 +635,11 @@ export function RecordContributionForm({
             placeholder="0..."
           />
           <p className="text-xs text-muted-foreground">
-            Required when status is Late.
+            {selectedPeriodsAreExempt
+              ? "No late-payment penalty applies to September or October 2026."
+              : includesExemptPeriod
+                ? "Required for late non-exempt periods. September and October 2026 are exempt."
+                : "Required when status is Late."}
           </p>
           {errors.penaltyAmount?.message && (
             <p className="text-xs text-destructive" aria-live="polite">

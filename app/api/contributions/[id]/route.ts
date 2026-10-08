@@ -4,6 +4,7 @@ import { penaltyOperations } from "@/db/operations/penalty-operations"
 import { insertContributionSchema } from "@/db/schemas/contribution-schema"
 import { z } from "zod"
 
+import { isLateContributionPenaltyExempt } from "@/lib/contribution-penalty"
 import { getSessionUserCached } from "@/lib/get-session-cached"
 
 const updateSchema = insertContributionSchema
@@ -78,6 +79,7 @@ export async function PUT(
   if (!existing) {
     return NextResponse.json({ error: "Not found" }, { status: 404 })
   }
+  const isPenaltyExempt = isLateContributionPenaltyExempt(existing.period)
 
   const auditTimestamp = new Date().toISOString()
   const mergedMetadata = {
@@ -89,6 +91,7 @@ export async function PUT(
 
   const updated = await contributionOperations.updateById(contribId, {
     ...parsed.data,
+    ...(isPenaltyExempt ? { penaltyAmount: "0" } : {}),
     metadata: mergedMetadata,
   })
   if (!updated) {
@@ -99,7 +102,18 @@ export async function PUT(
   const newStatus = parsed.data.status
   const newPenaltyAmount = parsed.data.penaltyAmount
 
-  if (newStatus === "late" || newPenaltyAmount !== undefined) {
+  if (isPenaltyExempt) {
+    const penaltyRecord =
+      await penaltyOperations.findByContributionId(contribId)
+    if (penaltyRecord?.status === "active") {
+      await penaltyOperations.updateById(penaltyRecord.id, {
+        status: "waived",
+        waivedBy: user.id,
+        waivedAt: new Date(),
+        waivedReason: `No late contribution payment penalty applies to ${existing.period}.`,
+      })
+    }
+  } else if (newStatus === "late" || newPenaltyAmount !== undefined) {
     const penaltyRecord =
       await penaltyOperations.findByContributionId(contribId)
     const amount = newPenaltyAmount ?? existing.penaltyAmount ?? "0"
@@ -144,7 +158,11 @@ export async function PUT(
     }
   }
 
-  if (newStatus === "late" && existing.status === "waived") {
+  if (
+    !isPenaltyExempt &&
+    newStatus === "late" &&
+    existing.status === "waived"
+  ) {
     // Undo waiver - re-activate the penalty
     const penaltyRecord =
       await penaltyOperations.findByContributionId(contribId)

@@ -21,6 +21,7 @@ import {
   NOTIFICATION_ACTION,
 } from "@/types/notifications"
 import { auth } from "@/lib/auth"
+import { isLateContributionPenaltyExempt } from "@/lib/contribution-penalty"
 
 const listSchema = z.object({
   memberId: z.string().optional(),
@@ -360,6 +361,9 @@ export async function POST(request: Request) {
     .values(
       periods.map((selectedPeriod) => ({
         ...contributionData,
+        penaltyAmount: isLateContributionPenaltyExempt(selectedPeriod)
+          ? "0"
+          : contributionData.penaltyAmount,
         period: selectedPeriod,
         organizationId: activeOrganizationId,
         id: crypto.randomUUID(),

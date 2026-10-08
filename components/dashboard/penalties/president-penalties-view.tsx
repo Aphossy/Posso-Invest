@@ -919,8 +919,9 @@ export function PresidentPenaltiesView() {
             Penalties Management
           </h1>
           <p className="mt-0.5 text-sm text-muted-foreground">
-            Group-wide oversight of late payment penalties. 10% penalty applies
-            per the Group Constitution.
+            Group-wide oversight of late payment penalties. September and
+            October 2026 contributions are exempt from the 10% late-payment
+            penalty.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
