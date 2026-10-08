@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { siteConfig } from "@/constants/site-config"
 import type { LoanExportable } from "@/utils/loan-export-utils"
 import { Banknote, Calendar, Info, User } from "lucide-react"
 import { toast } from "sonner"
@@ -36,8 +37,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Loader } from "@/components/common/loader"
-
-import { PaymentInfoSection } from "./payment-info-section"
 
 interface LoanDisburseDialogProps {
   loan: LoanExportable
@@ -97,6 +96,8 @@ export function LoanDisburseDialog({
   const [interestRate, setInterestRate] = useState(loan.interestRate ?? "")
   const [notes, setNotes] = useState(loan.notes ?? "")
   const [formErrors, setFormErrors] = useState<Record<string, string>>({})
+
+  if (!siteConfig.platform.loans.enabled) return null
 
   const validateForm = (): boolean => {
     const errors: Record<string, string> = {}
@@ -315,17 +316,6 @@ export function LoanDisburseDialog({
             Approved by {loan.approvedByName}
           </div>
         ) : null}
-      </div>
-
-      <div className="space-y-1.5">
-        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          Member Payout Details
-        </p>
-        <PaymentInfoSection
-          ventures={loan.memberVenturesProfile}
-          memberName={loan.memberName}
-          maskAccount={false}
-        />
       </div>
 
       <div className="grid gap-4">

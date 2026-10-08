@@ -148,13 +148,10 @@ export function AdminDashboardContent() {
         icon: HandCoins,
       },
       {
-        label: "Loan cap",
-        value: `${siteConfig.platform.loans.maxLoanToSavingsRatio}x savings`,
-        icon: Landmark,
-      },
-      {
-        label: "Interest rate",
-        value: `${Math.round(siteConfig.platform.loans.interestRate * 100)}%`,
+        label: "Loan policy",
+        value: siteConfig.platform.loans.enabled
+          ? "Enabled"
+          : "Borrowing and member loans disabled",
         icon: Banknote,
       },
       {

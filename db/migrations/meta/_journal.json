@@ -183,6 +183,13 @@
       "when": 1787647578866,
       "tag": "20260825084618_fresh_ego",
       "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1791434026000,
+      "tag": "20261008043346_add_bank_accounts",
+      "breakpoints": true
     }
   ]
 }

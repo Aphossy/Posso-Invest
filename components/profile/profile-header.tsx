@@ -35,12 +35,6 @@ export function ProfileHeader({ profile, onUpdate }: ProfileHeaderProps) {
       profile.address?.cell,
       profile.address?.village,
       profile.address?.city,
-      venturesProfile?.preferredPayoutMethod,
-      venturesProfile?.bankName,
-      venturesProfile?.bankAccountNumber,
-      venturesProfile?.bankAccountHolder,
-      venturesProfile?.mobileMoneyProvider,
-      venturesProfile?.mobileMoneyNumber,
       venturesProfile?.emergencyContactName,
       venturesProfile?.emergencyContactPhone,
     ]

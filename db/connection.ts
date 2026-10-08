@@ -52,7 +52,7 @@ class DatabaseConnection {
       // Initialize Drizzle with unified schema
       this.db = drizzle(this.client, {
         schema,
-        logger: process.env.NODE_ENV === "development",
+        logger: false,
       })
 
       this.isConnected = true

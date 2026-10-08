@@ -7,11 +7,9 @@ import {
   Building2,
   Calendar,
   CheckCircle2,
-  CreditCard,
   Download,
   FileText,
   Gavel,
-  HandCoins,
   Landmark,
   MapPin,
   Printer,
@@ -40,7 +38,7 @@ const docMeta = [
   { label: "Legal Name", value: "10/10 Ventures Ltd", icon: BookOpen },
   {
     label: "Type",
-    value: "Member-owned savings and investment company",
+    value: "Savings and investment company",
     icon: Building2,
   },
   { label: "Effective", value: "September 01, 2026", icon: Calendar },
@@ -49,8 +47,12 @@ const docMeta = [
     value: "Kacyiru Sector, Gasabo District, Rwanda",
     icon: MapPin,
   },
-  { label: "Founding Members", value: "Ten (10)", icon: Users },
-  { label: "Document", value: "Organizational Statute (Bylaws)", icon: ScrollText },
+  { label: "Founding Members", value: "Twelve (12)", icon: Users },
+  {
+    label: "Document",
+    value: "Organizational Statute (Bylaws)",
+    icon: ScrollText,
+  },
 ]
 
 const keyTerms = [
@@ -61,21 +63,15 @@ const keyTerms = [
   },
   {
     label: "Payment Window",
-    value: "01st → 05th of following month",
+    value: "25th → 5th of following month",
     icon: Calendar,
   },
   { label: "Late Penalty", value: "10% of contribution amount", icon: Scale },
   { label: "Meeting Fee", value: "10,000 RWF per meeting", icon: Users },
   {
-    label: "Max Loan",
-    value: "Up to personal savings total",
-    icon: CreditCard,
-  },
-  { label: "Loan Interest", value: "5% flat rate", icon: HandCoins },
-  {
-    label: "Loan Disbursement",
-    value: "Within 3 business days",
-    icon: CheckCircle2,
+    label: "Loan Policy",
+    value: "No borrowing or loans to members",
+    icon: Shield,
   },
   {
     label: "Dual Authorization Threshold",
@@ -93,27 +89,26 @@ const articles = [
     num: 1,
     title: "Name of the Group",
     icon: BookOpen,
-    summary:
-      "The official name is 10/10 VENTURES.",
+    summary: "The official name is 10/10 VENTURES.",
     content: [
       'The official name of the group is 10/10 VENTURES, hereinafter referred to as "the Group" or "the Ventures."',
       "The name 10/10 Ventures shall be used consistently in all group records, communications, and activities.",
     ],
   },
- {
-  num: 2,
-  title: "Nature and Legal Status",
-  icon: Scale,
-  summary:
-    "A voluntary savings, investment, and business development group operating under the laws of Rwanda and progressing toward formal legal registration.",
-  content: [
-    "10/10 Ventures is a voluntary savings, investment, and business development group established by committed members who share a common vision of achieving financial independence through disciplined savings, collective investment, and entrepreneurship.",
-    "The Group shall initially operate as an informal savings and investment initiative governed by this Constitution while pursuing formal legal registration under the applicable laws and regulations of the Republic of Rwanda.",
-    "Upon registration, 10/10 Ventures shall operate as a legally recognized organization with the authority to conduct business activities, enter into contracts, own assets, open and manage financial accounts, and establish strategic partnerships.",
-    "The Group shall operate in accordance with the principles of transparency, accountability, integrity, professionalism, inclusiveness, and responsible financial management.",
-    "10/10 Ventures shall remain non-partisan, non-discriminatory, and committed to promoting sustainable economic development, entrepreneurship, and long-term prosperity for all members.",
-  ],
-},
+  {
+    num: 2,
+    title: "Nature and Legal Status",
+    icon: Scale,
+    summary:
+      "A voluntary savings, investment, and business development group operating under the laws of Rwanda and progressing toward formal legal registration.",
+    content: [
+      "10/10 Ventures is a voluntary savings, investment, and business development group established by committed members who share a common vision of achieving financial independence through disciplined savings, collective investment, and entrepreneurship.",
+      "The Group shall initially operate as an informal savings and investment initiative governed by this Constitution while pursuing formal legal registration under the applicable laws and regulations of the Republic of Rwanda.",
+      "Upon registration, 10/10 Ventures shall operate as a legally recognized organization with the authority to conduct business activities, enter into contracts, own assets, open and manage financial accounts, and establish strategic partnerships.",
+      "The Group shall operate in accordance with the principles of transparency, accountability, integrity, professionalism, inclusiveness, and responsible financial management.",
+      "10/10 Ventures shall remain non-partisan, non-discriminatory, and committed to promoting sustainable economic development, entrepreneurship, and long-term prosperity for all members.",
+    ],
+  },
   {
     num: 3,
     title: "Registered Office and Jurisdiction",
@@ -156,7 +151,7 @@ const articles = [
       "Encourage consistent and disciplined saving habits among all members.",
       "Build a collective fund sufficient for long-term investment and sustainable growth.",
       "Provide financial and moral support to members experiencing genuine hardship.",
-      "Strengthen professional unity, networking, and collaboration among Dental Therapy graduates.",
+      "Build sustainable, income-generating Rwandan businesses through disciplined collective savings and investment.",
       "Ensure transparency, accountability, and trust in all financial and governance matters.",
       "Comply with all applicable laws and regulations of the Republic of Rwanda.",
     ],
@@ -167,7 +162,7 @@ const articles = [
     title: "Membership",
     icon: Users,
     summary:
-      "Open to committed individuals from different sectors who share a common vision. New members require 2/3 approval. Equal rights for all 10 founding members.",
+      "Open to committed individuals from different sectors who share a common vision. New members require 2/3 approval. Equal rights for all 12 founding members.",
     sections: [
       {
         title: "7.1 Eligibility",
@@ -182,7 +177,7 @@ const articles = [
         items: [
           "To participate fully in all meetings and discussions.",
           "To vote on all matters brought before the general membership.",
-          "To benefit from group activities, loans, and investments according to the rules herein.",
+          "To benefit from approved collective investments and distributions adopted under the registered company documents.",
           "To access financial records and request a financial summary at any meeting.",
           "To nominate themselves or others for leadership positions.",
           "To raise concerns, complaints, or suggestions through proper channels.",
@@ -202,9 +197,9 @@ const articles = [
         title: "7.5 Withdrawal of a Member",
         items: [
           "A member wishing to withdraw must give written notice to the Secretary at least two (2) months in advance.",
-          "Upon withdrawal, the member's personal savings shall be refunded in full, unless there are any outstanding loan balances or penalties.",
-          "A withdrawing member shall not be entitled to any share of the Group's collective investment assets.",
-          "A member dismissed for misconduct shall forfeit any right to claim savings until approved by a two-thirds (2/3) majority vote.",
+          "Contributed capital shall not be withdrawn early during the 30-month savings commitment.",
+          "Withdrawal and settlement after the savings commitment must follow the registered company documents and applicable law.",
+          "Equal contributions alone do not establish a member's legal share percentage or ownership of specific company assets.",
         ],
       },
     ],
@@ -214,13 +209,13 @@ const articles = [
     title: "Savings and Contributions",
     icon: Wallet,
     summary:
-      "100,000 RWF/month. Payment window 01st–05th. Late penalty: 10%. Meeting fee: 10,000 RWF.",
+      "100,000 RWF/month. Payment window 25th–5th of the following month. Late penalty: 10%. Meeting fee: 10,000 RWF.",
     sections: [
       {
         title: "8.1 Monthly Contributions",
         items: [
           "Each member shall contribute 100,000 RWF per month during the 30-month savings phase.",
-          "Contributions shall be made from the 1st through the 5th of the following month for the applicable contribution period.",
+          "Each contribution period opens on the 25th of its named month and closes on the 5th of the following month.",
           "Contributions shall be deposited directly to the Group's official Equity Bank Rwanda account.",
         ],
       },
@@ -242,7 +237,7 @@ const articles = [
       {
         title: "8.4 Fund Usage",
         items: [
-          "Funds shall be used strictly for purposes approved by the members, including savings accumulation, member loans, and collective investments.",
+          "Funds shall be used strictly for purposes approved by the members, including savings accumulation and collective investments; Group borrowing and loans to members are not permitted.",
           "No funds shall be withdrawn or transferred without the dual authorization of the President and Treasurer.",
         ],
       },
@@ -250,44 +245,16 @@ const articles = [
   },
   {
     num: 9,
-    title: "Loans",
-    icon: HandCoins,
-    summary:
-      "Borrow up to personal savings. 5% flat interest. Disbursed within 3 days. Default = dismissal after 3 missed months.",
+    title: "Debt-free Investment Policy",
+    icon: Shield,
+    summary: "The Group will not borrow or lend to members.",
     sections: [
       {
-        title: "9.1 Loan Eligibility",
+        title: "9.1 No Borrowing or Member Loans",
         items: [
-          "Any member of good standing (up to date with contributions and free of existing Group loans) may apply for a loan.",
-          "The maximum loan amount shall not exceed the total personal savings the member has accumulated within the Group.",
-        ],
-      },
-      {
-        title: "9.2 Loan Application",
-        items: [
-          "Loan requests must be submitted in writing to the Treasurer.",
-          "Loan approval shall be decided at the next scheduled meeting, or within three (3) business days for urgent cases.",
-        ],
-      },
-      {
-        title: "9.3 Disbursement",
-        items: [
-          "Approved loans shall be disbursed within three (3) business days of approval.",
-        ],
-      },
-      {
-        title: "9.4 Repayment and Interest",
-        items: [
-          "All loans shall be repaid with a flat interest rate of five percent (5%) on the principal amount.",
-          "The repayment schedule shall be agreed upon at the time of disbursement.",
-          "Interest collected shall be added to the Group's general fund.",
-        ],
-      },
-      {
-        title: "9.5 Default",
-        items: [
-          "A member who fails to repay their loan for three (3) consecutive months without a valid, documented reason shall be dismissed from the Group.",
-          "Outstanding loan balances shall be deducted from the dismissed member's savings before any refund.",
+          "The Group shall not borrow from external lenders.",
+          "Group funds shall not be advanced to members as loans.",
+          "Collective investments shall be funded through member contributions and retained business income, subject to member approval and applicable law.",
         ],
       },
     ],
@@ -455,11 +422,11 @@ const articles = [
     title: "Dissolution of the Group",
     icon: Scale,
     summary:
-      "Unanimous agreement required. All debts settled, funds distributed proportionally to personal savings.",
+      "Unanimous agreement required. Remaining assets are distributed under registered company documents and applicable law.",
     content: [
       "The Group may be dissolved only upon unanimous agreement of all members at a duly convened Special General Meeting.",
-      "Upon dissolution, all outstanding loans shall first be collected, all debts settled, and the remaining collective fund distributed in proportion to each member's total personal savings.",
-      "Any jointly owned assets (e.g., clinic shares) shall be disposed of and proceeds distributed as agreed by unanimous vote.",
+      "Upon dissolution, liabilities shall be settled and remaining assets distributed under the registered company documents, share register, and applicable law.",
+      "The distribution of company assets must not be inferred from contribution totals alone; legal ownership and member entitlements must be established in the company's formal records.",
     ],
     numbered: true,
   },
@@ -587,8 +554,8 @@ export function ConstitutionView() {
             <h1 className="text-2xl font-semibold">Organizational Statute</h1>
           </div>
           <p className="text-sm text-muted-foreground">
-            The supreme governing document of 10/10 Ventures - Version
-            effective September 1, 2026.
+            The supreme governing document of 10/10 Ventures - Version effective
+            September 1, 2026.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -658,18 +625,18 @@ export function ConstitutionView() {
               <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">
                 Preamble
               </p>
-           <p className="text-sm leading-relaxed text-muted-foreground italic">
-              &ldquo;We, the founding members of 10/10 Ventures, united by a shared
-              vision of financial growth, disciplined saving, and collective
-              investment, hereby establish this Constitution to govern our
-              savings and investment group. We commit ourselves to the
-              principles of transparency, accountability, mutual trust, and
-              financial discipline as we build lasting businesses — a Bakery,
-              an Avocado Farm, Mushroom Cultivation, a Beetroot and Grape
-              Winery, and a Healthcare Clinic — for the benefit of all members
-              and the wider community of Kigali, Rwanda. This Constitution
-              shall serve as the supreme governing instrument of 10/10
-              Ventures, binding upon all members from the date of adoption.&rdquo;
+              <p className="text-sm leading-relaxed text-muted-foreground italic">
+                &ldquo;We, the founding members of 10/10 Ventures, united by a
+                shared vision of financial growth, disciplined saving, and
+                collective investment, hereby establish this Constitution to
+                govern our savings and investment group. We commit ourselves to
+                the principles of transparency, accountability, mutual trust,
+                and financial discipline as we build sustainable,
+                income-generating Rwandan businesses and long-term shared
+                prosperity. Any business plans, timelines, and returns are
+                projections, not guarantees. Legal ownership and distributions
+                shall follow the company's registered documents and adopted
+                member resolutions.&rdquo;
               </p>
             </CardContent>
           </Card>
@@ -683,15 +650,15 @@ export function ConstitutionView() {
                   Vision
                 </CardTitle>
               </CardHeader>
-            <CardContent className="text-sm text-muted-foreground">
-              To become Rwanda's leading member-owned savings and investment group,
-              empowering individuals to achieve financial independence through
-              disciplined savings, sustainable investments, entrepreneurship, and the
-              creation of long-term shared wealth that benefits members and the wider
-              community.
-            </CardContent>
+              <CardContent className="text-sm text-muted-foreground">
+                To become Rwanda's trusted savings and investment group,
+                empowering individuals to achieve financial independence through
+                disciplined savings, sustainable investments, entrepreneurship,
+                and the creation of long-term shared wealth that benefits
+                members and the wider community.
+              </CardContent>
             </Card>
-           <Card>
+            <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="flex items-center gap-2 text-sm font-semibold">
                   <CheckCircle2 className="h-4 w-4 text-emerald-500" />
@@ -699,14 +666,45 @@ export function ConstitutionView() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground">
-                To unite committed members in building financial security through
-                regular savings, transparent governance, responsible fund management,
-                collective investment, and innovative business ventures that generate
-                sustainable income, create employment opportunities, and contribute to
-                Rwanda's socio-economic development.
+                To unite committed members in building financial security
+                through regular savings, transparent governance, responsible
+                fund management, collective investment, and innovative business
+                ventures that generate sustainable income, create employment
+                opportunities, and contribute to Rwanda's socio-economic
+                development.
               </CardContent>
             </Card>
           </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-sm font-semibold">
+                Savings and Year 5 proposal
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3 text-sm text-muted-foreground">
+              <p>
+                The plan is for 12 members to contribute 100,000 RWF monthly for
+                30 months: 3,000,000 RWF per member and 36,000,000 RWF
+                collectively.
+              </p>
+              <p>
+                The source proposal projects 15,870,000 RWF in total Year 5
+                profit. An equal split among 12 members would be 1,322,500 RWF
+                each, about 44.1% of one member&apos;s planned contributions.
+                This is a projected profit distribution, not repayment of the
+                full 3,000,000 RWF contribution.
+              </p>
+              <p>
+                The proposal&apos;s payout table says 10 members and reports
+                45.2% recovery, which conflicts with the 12-member group and the
+                payout arithmetic. These business figures are projections, not
+                guaranteed returns. The proposal does not set legal share
+                percentages or ownership of individual assets; those must be
+                established in the company&apos;s registered documents.
+              </p>
+            </CardContent>
+          </Card>
 
           {/* Key terms */}
           <div>
@@ -745,7 +743,7 @@ export function ConstitutionView() {
                   "Encourage consistent and disciplined saving habits among all members.",
                   "Build a collective fund sufficient for long-term investment and sustainable growth.",
                   "Provide financial and moral support to members experiencing genuine hardship.",
-                  "Strengthen professional unity, networking, and collaboration among Dental Therapy graduates.",
+                  "Build sustainable, income-generating Rwandan businesses through disciplined collective savings and investment.",
                   "Ensure transparency, accountability, and trust in all financial and governance matters.",
                   "Comply with all applicable laws and regulations of the Republic of Rwanda.",
                 ].map((obj, i) => (

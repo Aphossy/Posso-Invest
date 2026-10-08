@@ -13,7 +13,7 @@ export default function CustomerDashboardLayout({
 }) {
   return (
     <Suspense fallback={<OrbitingSpinner />}>
-      <RoleGuard allowedRoles={["member", "admin"]}>
+      <RoleGuard allowedRoles={["member", "advisor", "admin"]}>
         <DashboardLayout title="Dashboard">{children}</DashboardLayout>
       </RoleGuard>
     </Suspense>

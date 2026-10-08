@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { LegalRegistrationForm } from "@/components/dashboard/admin/legal/legal-registration-form"
 
 export const metadata: Metadata = {
   title: "Legal",
@@ -13,19 +13,10 @@ export default function LegalPage() {
       <div>
         <h1 className="text-2xl font-semibold">Legal</h1>
         <p className="text-sm text-muted-foreground">
-          Legal page for 10/10 Ventures.
+          Manage organization registration information and legal records.
         </p>
       </div>
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base font-semibold">
-            Legal Content
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="text-sm text-muted-foreground">
-          Content for this section will appear here.
-        </CardContent>
-      </Card>
+      <LegalRegistrationForm />
     </div>
   )
 }

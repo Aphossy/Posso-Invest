@@ -58,7 +58,6 @@ import {
 const { monthlyContributionRwf, latePenaltyRate, contributionWindow } =
   siteConfig.platform.savings
 const { membershipCount } = siteConfig.platform.governance
-const { interestRate } = siteConfig.platform.loans
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -802,17 +801,13 @@ export function PresidentFinancialOverviewView() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">
-                Interest Rate
-              </CardTitle>
+              <CardTitle className="text-sm font-medium">Loan Policy</CardTitle>
               <TrendingUp className="h-4 w-4 text-purple-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-semibold">
-                {(interestRate * 100).toFixed(0)}%
-              </div>
+              <div className="text-2xl font-semibold">Disabled</div>
               <p className="text-xs text-muted-foreground">
-                Flat rate on all loans
+                The group does not borrow or lend to members
               </p>
             </CardContent>
           </Card>
@@ -1089,9 +1084,8 @@ export function PresidentFinancialOverviewView() {
           </p>
           <Separator />
           <p>
-            <strong className="text-foreground">Loan cap:</strong> Up to the
-            member&apos;s total accumulated personal savings. Flat interest rate
-            of {(interestRate * 100).toFixed(0)}%.
+            <strong className="text-foreground">Loan policy:</strong> Group
+            borrowing and loans to members are not permitted.
           </p>
           <Separator />
           <p>

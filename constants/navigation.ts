@@ -111,7 +111,7 @@ export const MEMBER_NAVIGATION: NavigationGroup[] = [
     ],
   },
   {
-    label: "Contributions & Loans",
+    label: "Contributions",
     items: [
       {
         title: "Contribution Calendar",
@@ -128,11 +128,10 @@ export const MEMBER_NAVIGATION: NavigationGroup[] = [
         shortcut: "mod+4",
       },
       {
-        title: "Loan Requests",
-        url: "/member/loans",
-        icon: CreditCard,
-        description: "Request and track loans",
-        shortcut: "mod+l",
+        title: "Group Bank Accounts",
+        url: "/member/bank-accounts",
+        icon: Building2,
+        description: "Official accounts for group contributions and transfers",
       },
       {
         title: "My Penalties",
@@ -310,6 +309,12 @@ export const TREASURER_NAVIGATION: NavigationGroup[] = [
         url: "/treasurer/contributions/receipts",
         icon: FileText,
         description: "Issue and archive receipts",
+      },
+      {
+        title: "Group Bank Accounts",
+        url: "/treasurer/bank-accounts",
+        icon: Building2,
+        description: "Official accounts for group payments",
       },
     ],
   },
@@ -557,6 +562,12 @@ export const SECRETARY_NAVIGATION: NavigationGroup[] = [
         description: "Correspondence and formal letters",
       },
       {
+        title: "Group Bank Accounts",
+        url: "/secretary/bank-accounts",
+        icon: Building2,
+        description: "Official accounts for group payments",
+      },
+      {
         title: "Shared Assets",
         url: "/secretary/assets",
         icon: FolderOpen,
@@ -695,6 +706,12 @@ export const PRESIDENT_NAVIGATION: NavigationGroup[] = [
         icon: PiggyBank,
         description: "Approve year-end fund distribution",
         isNew: true,
+      },
+      {
+        title: "Group Bank Accounts",
+        url: "/president/bank-accounts",
+        icon: Building2,
+        description: "Official accounts for group payments",
       },
     ],
   },
@@ -1044,15 +1061,7 @@ export const QUICK_ACTIONS: Record<UserRole, NavigationItem[]> = {
       shortcut: "mod+shift+a",
     },
   ],
-  member: [
-    {
-      title: "Request Loan",
-      url: "/member/loans",
-      icon: CreditCard,
-      description: "Start a loan request",
-      shortcut: "mod+l",
-    },
-  ],
+  member: [],
   treasurer: [
     {
       title: "Verify Contribution",
@@ -1062,10 +1071,10 @@ export const QUICK_ACTIONS: Record<UserRole, NavigationItem[]> = {
       shortcut: "mod+v",
     },
     {
-      title: "Approve Loan",
+      title: "Review Loan Requests",
       url: "/treasurer/loans/requests",
       icon: CheckCircle,
-      description: "Review pending loans",
+      description: "Close existing requests under group policy",
       shortcut: "mod+shift+l",
     },
   ],

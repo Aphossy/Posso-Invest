@@ -26,7 +26,6 @@ import {
 
 import { getDynamicGreeting } from "@/lib/greeting"
 import { useMemberDashboard } from "@/hooks/api/use-member-dashboard"
-import { useProfile } from "@/hooks/use-profile"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -196,10 +195,7 @@ export function MemberDashboardContent() {
   const [isOverdueAlertCollapsed, setIsOverdueAlertCollapsed] = useState(false)
   const [isPenaltyAlertVisible, setIsPenaltyAlertVisible] = useState(true)
   const [isPenaltyAlertCollapsed, setIsPenaltyAlertCollapsed] = useState(false)
-  const [isVenturesAlertVisible, setIsVenturesAlertVisible] = useState(true)
-  const [isVenturesAlertCollapsed, setIsVenturesAlertCollapsed] = useState(false)
   const { data, isLoading, error, refetch } = useMemberDashboard()
-  const { profile } = useProfile()
 
   const contributionAlertId = data?.data
     ? getContributionAlertState({
@@ -273,23 +269,10 @@ export function MemberDashboardContent() {
     penalties,
   } = data.data
 
-  const ventures = profile?.metadata?.venturesProfile
-  const hasPayoutDetails =
-    !!ventures?.preferredPayoutMethod &&
-    (ventures.preferredPayoutMethod === "cash" ||
-      (ventures.preferredPayoutMethod === "bank" &&
-        !!ventures.bankAccountNumber) ||
-      (ventures.preferredPayoutMethod === "mobile_money" &&
-        !!ventures.mobileMoneyNumber))
-
   const firstName = member.name?.trim().split(/\s+/)[0] ?? member.email
   const monthlyTarget = siteConfig.platform.savings.monthlyContributionRwf
   const latePenaltyRate = siteConfig.platform.savings.latePenaltyRate
   const hostFee = siteConfig.platform.meetings.hostContributionRwf
-  const interestRate = Math.round(siteConfig.platform.loans.interestRate * 100)
-  const maxRatio = siteConfig.platform.loans.maxLoanToSavingsRatio
-  const loanCap = stats.savings.totalSaved * maxRatio
-
   const maxMonthlyAmount = Math.max(
     ...contributions.monthly.map((m) => m.amount),
     monthlyTarget
@@ -494,58 +477,6 @@ export function MemberDashboardContent() {
         </Alert>
       )}
 
-      {!hasPayoutDetails && isVenturesAlertVisible && (
-        <Alert variant="warning">
-          <HandCoins className="h-4 w-4" />
-          <div className="flex min-w-0 flex-1 items-start justify-between gap-3">
-            <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium leading-tight">
-                Payout details not set up
-              </p>
-              {!isVenturesAlertCollapsed && (
-                <AlertDescription className="mt-1">
-                  You are responsible for keeping your payout information up to
-                  date so the committee can disburse loans and matching records.
-                  Please{" "}
-                  <Link
-                    href="/member/profile?tab=ventures"
-                    className="font-medium underline underline-offset-2">
-                    update your payout details
-                  </Link>{" "}
-                  as soon as possible.
-                </AlertDescription>
-              )}
-            </div>
-            <div className="flex items-center gap-1 self-start">
-              <button
-                type="button"
-                onClick={() =>
-                  setIsVenturesAlertCollapsed((current) => !current)
-                }
-                className="rounded-md p-1 text-muted-foreground transition-colors hover:bg-black/5 hover:text-foreground"
-                aria-label={
-                  isVenturesAlertCollapsed
-                    ? "Expand payout alert"
-                    : "Collapse payout alert"
-                }>
-                {isVenturesAlertCollapsed ? (
-                  <ChevronDown className="h-4 w-4" />
-                ) : (
-                  <ChevronUp className="h-4 w-4" />
-                )}
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsVenturesAlertVisible(false)}
-                className="rounded-md p-1 text-muted-foreground transition-colors hover:bg-black/5 hover:text-foreground"
-                aria-label="Dismiss payout alert">
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-        </Alert>
-      )}
-
       <TabsList>
         <TabsTrigger value="overview">Overview</TabsTrigger>
         <TabsTrigger value="savings">Savings</TabsTrigger>
@@ -579,19 +510,13 @@ export function MemberDashboardContent() {
             }
           />
           <StatCard
-            title={
-              stats.loans.activeLoan
-                ? "Active loan"
-                : stats.loans.pendingRequests > 0
-                  ? "Loan pending"
-                  : "No active loan"
-            }
+            title="Loan records"
             value={
               stats.loans.activeLoan
                 ? formatRwf(stats.loans.activeLoan.amount)
                 : stats.loans.pendingRequests > 0
-                  ? `${stats.loans.pendingRequests} awaiting review`
-                  : "Eligible for loan"
+                  ? `${stats.loans.pendingRequests} existing`
+                  : "Loans disabled"
             }
             icon={Landmark}
             iconColor={
@@ -603,8 +528,8 @@ export function MemberDashboardContent() {
             }
             description={
               stats.loans.activeLoan
-                ? `${stats.loans.activeLoan.status} · ${interestRate}% interest`
-                : `Cap: ${formatRwf(loanCap)}`
+                ? `Existing record: ${stats.loans.activeLoan.status}`
+                : "No borrowing or member loans permitted"
             }
           />
           <StatCard
@@ -730,13 +655,8 @@ export function MemberDashboardContent() {
                     icon: HandCoins,
                   },
                   {
-                    label: "Loan cap",
-                    value: `${maxRatio}x your savings`,
-                    icon: Landmark,
-                  },
-                  {
-                    label: "Interest rate",
-                    value: `${interestRate}% p.a.`,
+                    label: "Loan policy",
+                    value: "Borrowing and member loans disabled",
                     icon: Banknote,
                   },
                   {
@@ -869,7 +789,7 @@ export function MemberDashboardContent() {
               </CardHeader>
               <CardContent>
                 <p className="text-xs text-muted-foreground">
-                  Request or track your loans
+                  Review existing loan records; new loans are disabled
                 </p>
               </CardContent>
             </Card>
@@ -1051,18 +971,18 @@ export function MemberDashboardContent() {
       <TabsContent value="loans" className="space-y-4">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <StatCard
-            title="Loan eligibility"
-            value={formatRwf(loanCap)}
+            title="New loan applications"
+            value="Disabled"
             icon={Landmark}
-            iconColor="text-indigo-500"
-            description={`${maxRatio}x your confirmed savings`}
+            iconColor="text-muted-foreground"
+            description="The group does not borrow or lend to members"
           />
           <StatCard
             title="Total loan requests"
             value={stats.loans.total}
             icon={CheckCircle2}
             iconColor="text-slate-500"
-            description={`${stats.loans.pendingRequests} pending review`}
+            description={`${stats.loans.pendingRequests} existing requests`}
           />
           <StatCard
             title="Active loan"
@@ -1138,7 +1058,8 @@ export function MemberDashboardContent() {
           <CardContent className="space-y-3">
             {loans.recent.length === 0 ? (
               <p className="text-sm text-muted-foreground">
-                No loan requests yet.
+                No existing loan records. The group does not borrow or lend to
+                members.
               </p>
             ) : (
               loans.recent.map((l) => (
@@ -1159,7 +1080,7 @@ export function MemberDashboardContent() {
               ))
             )}
             <Button asChild variant="ghost" size="sm" className="w-full">
-              <Link href="/member/loans">View all & request loan</Link>
+              <Link href="/member/loans">View loan records</Link>
             </Button>
           </CardContent>
         </Card>

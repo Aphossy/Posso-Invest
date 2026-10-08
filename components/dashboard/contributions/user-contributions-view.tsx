@@ -1,19 +1,16 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import Link from "next/link"
 import {
   Calendar,
   CircleDollarSign,
   Eye,
-  HandCoins,
   Receipt,
   RefreshCcw,
   Wallet,
 } from "lucide-react"
 
 import { useMyContributions } from "@/hooks/api/use-contributions"
-import { useMyLoans } from "@/hooks/api/use-loans"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -28,7 +25,6 @@ import {
 } from "@/components/ui/sheet"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Loader } from "@/components/common/loader"
-import { RequestLoanTrigger } from "@/components/dashboard/loans/request-loan-trigger"
 
 function formatRwf(amount?: string | null) {
   if (!amount) return "-"
@@ -63,31 +59,12 @@ function statusVariant(status?: string) {
   }
 }
 
-function loanStatusVariant(status?: string) {
-  switch (status) {
-    case "approved":
-    case "repaid":
-      return "success"
-    case "requested":
-    case "repaying":
-    case "disbursed":
-      return "warning"
-    case "rejected":
-    case "overdue":
-      return "danger"
-    default:
-      return "outline"
-  }
-}
-
 export function UserContributionsView() {
   const { data, isPending, error, refetch, isRefetching } =
     useMyContributions(50)
-  const { data: loansData, isPending: isLoansPending } = useMyLoans(5)
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
   const contributions = useMemo(() => data?.data ?? [], [data?.data])
-  const recentLoans = useMemo(() => loansData?.data ?? [], [loansData?.data])
   const latest = contributions[0] ?? null
   const selectedContribution =
     contributions.find((item) => item.id === selectedId) ?? null
@@ -133,7 +110,6 @@ export function UserContributionsView() {
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <RequestLoanTrigger />
           <Button
             variant="outline"
             onClick={() => void refetch()}
@@ -218,57 +194,6 @@ export function UserContributionsView() {
           </Card>
         ))}
       </div>
-
-      {/* <Card>
-        <CardHeader className="flex flex-row items-center justify-between gap-3">
-          <div>
-            <CardTitle className="text-base font-semibold">
-              Recent Loan Requests
-            </CardTitle>
-            <p className="text-sm text-muted-foreground">
-              Track your latest requests and follow up quickly.
-            </p>
-          </div>
-          <Button variant="outline" size="sm" asChild>
-            <Link href="/member/loans">View all</Link>
-          </Button>
-        </CardHeader>
-        <CardContent>
-          {isLoansPending ? (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Loader className="h-4 w-4" />
-              Loading loan requests...
-            </div>
-          ) : recentLoans.length === 0 ? (
-            <div className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-              No loan requests yet. Use Request Loan to submit your first one.
-            </div>
-          ) : (
-            <div className="space-y-2">
-              {recentLoans.slice(0, 4).map((loan) => (
-                <div
-                  key={loan.id}
-                  className="flex flex-wrap items-center justify-between gap-2 rounded-md border p-3">
-                  <div className="flex items-center gap-2">
-                    <HandCoins className="h-4 w-4 text-primary" />
-                    <div>
-                      <p className="text-sm font-medium tabular-nums">
-                        {formatRwf(loan.requestedAmount)}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        Requested {formatDate(loan.requestedAt)}
-                      </p>
-                    </div>
-                  </div>
-                  <Badge variant={loanStatusVariant(loan.status)}>
-                    {loan.status}
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card> */}
 
       <Card>
         <CardHeader>

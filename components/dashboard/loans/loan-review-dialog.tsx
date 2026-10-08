@@ -38,8 +38,6 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { Loader } from "@/components/common/loader"
 
-import { PaymentInfoSection } from "./payment-info-section"
-
 interface LoanReviewDialogProps {
   loan: LoanExportable
   onUpdated?: () => void

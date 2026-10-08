@@ -2,6 +2,40 @@ import { siteConfig } from "@/constants/site-config"
 import { addMonths, endOfDay, format, parse, subMonths } from "date-fns"
 
 export const FIRST_CONTRIBUTION_PERIOD = "2026-09"
+const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
+const CONTRIBUTION_TIME_ZONE = "Africa/Kigali"
+
+function getKigaliCalendarDate(date: Date) {
+  const parts = new Intl.DateTimeFormat("en", {
+    timeZone: CONTRIBUTION_TIME_ZONE,
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  }).formatToParts(date)
+  const getPart = (type: string) =>
+    Number(parts.find((part) => part.type === type)?.value)
+
+  return {
+    year: getPart("year"),
+    month: getPart("month"),
+    day: getPart("day"),
+  }
+}
+
+function getContributionPeriodDate(now: Date) {
+  const { startDay, endDay } = siteConfig.platform.savings.contributionWindow
+  const { year, month, day } = getKigaliCalendarDate(now)
+  const currentPeriod = new Date(year, month - 1, 1)
+  const isOpen = day >= startDay || day <= endDay
+  const periodStart =
+    day >= startDay
+      ? currentPeriod
+      : day <= endDay
+        ? subMonths(currentPeriod, 1)
+        : currentPeriod
+
+  return { day, year, month, periodStart, isOpen }
+}
 
 export interface ContributionWindow {
   isOpen: boolean
@@ -14,44 +48,44 @@ export interface ContributionWindow {
 /**
  * Compute the current contribution window for a given instant (used by API routes).
  *
- * The statute assigns each contribution to a calendar month and gives members
- * the 1st of that month through the 5th of the following month to pay it.
+ * Each contribution period opens on the 25th and closes on the 5th of the
+ * following month, using the calendar date in Kigali.
  */
 export function getContributionWindow(now: Date): ContributionWindow {
   const { startDay, endDay } = siteConfig.platform.savings.contributionWindow
-  const currentPeriod = new Date(now.getFullYear(), now.getMonth(), 1)
-  const currentMonthWindowEnd = endOfDay(new Date(
-    currentPeriod.getFullYear(),
-    currentPeriod.getMonth(),
-    endDay
-  ))
-  const periodStart =
-    now <= currentMonthWindowEnd ? subMonths(currentPeriod, 1) : currentPeriod
-  const isOpen = true
+  const { day, year, month, periodStart, isOpen } =
+    getContributionPeriodDate(now)
   const windowStart = new Date(
     periodStart.getFullYear(),
     periodStart.getMonth(),
     startDay
   )
   const followingPeriod = addMonths(periodStart, 1)
-  const windowEnd = endOfDay(new Date(
-    followingPeriod.getFullYear(),
-    followingPeriod.getMonth(),
-    endDay
-  ))
+  const windowEnd = endOfDay(
+    new Date(followingPeriod.getFullYear(), followingPeriod.getMonth(), endDay)
+  )
 
-  const label = `${windowStart.toLocaleString("default", { month: "short" })} ${windowStart.getDate()} – ${windowEnd.toLocaleString("default", { month: "short" })} ${windowEnd.getDate()}`
+  const label = `${windowStart.toLocaleString("en", { month: "short" })} ${windowStart.getDate()} – ${windowEnd.toLocaleString("en", { month: "short" })} ${windowEnd.getDate()}`
 
   const period = `${periodStart.getFullYear()}-${String(periodStart.getMonth() + 1).padStart(2, "0")}`
 
-  const daysRemaining = Math.max(
-    0,
-    Math.ceil((windowEnd.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+  const today = Date.UTC(year, month - 1, day)
+  const start = Date.UTC(
+    periodStart.getFullYear(),
+    periodStart.getMonth(),
+    startDay
   )
-  const daysUntilNext = Math.max(
-    0,
-    Math.ceil((windowStart.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+  const end = Date.UTC(
+    followingPeriod.getFullYear(),
+    followingPeriod.getMonth(),
+    endDay
   )
+  const daysRemaining = isOpen
+    ? Math.max(0, Math.floor((end - today) / DAY_IN_MILLISECONDS) + 1)
+    : 0
+  const daysUntilNext = isOpen
+    ? 0
+    : Math.max(0, Math.floor((start - today) / DAY_IN_MILLISECONDS))
 
   return { isOpen, label, period, daysRemaining, daysUntilNext }
 }
@@ -82,19 +116,8 @@ export function getWindowForPeriod(period: string): {
 /**
  * Return the period currently being paid or prepared for.
  */
-export function getActivePeriod(): string {
-  const today = new Date()
-  const periodDate = new Date(today.getFullYear(), today.getMonth(), 1)
-  const currentMonthWindowEnd = endOfDay(new Date(
-    periodDate.getFullYear(),
-    periodDate.getMonth(),
-    siteConfig.platform.savings.contributionWindow.endDay
-  ))
-
-  return format(
-    today <= currentMonthWindowEnd ? subMonths(periodDate, 1) : periodDate,
-    "yyyy-MM"
-  )
+export function getActivePeriod(now: Date = new Date()): string {
+  return format(getContributionPeriodDate(now).periodStart, "yyyy-MM")
 }
 
 export function getContributionTrendPeriods(
@@ -102,7 +125,11 @@ export function getContributionTrendPeriods(
   count = 6
 ): string[] {
   const activePeriodDate = parse(activePeriod, "yyyy-MM", new Date())
-  const firstContributionDate = parse(FIRST_CONTRIBUTION_PERIOD, "yyyy-MM", new Date())
+  const firstContributionDate = parse(
+    FIRST_CONTRIBUTION_PERIOD,
+    "yyyy-MM",
+    new Date()
+  )
   const periods: string[] = []
 
   for (let i = count - 1; i >= 0; i--) {

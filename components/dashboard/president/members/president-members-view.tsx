@@ -407,15 +407,9 @@ export function PresidentMembersView() {
           <p>
             Withdrawal requires{" "}
             <strong className="text-foreground">2 months written notice</strong>{" "}
-            to the Secretary. Personal savings are refunded in full unless loans
-            or penalties are outstanding.
-          </p>
-          <p>
-            A member with{" "}
-            <strong className="text-foreground">
-              3 missed loan repayment months
-            </strong>{" "}
-            shall be dismissed per the constitution.
+            to the Secretary. Contributions cannot be withdrawn during the
+            30-month savings commitment; later settlement follows registered
+            company documents and applicable law.
           </p>
         </CardContent>
       </Card>

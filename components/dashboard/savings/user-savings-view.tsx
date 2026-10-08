@@ -334,7 +334,7 @@ export function UserSavingsView() {
               {formatRwf(stats.confirmed)}
             </div>
             <p className="text-xs text-muted-foreground">
-              Ready for borrowing and balances.
+              Review your savings balances and contribution history.
             </p>
           </CardContent>
         </Card>

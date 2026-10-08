@@ -127,7 +127,7 @@ ContributionWindowReminderMemberEmail.PreviewProps = {
   memberName: "Aline Mukamana",
   period: "2026-02",
   periodLabel: "February 2026",
-  windowEnd: "6 March 2026",
+  windowEnd: "5 March 2026",
   daysRemaining: 3,
   amountDue: "80,000",
   penaltyAmount: "8,000",

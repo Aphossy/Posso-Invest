@@ -3,9 +3,9 @@
 export const siteConfig = {
   name: "10/10 Ventures",
   legalName: "10/10 Ventures Ltd",
-  title: "10/10 Ventures Ltd - Member-Owned Savings and Investment Company",
+  title: "10/10 Ventures Ltd - Savings and Investment Company",
   description:
-    "10/10 Ventures is a transparent Ventures Group that empowers members to save, invest, and build a modern dental clinic together.",
+    "12 founding members pool disciplined savings to build sustainable, income-generating Rwandan businesses and long-term shared prosperity.",
   url: "https://www.1010ventures.online",
   ogImage: "https://www.1010ventures.online/og.jpg",
   tagline: "Save together. Build together.",
@@ -13,9 +13,8 @@ export const siteConfig = {
     "Ventures Group",
     "savings group",
     "10/10 Ventures",
-    "dental therapy graduates",
     "Rwanda savings",
-    "group loans",
+    "debt-free investing",
     "collective investment",
     "meeting minutes",
   ],
@@ -39,12 +38,13 @@ export const siteConfig = {
       monthlyContributionRwf: 100000,
       savingsCommitmentMonths: 30,
       contributionWindow: {
-        startDay: 1,
+        startDay: 25,
         endDay: 5,
       },
       latePenaltyRate: 0.1,
     },
     loans: {
+      enabled: false,
       maxLoanToSavingsRatio: 1,
       interestRate: 0.05,
       disbursementDays: 3,
@@ -124,7 +124,7 @@ export const siteConfig = {
     defaultTitle: "10/10 Ventures - Professional Ventures Group in Rwanda",
     titleTemplate: "%s | 10/10 Ventures",
     description:
-      "A transparent Ventures Group for Dental Therapy graduates focused on saving, investing, and establishing a modern dental clinic.",
+      "12 founding members pool disciplined savings to build sustainable, income-generating Rwandan businesses and long-term shared prosperity.",
     openGraph: {
       type: "website",
       locale: "en_US",

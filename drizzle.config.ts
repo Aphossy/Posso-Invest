@@ -10,7 +10,7 @@ loadEnvironmentConfig({
 })
 
 export default defineConfig({
-  schema: ["./db/schemas/index.ts", "./db/schemas/customer-schema.ts"],
+  schema: "./db/schemas/index.ts",
   out: "./db/migrations",
   dialect: "postgresql",
   dbCredentials: {

@@ -2,6 +2,7 @@ import { siteConfig } from "@/constants/site-config"
 import { db } from "@/db/connection"
 import { penaltyOperations } from "@/db/operations/penalty-operations"
 import { contribution, member, organization, user } from "@/db/schemas"
+import { ContributionCatchupReminder } from "@/emails/contribution-catchup-reminder"
 import { ContributionDeadlinePassedMemberEmail } from "@/emails/contribution-deadline-passed-member"
 import { ContributionDeadlineSummaryTreasurerEmail } from "@/emails/contribution-deadline-summary-treasurer"
 import { ContributionWindowLastDayMemberEmail } from "@/emails/contribution-window-last-day-member"
@@ -10,7 +11,6 @@ import { ContributionWindowOpenedMemberEmail } from "@/emails/contribution-windo
 import { ContributionWindowOpenedTreasurerEmail } from "@/emails/contribution-window-opened-treasurer"
 import { ContributionWindowReminderMemberEmail } from "@/emails/contribution-window-reminder-member"
 import { ContributionWindowReminderTreasurerEmail } from "@/emails/contribution-window-reminder-treasurer"
-import { ContributionCatchupReminder } from "@/emails/contribution-catchup-reminder"
 import { inngest } from "@/inngest/client"
 import {
   ensureEmailLogRecord,
@@ -59,14 +59,23 @@ const EMAIL_EVENT = {
 // Date / period helpers
 // ---------------------------------------------------------------------------
 
-function getPreviousPeriod(): string {
-  const now = new Date()
-  const kigaliStr = now.toLocaleString("en-US", { timeZone: "Africa/Kigali" })
-  const kigali = new Date(kigaliStr)
-  const prev = new Date(kigali.getFullYear(), kigali.getMonth() - 1, 1)
-  const year = prev.getFullYear()
-  const month = String(prev.getMonth() + 1).padStart(2, "0")
-  return `${year}-${month}`
+function getContributionPeriodForNotification(): string {
+  const parts = new Intl.DateTimeFormat("en", {
+    timeZone: "Africa/Kigali",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  }).formatToParts(new Date())
+  const getPart = (type: string) =>
+    Number(parts.find((part) => part.type === type)?.value)
+  const year = getPart("year")
+  const month = getPart("month")
+  const day = getPart("day")
+  const { startDay } = siteConfig.platform.savings.contributionWindow
+  const periodYear = day >= startDay || month > 1 ? year : year - 1
+  const periodMonth = day >= startDay ? month : month > 1 ? month - 1 : 12
+
+  return `${periodYear}-${String(periodMonth).padStart(2, "0")}`
 }
 
 function periodLabel(period: string): string {
@@ -92,12 +101,22 @@ function getWindowDates(period: string): {
   daysRemainingFromNow: number
 } {
   const [y, m] = period.split("-").map(Number)
-  const windowStartDate = new Date(y, m, 1)
-  const windowEndDate = new Date(y, m, 5)
-  const nowMs = Date.now()
+  const { startDay, endDay } = siteConfig.platform.savings.contributionWindow
+  const windowStartDate = new Date(Date.UTC(y, m - 1, startDay, 12))
+  const windowEndDate = new Date(Date.UTC(y, m, endDay, 12))
+  const todayParts = new Intl.DateTimeFormat("en", {
+    timeZone: "Africa/Kigali",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  }).formatToParts(new Date())
+  const getPart = (type: string) =>
+    Number(todayParts.find((part) => part.type === type)?.value)
+  const today = Date.UTC(getPart("year"), getPart("month") - 1, getPart("day"))
+  const end = Date.UTC(y, m, endDay)
   const daysRemainingFromNow = Math.max(
     0,
-    Math.ceil((windowEndDate.getTime() - nowMs) / (1000 * 60 * 60 * 24))
+    Math.floor((end - today) / (24 * 60 * 60 * 1000)) + 1
   )
   return {
     windowStart: fmtDate(windowStartDate),
@@ -208,9 +227,8 @@ async function waiveAutoSeptemberPenalties(
 ): Promise<number> {
   const reason =
     "Waived because the group did not have a bank account for September 2026 contributions."
-  const autoPenalties: Awaited<
-    ReturnType<typeof penaltyOperations.findMany>
-  > = []
+  const autoPenalties: Awaited<ReturnType<typeof penaltyOperations.findMany>> =
+    []
   let offset = 0
 
   while (true) {
@@ -299,7 +317,7 @@ async function applyLatePenalties(
 }
 
 // ---------------------------------------------------------------------------
-// Function 1 - Window opened (cron: 1st of every month)
+// Function 1 - Window opened (cron: 25th of every month)
 // ---------------------------------------------------------------------------
 
 export const contributionWindowOpenedNotifier = inngest.createFunction(
@@ -307,10 +325,13 @@ export const contributionWindowOpenedNotifier = inngest.createFunction(
     id: "ventures-contribution-window-opened-notifier",
     retries: 3,
     concurrency: 1,
-    triggers: [{ cron: "TZ=Africa/Kigali 0 8 1 * *" }],
+    triggers: [{ cron: "TZ=Africa/Kigali 0 8 25 * *" }],
   },
   async ({ step, notificationOperations, logger }) => {
-    const period = await step.run("resolve-period", getPreviousPeriod)
+    const period = await step.run(
+      "resolve-period",
+      getContributionPeriodForNotification
+    )
     const orgId = await step.run("resolve-organization", resolveOrganizationId)
     const label = periodLabel(period)
     const { windowStart, windowEnd, daysRemainingFromNow } =
@@ -528,7 +549,7 @@ export const contributionWindowOpenedNotifier = inngest.createFunction(
 )
 
 // ---------------------------------------------------------------------------
-// Function 2 - 3-day reminder (cron: 3rd of every month)
+// Function 2 - contribution reminder (cron: 1st of every month)
 // ---------------------------------------------------------------------------
 
 export const contributionWindowReminderNotifier = inngest.createFunction(
@@ -536,10 +557,13 @@ export const contributionWindowReminderNotifier = inngest.createFunction(
     id: "ventures-contribution-window-reminder-notifier",
     retries: 3,
     concurrency: 1,
-    triggers: [{ cron: "TZ=Africa/Kigali 0 8 3 * *" }],
+    triggers: [{ cron: "TZ=Africa/Kigali 0 8 1 * *" }],
   },
   async ({ step, notificationOperations, logger }) => {
-    const period = await step.run("resolve-period", getPreviousPeriod)
+    const period = await step.run(
+      "resolve-period",
+      getContributionPeriodForNotification
+    )
     const orgId = await step.run("resolve-organization", resolveOrganizationId)
     const label = periodLabel(period)
     const { windowEnd, daysRemainingFromNow } = getWindowDates(period)
@@ -779,7 +803,10 @@ export const contributionWindowLastDayNotifier = inngest.createFunction(
     triggers: [{ cron: "TZ=Africa/Kigali 0 8 4 * *" }],
   },
   async ({ step, notificationOperations, logger }) => {
-    const period = await step.run("resolve-period", getPreviousPeriod)
+    const period = await step.run(
+      "resolve-period",
+      getContributionPeriodForNotification
+    )
     const orgId = await step.run("resolve-organization", resolveOrganizationId)
     const label = periodLabel(period)
     const { windowEnd } = getWindowDates(period)
@@ -1022,7 +1049,10 @@ export const contributionDeadlinePassedNotifier = inngest.createFunction(
     triggers: [{ cron: "TZ=Africa/Kigali 0 8 6 * *" }],
   },
   async ({ step, notificationOperations, logger }) => {
-    const period = await step.run("resolve-period", getPreviousPeriod)
+    const period = await step.run(
+      "resolve-period",
+      getContributionPeriodForNotification
+    )
     if (period === "2026-09") {
       logger.info("Skipping September 2026 deadline penalties and notices", {
         period,
@@ -1350,9 +1380,9 @@ export const contributionCatchupReminderNotifier = inngest.createFunction(
       )
       for (const member of members) {
         if (!settledIds.has(member.userId)) {
-          outstandingByMember.get(member.userId)?.push(
-            period === "2026-09" ? "September" : "October"
-          )
+          outstandingByMember
+            .get(member.userId)
+            ?.push(period === "2026-09" ? "September" : "October")
         }
       }
     }
@@ -1394,19 +1424,12 @@ export const contributionCatchupReminderNotifier = inngest.createFunction(
       if (result.success) {
         await markEmailSent(m.userId, eventType, refId)
       } else {
-        await markEmailFailed(
-          m.userId,
-          eventType,
-          refId,
-          String(result.error)
-        )
+        await markEmailFailed(m.userId, eventType, refId, String(result.error))
       }
     }
 
     for (const m of recipients) {
-      await step.run(`send-catchup-reminder-${m.userId}`, () =>
-        sendToMember(m)
-      )
+      await step.run(`send-catchup-reminder-${m.userId}`, () => sendToMember(m))
     }
 
     const failedUserIds = await step.run("find-failed-reminders", () =>

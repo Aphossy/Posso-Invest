@@ -34,7 +34,6 @@ import {
 
 import { LoanApproveDialog } from "./loan-approve-dialog"
 import { LoanReviewDialog } from "./loan-review-dialog"
-import { PaymentInfoSection } from "./payment-info-section"
 
 interface LoanDetailsDialogProps {
   loan?: LoanExportable | null
@@ -330,17 +329,6 @@ export function LoanDetailsDialog({
           <p className="text-xs text-muted-foreground">Disbursed By</p>
           <p className="font-medium">{loan.disbursedByName || "-"}</p>
         </div>
-      </div>
-
-      <div className="space-y-2">
-        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          Member Payout Details
-        </p>
-        <PaymentInfoSection
-          ventures={loan.memberVenturesProfile}
-          memberName={loan.memberName}
-          maskAccount={false}
-        />
       </div>
 
       {/* Audit trail */}

@@ -252,8 +252,6 @@ export async function GET(request: Request) {
       disbursedByName: item.disbursedBy
         ? (userMap.get(item.disbursedBy)?.name ?? null)
         : null,
-      memberVenturesProfile:
-        (userMap.get(item.memberId)?.metadata as any)?.venturesProfile ?? null,
       totalRepaid: Math.round(totalRepaid),
       outstandingBalance: computeOutstanding(totalRepayable, totalRepaid),
     }
@@ -280,6 +278,16 @@ export async function POST(request: Request) {
       401,
       {},
       "Please sign in and try again."
+    )
+  }
+
+  if (!siteConfig.platform.loans.enabled) {
+    return apiError(
+      "LOANS_DISABLED",
+      "The group policy does not permit borrowing or loans to members.",
+      403,
+      {},
+      "Loan requests are currently disabled."
     )
   }
 

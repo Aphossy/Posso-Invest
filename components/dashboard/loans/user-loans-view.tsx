@@ -63,7 +63,6 @@ import {
 } from "@/components/ui/sheet"
 import { Loader } from "@/components/common/loader"
 import { LoanRequestForm } from "@/components/dashboard/loans/loan-request-form"
-import { RequestLoanTrigger } from "@/components/dashboard/loans/request-loan-trigger"
 
 function formatRwf(amount?: string | null) {
   if (!amount) return "-"
@@ -306,10 +305,10 @@ export function UserLoansView() {
     <div className="flex-1 space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="space-y-1">
-          <h1 className="text-2xl font-semibold">My Loans</h1>
+          <h1 className="text-2xl font-semibold">My Loan Records</h1>
           <p className="text-sm text-muted-foreground">
-            Review requests, edit pending applications, and track repayment
-            progress.
+            Review existing records and repayment history. New borrowing and
+            loans to members are not permitted by group policy.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -320,9 +319,15 @@ export function UserLoansView() {
             <RefreshCcw className="h-4 w-4" />
             {isRefetching ? "Refreshing..." : "Refresh"}
           </Button>
-          <RequestLoanTrigger />
         </div>
       </div>
+
+      <Alert>
+        <AlertDescription>
+          The group does not borrow or lend to members. Existing records remain
+          available here for reference.
+        </AlertDescription>
+      </Alert>
 
       {error ? (
         <Alert variant="destructive">

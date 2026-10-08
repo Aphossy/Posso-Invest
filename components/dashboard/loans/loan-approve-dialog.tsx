@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { siteConfig } from "@/constants/site-config"
 import type { LoanExportable } from "@/utils/loan-export-utils"
 import { CheckCircle, XCircle } from "lucide-react"
 import { toast } from "sonner"
@@ -66,6 +67,7 @@ export function LoanApproveDialog({ loan, onUpdated }: LoanApproveDialogProps) {
   )
   const [approvalNotes, setApprovalNotes] = useState("")
   const [rejectionReason, setRejectionReason] = useState("")
+  const loansEnabled = siteConfig.platform.loans.enabled
 
   const isBusy = submitting !== null
 
@@ -169,45 +171,47 @@ export function LoanApproveDialog({ loan, onUpdated }: LoanApproveDialogProps) {
     <div className="space-y-5">
       {summarySection}
 
-      <div className="space-y-3">
-        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          If Approving
-        </p>
-        <div className="grid gap-3 sm:grid-cols-2">
-          <div className="space-y-1.5">
-            <Label htmlFor="approvedAmount">Approved Amount</Label>
-            <Input
-              id="approvedAmount"
-              inputMode="decimal"
-              value={approvedAmount}
-              onChange={(e) => setApprovedAmount(e.target.value)}
-              placeholder={loan.requestedAmount ?? ""}
-              disabled={isBusy}
-            />
+      {loansEnabled && (
+        <div className="space-y-3">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            If Approving
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="approvedAmount">Approved Amount</Label>
+              <Input
+                id="approvedAmount"
+                inputMode="decimal"
+                value={approvedAmount}
+                onChange={(e) => setApprovedAmount(e.target.value)}
+                placeholder={loan.requestedAmount ?? ""}
+                disabled={isBusy}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="dueDate">Due Date</Label>
+              <Input
+                id="dueDate"
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                disabled={isBusy}
+              />
+            </div>
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="dueDate">Due Date</Label>
-            <Input
-              id="dueDate"
-              type="date"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
+            <Label htmlFor="approvalNotes">Approval Notes (optional)</Label>
+            <Textarea
+              id="approvalNotes"
+              rows={2}
+              value={approvalNotes}
+              onChange={(e) => setApprovalNotes(e.target.value)}
+              placeholder="Any conditions or remarks..."
               disabled={isBusy}
             />
           </div>
         </div>
-        <div className="space-y-1.5">
-          <Label htmlFor="approvalNotes">Approval Notes (optional)</Label>
-          <Textarea
-            id="approvalNotes"
-            rows={2}
-            value={approvalNotes}
-            onChange={(e) => setApprovalNotes(e.target.value)}
-            placeholder="Any conditions or remarks..."
-            disabled={isBusy}
-          />
-        </div>
-      </div>
+      )}
 
       <div className="space-y-3 border-t pt-4">
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -239,8 +243,9 @@ export function LoanApproveDialog({ loan, onUpdated }: LoanApproveDialogProps) {
           <DialogHeader className="shrink-0 border-b px-6 py-4 pr-14">
             <DialogTitle>Review Loan Request</DialogTitle>
             <DialogDescription>
-              Approve or reject this request. Set the approved amount and due
-              date before approving.
+              {loansEnabled
+                ? "Approve or reject this request. Set the approved amount and due date before approving."
+                : "New loans are not permitted by group policy. You may reject this existing request."}
             </DialogDescription>
           </DialogHeader>
 
@@ -272,22 +277,24 @@ export function LoanApproveDialog({ loan, onUpdated }: LoanApproveDialogProps) {
                 disabled={isBusy}>
                 Cancel
               </Button>
-              <Button
-                className="bg-emerald-600 text-white hover:bg-emerald-700"
-                onClick={handleApprove}
-                disabled={isBusy}>
-                {submitting === "approve" ? (
-                  <>
-                    <Loader className="mr-2 h-4 w-4" />
-                    Approving...
-                  </>
-                ) : (
-                  <>
-                    <CheckCircle className="mr-2 h-4 w-4" />
-                    Approve
-                  </>
-                )}
-              </Button>
+              {loansEnabled ? (
+                <Button
+                  className="bg-emerald-600 text-white hover:bg-emerald-700"
+                  onClick={handleApprove}
+                  disabled={isBusy}>
+                  {submitting === "approve" ? (
+                    <>
+                      <Loader className="mr-2 h-4 w-4" />
+                      Approving...
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle className="mr-2 h-4 w-4" />
+                      Approve
+                    </>
+                  )}
+                </Button>
+              ) : null}
             </div>
           </div>
         </DialogContent>
@@ -305,7 +312,9 @@ export function LoanApproveDialog({ loan, onUpdated }: LoanApproveDialogProps) {
         <DrawerHeader className="border-b bg-muted/40 px-4 py-4 text-left">
           <DrawerTitle>Review Loan Request</DrawerTitle>
           <DrawerDescription>
-            Approve or reject this loan request.
+            {loansEnabled
+              ? "Approve or reject this loan request."
+              : "New loans are not permitted by group policy. You may reject this existing request."}
           </DrawerDescription>
         </DrawerHeader>
 
@@ -314,22 +323,24 @@ export function LoanApproveDialog({ loan, onUpdated }: LoanApproveDialogProps) {
         </div>
 
         <DrawerFooter className="flex flex-col gap-2 border-t bg-background pb-6">
-          <Button
-            className="bg-emerald-600 text-white hover:bg-emerald-700"
-            onClick={handleApprove}
-            disabled={isBusy}>
-            {submitting === "approve" ? (
-              <>
-                <Loader className="mr-2 h-4 w-4" />
-                Approving...
-              </>
-            ) : (
-              <>
-                <CheckCircle className="mr-2 h-4 w-4" />
-                Approve Loan
-              </>
-            )}
-          </Button>
+          {loansEnabled ? (
+            <Button
+              className="bg-emerald-600 text-white hover:bg-emerald-700"
+              onClick={handleApprove}
+              disabled={isBusy}>
+              {submitting === "approve" ? (
+                <>
+                  <Loader className="mr-2 h-4 w-4" />
+                  Approving...
+                </>
+              ) : (
+                <>
+                  <CheckCircle className="mr-2 h-4 w-4" />
+                  Approve Loan
+                </>
+              )}
+            </Button>
+          ) : null}
           <Button
             variant="destructive"
             onClick={handleReject}

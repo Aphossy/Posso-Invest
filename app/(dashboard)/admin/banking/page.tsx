@@ -1,31 +1,12 @@
-import { Metadata } from "next"
+import type { Metadata } from "next"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { BankAccountsManager } from "@/components/dashboard/admin/banking/bank-accounts-manager"
 
 export const metadata: Metadata = {
-  title: "Banking",
-  description: "Banking page for 10/10 Ventures.",
+  title: "Bank Accounts",
+  description: "Manage official 10/10 Ventures bank accounts.",
 }
 
 export default function BankingPage() {
-  return (
-    <div className="flex-1 space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold">Banking</h1>
-        <p className="text-sm text-muted-foreground">
-          Banking page for 10/10 Ventures.
-        </p>
-      </div>
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base font-semibold">
-            Banking Content
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="text-sm text-muted-foreground">
-          Content for this section will appear here.
-        </CardContent>
-      </Card>
-    </div>
-  )
+  return <BankAccountsManager />
 }

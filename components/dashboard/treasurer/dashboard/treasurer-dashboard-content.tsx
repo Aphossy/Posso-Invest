@@ -259,7 +259,6 @@ export function TreasurerDashboardContent() {
   const monthlyTarget = siteConfig.platform.savings.monthlyContributionRwf
   const { membershipCount } = siteConfig.platform.governance
   const { auditCadenceMonths } = siteConfig.platform.meetings
-  const { interestRate, disbursementDays } = siteConfig.platform.loans
 
   const monthlyContributionTarget = monthlyTarget * membershipCount
   const totalLoansActive =
@@ -299,13 +298,12 @@ export function TreasurerDashboardContent() {
           <div className="flex min-w-0 flex-1 items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
               <p className="text-sm font-medium leading-tight">
-                {pendingRequestsCount} loan{" "}
-                {pendingRequestsCount === 1 ? "request" : "requests"} awaiting
-                review
+                {pendingRequestsCount} existing loan{" "}
+                {pendingRequestsCount === 1 ? "request" : "requests"} to close
               </p>
               {!isPendingRequestsAlertCollapsed && (
                 <AlertDescription className="mt-1 text-blue-500!">
-                  Disburse within {disbursementDays} days.{" "}
+                  Group policy does not allow new approvals or disbursements.{" "}
                   <Link
                     href="/treasurer/loans/requests"
                     className="underline hover:no-underline font-medium text-blue-700">
@@ -1014,7 +1012,7 @@ export function TreasurerDashboardContent() {
                 ? "text-amber-500"
                 : "text-slate-400"
             }
-            description={`Disburse within ${disbursementDays} days`}
+            description="Existing requests cannot be approved under group policy"
             href="/treasurer/loans/requests"
           />
           <StatCard
@@ -1031,7 +1029,7 @@ export function TreasurerDashboardContent() {
             value={stats.loans.repaid}
             icon={CheckCircle2}
             iconColor="text-emerald-500"
-            description={`${Math.round(interestRate * 100)}% interest rate`}
+            description="Historical loan records"
           />
         </div>
 
@@ -1264,19 +1262,9 @@ export function TreasurerDashboardContent() {
                 icon: HandCoins,
               },
               {
-                label: "Loan cap",
-                value: `${siteConfig.platform.loans.maxLoanToSavingsRatio}× member savings`,
+                label: "Loan policy",
+                value: "Borrowing and member loans disabled",
                 icon: Landmark,
-              },
-              {
-                label: "Interest rate",
-                value: `${Math.round(interestRate * 100)}% p.a.`,
-                icon: Banknote,
-              },
-              {
-                label: "Disbursement window",
-                value: `${disbursementDays} days`,
-                icon: Clock,
               },
               {
                 label: "Audit cadence",

@@ -127,8 +127,8 @@ ContributionWindowOpenedMemberEmail.PreviewProps = {
   period: "2026-02",
   periodLabel: "February 2026",
   windowStart: "25 February 2026",
-  windowEnd: "6 March 2026",
-  daysRemaining: 10,
+  windowEnd: "5 March 2026",
+  daysRemaining: 9,
   amountDue: "80,000",
   currency: "RWF",
 } satisfies ContributionWindowOpenedMemberEmailProps

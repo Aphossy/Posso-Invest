@@ -1,171 +1,83 @@
 # 10/10 Ventures
 
-10/10 Ventures is a disciplined savings, investment, and business-development proposal built around a shared vision of long-term wealth creation for 10 committed members in Kigali, Rwanda.
-
-The model combines monthly savings, strategic reinvestment, and phased business launches across bakery, avocado farming, mushroom cultivation, and a future beetroot-and-grape winery.
-
-> Save 30 Months. Build for the Long Term. Benefit for a Lifetime.
-
----
-
-## Overview
-
-10/10 Ventures Ltd brings together 10 members who contribute 100,000 Frw every month for 30 months, creating a total group capital of 30,000,000 Frw before investment returns.
-
-After the saving phase ends, the capital is deployed into profitable ventures that generate income, build reserves, and create long-term wealth for all members.
-
-### Core Proposal Summary
-
-- Members: 10
-- Monthly contribution per person: 100,000 Frw
-- Saving period: 30 months
-- Total group capital: 30,000,000 Frw
-- Total personal contribution per member: 3,000,000 Frw
-- First member distributions: Year 5
-- Long-term focus: bakery, avocado farm, mushroom cultivation, and winery
-
----
-
-## Vision
-
-Ten disciplined people. Two years of saving. Five years of building. A lifetime of shared prosperity.
-
-The group aims to:
-
-- improve financial stability through regular savings
-- build sustainable businesses with strong community impact
-- create employment opportunities
-- generate long-term wealth and generational assets
-- support future expansion into premium and high-growth sectors
-
----
-
-## Business Model
-
-### 1. Savings Engine
-
-Each member contributes 100,000 Frw monthly for 30 months as set out in the Group Statute.
-
-This creates a total group savings pool of 30,000,000 Frw before investment returns, which is then used to launch and grow the group’s ventures.
-
-### 2. Year 1 Investments
-
-The first 12,000,000 Frw is deployed into:
-
-- agricultural land and avocado plantation
-- bakery business launch in Kigali
-
-### 3. Year 2 Investments
-
-The second 12,000,000 Frw is used to:
-
-- expand the bakery
-- strengthen avocado farm operations
-- build reserves for operations, emergencies, and future business preparation
-
-### 4. Years 3–4 Growth Phase
-
-The 30-month savings phase is complete. No further member savings are required. Profits are reinvested to:
-
-- grow bakery operations
-- develop avocado production
-- prepare the mushroom venture
-- accumulate capital for winery launch preparation
-
-### 5. Year 5 Distribution and Expansion
-
-The group begins distributing profits to members while launching mushroom cultivation and preparing for the winery.
-
-### 6. Year 6 Winery Launch
-
-The winery becomes the flagship venture, funded from retained profits and designed to create major long-term income for the group.
-
----
-
-## Planned Ventures
-
-### Bakery
-
-A professional bakery serving households, schools, offices, restaurants, and supermarkets in Kigali.
-
-### Avocado Farm
-
-A long-term agricultural venture with productive land and avocado trees expected to yield for decades.
-
-### Mushroom Cultivation
-
-A fast-growth, high-turnover venture with rapid cycles and strong market demand.
-
-### Winery
-
-A premium beetroot-and-grape winery designed to become one of the group’s highest-value businesses.
-
----
-
-## Member Benefits
-
-Members are expected to receive their first return in Year 5.
-
-Example highlights:
-
-- Year 5: each member receives 3,000,000 Frw
-- Year 6: estimated distribution of about 7,513,750 Frw per member
-- Year 7: estimated distribution of about 13,267,500 Frw per member
-- Year 8+: estimated distributions of 24,000,000 Frw or more per member annually
-
-These figures are based on the group’s projected business performance and reinvestment strategy.
-
----
-
-## Core Values
-
-10/10 Ventures is built on:
-
-- discipline
-- integrity
-- accountability
-- transparency
-- unity
-- hard work
-- respect
-- confidentiality
-
----
-
-## Membership Requirements
-
-Members commit to:
-
-- contributing 100,000 Frw monthly for 30 months
-- maintaining active participation in meetings and decisions
-- supporting the group’s collective goals
-- upholding strong standards of integrity and confidentiality
-
----
-
-## Governance and Operations
-
-The group will operate with clear rules for:
-
-- leadership roles and responsibilities under the three-year officer/advisor succession model
-- internal loans
-- monthly reporting
-- profit distribution
-- member exit or transfer
-- dispute resolution
-- investment approval
-- audits and compliance
-
----
-
-## Conclusion
-
-10/10 Ventures is more than a savings group. It is a structured path toward shared prosperity, entrepreneurship, and long-term wealth creation.
-
-With discipline, collective action, and patient reinvestment, the group aims to build ventures that generate lasting value for every member and their future generations.
-
----
-
-10/10 Ventures — Kigali, Rwanda
-
-Save 2 Years. Build 3 Years. Benefit for a Lifetime.
+10/10 Ventures Ltd is a Rwanda-based savings and investment group. Its purpose
+is to turn disciplined collective savings into sustainable, income-generating
+Rwandan businesses and long-term shared prosperity for its founding members.
+The proposal identifies ventures such as a bakery, avocado farm, mushroom
+farm, winery, and export business; these are plans and projections, not
+guaranteed outcomes.
+
+## Group and contribution plan
+
+- Members: 12 founding members
+- Monthly contribution: RWF 100,000 per member
+- Saving commitment: 30 months
+- Each member's planned contribution: RWF 3,000,000
+- Planned group capital: RWF 36,000,000
+- Contribution period: the 25th of the contribution month through the 5th of
+  the following month (for example, October 25 to November 5, 2026)
+- Borrowing and loans to members: not permitted by the group's selected policy
+
+The application uses the contribution month as the contribution period. For
+example, payments from October 25 through November 5 are recorded for October.
+Automated email and in-app notifications are scheduled for 08:00 Africa/Kigali:
+
+| Date                       | Notification                                          |
+| -------------------------- | ----------------------------------------------------- |
+| 25th                       | Contribution window opens                             |
+| 1st of the following month | Reminder to members with an unpaid contribution       |
+| 4th                        | Final reminder before the deadline                    |
+| 6th                        | Overdue notice and configured late-penalty processing |
+
+Inngest must be running and the email provider must be configured for scheduled
+emails to be delivered. The application also records notification delivery
+status for retry handling.
+
+## Capital, ownership, and distributions
+
+The plan calls for equal monthly contributions, totaling RWF 3,000,000 per
+member and RWF 36,000,000 across 12 members. That pool is intended to be
+invested through the company, not held as individually withdrawable balances.
+The source proposal does not establish a legal share percentage, share class,
+or ownership of each business asset. Equal contributions and equal projected
+distributions should not be treated as a substitute for the company's
+registered articles, share register, or other legal ownership records.
+
+The proposal projects a one-time Year 5 group profit distribution of
+RWF 15,870,000. Dividing that projection equally among 12 members gives
+RWF 1,322,500 per member. This is a projected profit distribution, not a return
+of each member's full RWF 3,000,000 contribution: it equals about 44.1% of that
+amount. The proposal's payout table also says "10" members and claims 45.2%
+recovery, both inconsistent with the 12-member group and the stated payout
+amount. The application documentation uses the 12-member calculation and does
+not present the projection as guaranteed.
+
+The proposal describes a 60/40 profit distribution/retention policy from Year
+6 and a 70/30 policy from Year 17. These are proposal assumptions that should
+be confirmed and formally adopted by the members before distributions are
+authorized. Actual distributions depend on audited results, cash available,
+company obligations, and the adopted governance documents.
+
+## No-loan policy
+
+The group's selected policy is no borrowing and no loans to members. New loan
+requests and approvals are disabled in the application. Existing loan records
+are retained for historical reporting and any necessary record-keeping; they
+are not permission to make new loans.
+
+## Development
+
+Use Bun to install dependencies and run project commands:
+
+```sh
+bun install
+bun run dev
+```
+
+Useful checks:
+
+```sh
+bun run typecheck
+bun run lint
+bun run format:check
+```

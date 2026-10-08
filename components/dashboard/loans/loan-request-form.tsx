@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import Link from "next/link"
 import { siteConfig } from "@/constants/site-config"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
@@ -12,7 +11,6 @@ import { ApiErrorException } from "@/types/api"
 import { useMyConfirmedSavings } from "@/hooks/api/use-contributions"
 import { useCreateLoanMutation, useMyLoans } from "@/hooks/api/use-loans"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { useProfile } from "@/hooks/use-profile"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import {
@@ -42,7 +40,6 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { Loader } from "@/components/common/loader"
-import { PaymentInfoSection } from "@/components/dashboard/loans/payment-info-section"
 
 interface LoanRequestFormProps {
   onSuccess?: () => void
@@ -140,8 +137,6 @@ export function LoanRequestForm({
   const isDesktop = useMediaQuery("(min-width: 768px)")
   const { totalSavings, isPending: isSavingsPending } = useMyConfirmedSavings()
   const { data: myLoansData, isPending: isLoansPending } = useMyLoans(50)
-  const { profile } = useProfile()
-  const ventures = profile?.metadata?.venturesProfile
   const interestRate = siteConfig.platform.loans.interestRate
   const interestRatePercent = Math.round(interestRate * 100)
   const loanPolicySummary = [
@@ -340,29 +335,6 @@ export function LoanRequestForm({
               </li>
             ))}
           </ul>
-        </div>
-
-        <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-wide text-foreground">
-            Your Payout Details
-          </p>
-          <PaymentInfoSection ventures={ventures} maskAccount={false} />
-          {!ventures && (
-            <div className="rounded-md border border-amber-300 bg-amber-50 p-3 dark:border-amber-800 dark:bg-amber-950/40">
-              <p className="text-xs font-semibold text-amber-800 dark:text-amber-300">
-                Payout details missing
-              </p>
-              <p className="mt-1 text-xs text-amber-700 dark:text-amber-400">
-                The committee needs your payout details to disburse your loan.
-                Please update them as soon as possible.
-              </p>
-              <Link
-                href="/member/profile?tab=ventures"
-                className="mt-2 inline-flex items-center text-xs font-medium text-amber-800 underline underline-offset-2 hover:text-amber-900 dark:text-amber-300 dark:hover:text-amber-200">
-                Update payout details &rarr;
-              </Link>
-            </div>
-          )}
         </div>
       </div>
 

@@ -1,5 +1,6 @@
 import { headers } from "next/headers"
 import { NextResponse } from "next/server"
+import { siteConfig } from "@/constants/site-config"
 import { db } from "@/db/connection"
 import { auditLogOperations } from "@/db/operations/audit-log-operations"
 import { loanOperations } from "@/db/operations/loan-operations"
@@ -300,6 +301,23 @@ export async function PUT(
 
   const updatePayload = {
     ...(parsed.data as z.infer<typeof updateSchema>),
+  }
+  const nextStatus = updatePayload.status
+  const startsOrDisbursesLoan =
+    (["requested", "rejected"].includes(existing.status) &&
+      ["approved", "disbursed", "repaying", "overdue"].includes(
+        nextStatus ?? ""
+      )) ||
+    (existing.status === "approved" && nextStatus === "disbursed")
+
+  if (!siteConfig.platform.loans.enabled && startsOrDisbursesLoan) {
+    return apiError(
+      "LOANS_DISABLED",
+      "The group policy does not permit borrowing or loans to members.",
+      403,
+      {},
+      "Loan approvals and disbursements are currently disabled."
+    )
   }
 
   if (!canEditAsMember) {

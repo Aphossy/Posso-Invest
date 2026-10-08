@@ -493,7 +493,7 @@ const FAQ_ITEMS = [
     items: [
       {
         q: "What is the monthly contribution amount?",
-        a: "Each member contributes 100,000 RWF per month. Payments are accepted from the 1st through the 5th of the following month.",
+        a: "Each member contributes 100,000 RWF per month. The contribution window runs from the 25th of the contribution month through the 5th of the following month.",
       },
       {
         q: "What happens if I pay late?",
@@ -506,23 +506,11 @@ const FAQ_ITEMS = [
     ],
   },
   {
-    category: "Loans & Repayments",
+    category: "Loan policy",
     items: [
       {
-        q: "How much can I borrow?",
-        a: "Members can request a loan up to the total amount they have saved in the group.",
-      },
-      {
-        q: "What is the loan interest rate?",
-        a: "Loans are repaid with a 5% interest rate.",
-      },
-      {
-        q: "How fast are loans disbursed?",
-        a: "Approved loans are disbursed within three business days.",
-      },
-      {
-        q: "What if a loan is not repaid on time?",
-        a: "A member who fails to repay over three months without a known reason may be dismissed and the loan recovered from their savings.",
+        q: "Can I borrow from the group or request a member loan?",
+        a: "No. The group's selected policy does not permit borrowing or loans to members.",
       },
     ],
   },
@@ -585,8 +573,8 @@ function FAQTab() {
         </CardHeader>
         <CardContent className="text-sm text-muted-foreground space-y-1">
           <p>
-            <span className="font-medium">Email:</span>{" "}
-            10/10 Venturesgrouprw@gmail.com
+            <span className="font-medium">Email:</span> 10/10
+            Venturesgrouprw@gmail.com
           </p>
           <p>
             <span className="font-medium">Phone:</span> +250 788 000 000
@@ -662,7 +650,9 @@ export function UserSupportView() {
             <Mail className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <p className="text-sm font-medium">10/10 Venturesgrouprw@gmail.com</p>
+            <p className="text-sm font-medium">
+              10/10 Venturesgrouprw@gmail.com
+            </p>
             <p className="text-xs text-muted-foreground">Response within 24h</p>
           </CardContent>
         </Card>

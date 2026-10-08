@@ -37,7 +37,7 @@ interface FileUploadComponentProps {
   disabled?: boolean
   multiple?: boolean
   maxFiles?: number
-  acceptedTypes?: "all" | "images" | "documents" | "media" | "archives"
+  acceptedTypes?: "all" | "images" | "documents" | "pdf" | "media" | "archives"
   showPreview?: boolean
 }
 
@@ -101,6 +101,8 @@ const getAcceptString = (acceptedTypes: string) => {
       return "image/jpeg,image/jpg,image/png,image/webp,image/gif,image/svg+xml"
     case "documents":
       return "application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/plain,text/csv"
+    case "pdf":
+      return "application/pdf,.pdf"
     case "media":
       return "video/mp4,video/mpeg,video/quicktime,audio/mpeg,audio/mp3,audio/wav"
     case "archives":

@@ -7,6 +7,7 @@ import * as assetSchema from "./asset-schema"
 import * as attendanceSchema from "./attendance-schema"
 import * as auditLogSchema from "./audit-log-schema"
 import * as authSchema from "./auth-schema"
+import * as bankAccountSchema from "./bank-account-schema"
 import * as contributionSchema from "./contribution-schema"
 import * as emailSendLogSchema from "./email-send-log-schema"
 import * as financialDocumentSchema from "./financial-document-schema"
@@ -26,6 +27,7 @@ import * as subscriberSchema from "./subscriber-schema"
 // Unified schema file that exports everything
 // Re-export all schemas and types
 export * from "./auth-schema"
+export * from "./bank-account-schema"
 export * from "./announcement-schema"
 export * from "./attendance-schema"
 export * from "./action-item-schema"
@@ -50,6 +52,7 @@ export * from "./operational-expense-schema"
 export const schema = {
   // 10/10 Ventures schemas
   ...authSchema,
+  ...bankAccountSchema,
   ...announcementSchema,
   ...attendanceSchema,
   ...actionItemSchema,
@@ -103,6 +106,7 @@ export type {
   Language,
   Theme,
 } from "./auth-schema"
+export type { BankAccount, NewBankAccount } from "./bank-account-schema"
 
 export type {
   EmailSendLog,

@@ -137,7 +137,7 @@ ContributionWindowLastDayMemberEmail.PreviewProps = {
   memberName: "Theogene Iradukunda",
   period: "2026-02",
   periodLabel: "February 2026",
-  windowEnd: "6 March 2026",
+  windowEnd: "5 March 2026",
   amountDue: "80,000",
   penaltyAmount: "8,000",
   totalIfLate: "88,000",
