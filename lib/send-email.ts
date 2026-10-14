@@ -34,6 +34,11 @@ interface EmailOptions {
   bcc?: string | string[]
   react?: ReactNode
   html?: string
+  attachments?: {
+    filename: string
+    content: string
+    contentType?: string
+  }[]
 }
 
 interface SendEmailResult {
@@ -48,6 +53,7 @@ const sendEmail = async ({
   text,
   react,
   html,
+  attachments,
 }: EmailOptions): Promise<SendEmailResult> => {
   if (process.env.EMAIL_NOTIFICATIONS_ENABLED !== "true") {
     console.log("Email notifications are disabled")
@@ -63,6 +69,7 @@ const sendEmail = async ({
       text,
       react,
       html,
+      attachments,
     })
     if (error) {
       console.error(`Failed to send email to ${to}:`, error)

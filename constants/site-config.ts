@@ -42,7 +42,7 @@ export const siteConfig = {
         endDay: 5,
       },
       latePenaltyRate: 0.1,
-      latePenaltyExemptPeriods: ["2026-09", "2026-10"],
+      latePenaltyExemptPeriods: ["2026-09"],
     },
     loans: {
       enabled: false,

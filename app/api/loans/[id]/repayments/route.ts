@@ -29,6 +29,7 @@ import {
   NOTIFICATION_ACTION,
 } from "@/types/notifications"
 import { auth } from "@/lib/auth"
+import { generateReceiptPdf } from "@/lib/receipt-pdf"
 import sendEmail from "@/lib/send-email"
 
 const leadershipRoles = ["admin", "treasurer", "president"] as const
@@ -316,6 +317,9 @@ export async function POST(
   // Generate a receipt for the repayment (best-effort).
   let receiptId: string | null = null
   let receiptNumber: string | null = null
+  let issuedReceipt: Awaited<
+    ReturnType<typeof receiptOperations.create>
+  > | null = null
   try {
     const number = await receiptOperations.generateReceiptNumber()
     const createdReceipt = await receiptOperations.create({
@@ -332,6 +336,7 @@ export async function POST(
       notes: parsed.data.notes,
       issuedAt: paidAt,
     })
+    issuedReceipt = createdReceipt
     receiptId = createdReceipt.id
     receiptNumber = createdReceipt.receiptNumber ?? null
   } catch (error) {
@@ -397,6 +402,23 @@ export async function POST(
           ? "Your loan is fully repaid"
           : `Repayment recorded: ${formatRwf(amount)} ${loan.currency}`,
         html,
+        ...(issuedReceipt && process.env.EMAIL_NOTIFICATIONS_ENABLED === "true"
+          ? {
+              attachments: [
+                {
+                  filename: `${receiptNumber ?? "receipt"}.pdf`,
+                  content: Buffer.from(
+                    generateReceiptPdf({
+                      ...issuedReceipt,
+                      memberName: loanMember.name,
+                      issuedByName: user.name,
+                    })
+                  ).toString("base64"),
+                  contentType: "application/pdf",
+                },
+              ],
+            }
+          : {}),
       })
       if (!result.success) {
         logger.error("Failed to send loan repayment email", {
@@ -404,9 +426,26 @@ export async function POST(
           error: result.error,
         })
       }
+      if (issuedReceipt && process.env.EMAIL_NOTIFICATIONS_ENABLED !== "true") {
+        logger.warn(
+          "Loan repayment receipt was not emailed because email is disabled",
+          {
+            receiptId: issuedReceipt.id,
+            memberId: issuedReceipt.memberId,
+          }
+        )
+      }
     } catch (error) {
       logger.error("Failed to prepare loan repayment email", { loanId, error })
     }
+  } else if (issuedReceipt) {
+    logger.warn(
+      "Loan repayment receipt was not emailed because member has no email",
+      {
+        receiptId: issuedReceipt.id,
+        memberId: issuedReceipt.memberId,
+      }
+    )
   }
 
   // In-app notifications (non-blocking).

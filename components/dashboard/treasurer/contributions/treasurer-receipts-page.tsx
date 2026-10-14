@@ -9,6 +9,7 @@ import {
   Edit2,
   Eye,
   Plus,
+  Printer,
   Receipt,
   RefreshCw,
   Search,
@@ -62,6 +63,10 @@ const RECEIPT_TYPE_LABELS: Record<string, string> = {
   penalty_payment: "Penalty Payment",
   registration_fee: "Registration Fee",
   other: "Other",
+}
+
+const handlePrint = (r: ReceiptEnriched) => {
+  window.open(`/api/receipts/${r.id}/pdf`, "_blank", "noopener,noreferrer")
 }
 
 const RECEIPT_TYPE_COLORS: Record<string, string> = {
@@ -472,6 +477,7 @@ export default function TreasurerReceiptsPage() {
                   onEdit={openEdit}
                   onDelete={openDelete}
                   onDownload={handleDownload}
+                  onPrint={handlePrint}
                 />
               ))}
             </div>
@@ -516,6 +522,7 @@ export default function TreasurerReceiptsPage() {
         onOpenChange={setDetailOpen}
         onEdit={openEdit}
         onDownload={handleDownload}
+        onPrint={handlePrint}
       />
       <ReceiptDeleteDialog
         receipt={deleteReceipt}
@@ -535,12 +542,14 @@ function ReceiptRow({
   onEdit,
   onDelete,
   onDownload,
+  onPrint,
 }: {
   receipt: ReceiptEnriched
   onView: (r: ReceiptEnriched) => void
   onEdit: (r: ReceiptEnriched) => void
   onDelete: (r: ReceiptEnriched) => void
   onDownload: (r: ReceiptEnriched) => void
+  onPrint: (r: ReceiptEnriched) => void
 }) {
   const typeLabel = RECEIPT_TYPE_LABELS[receipt.receiptType] ?? "Receipt"
   const typeColor = RECEIPT_TYPE_COLORS[receipt.receiptType] ?? ""
@@ -621,6 +630,10 @@ function ReceiptRow({
 
       {/* Actions */}
       <div className="flex flex-wrap gap-2">
+        <Button size="sm" variant="outline" onClick={() => onPrint(receipt)}>
+          <Printer className="mr-1.5 h-3.5 w-3.5" />
+          PDF
+        </Button>
         <Button size="sm" variant="outline" onClick={() => onView(receipt)}>
           <Eye className="mr-1.5 h-3.5 w-3.5" />
           View

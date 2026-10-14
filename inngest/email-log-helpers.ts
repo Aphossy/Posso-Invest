@@ -17,6 +17,7 @@ import { and, eq, sql } from "drizzle-orm"
 
 export type EmailEventType =
   // Scheduled contribution-window events (refId = period "YYYY-MM")
+  | "contribution_window_upcoming"
   | "contribution_window_opened"
   | "contribution_window_reminder"
   | "contribution_window_last_day"

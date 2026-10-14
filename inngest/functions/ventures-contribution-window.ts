@@ -12,6 +12,7 @@ import { ContributionWindowOpenedMemberEmail } from "@/emails/contribution-windo
 import { ContributionWindowOpenedTreasurerEmail } from "@/emails/contribution-window-opened-treasurer"
 import { ContributionWindowReminderMemberEmail } from "@/emails/contribution-window-reminder-member"
 import { ContributionWindowReminderTreasurerEmail } from "@/emails/contribution-window-reminder-treasurer"
+import { ContributionWindowUpcomingMemberEmail } from "@/emails/contribution-window-upcoming-member"
 import { inngest } from "@/inngest/client"
 import {
   ensureEmailLogRecord,
@@ -51,6 +52,7 @@ type ContributionStatusRow = {
 // ---------------------------------------------------------------------------
 
 const EMAIL_EVENT = {
+  UPCOMING: "contribution_window_upcoming",
   OPENED: "contribution_window_opened",
   REMINDER: "contribution_window_reminder",
   LAST_DAY: "contribution_window_last_day",
@@ -78,6 +80,18 @@ function getContributionPeriodForNotification(): string {
   const periodMonth = day >= startDay ? month : month > 1 ? month - 1 : 12
 
   return `${periodYear}-${String(periodMonth).padStart(2, "0")}`
+}
+
+function getUpcomingContributionPeriodForNotification(): string {
+  const parts = new Intl.DateTimeFormat("en", {
+    timeZone: "Africa/Kigali",
+    year: "numeric",
+    month: "numeric",
+  }).formatToParts(new Date())
+  const getPart = (type: string) =>
+    Number(parts.find((part) => part.type === type)?.value)
+
+  return `${getPart("year")}-${String(getPart("month")).padStart(2, "0")}`
 }
 
 function periodLabel(period: string): string {
@@ -325,7 +339,148 @@ async function applyLatePenalties(
 }
 
 // ---------------------------------------------------------------------------
-// Function 1 - Window opened (cron: 25th of every month)
+// Function 1 - Window opens tomorrow (cron: 24th of every month)
+// ---------------------------------------------------------------------------
+
+export const contributionWindowUpcomingNotifier = inngest.createFunction(
+  {
+    id: "ventures-contribution-window-upcoming-notifier",
+    retries: 3,
+    concurrency: 1,
+    triggers: [{ cron: "TZ=Africa/Kigali 0 8 24 * *" }],
+  },
+  async ({ step, notificationOperations, logger }) => {
+    const period = await step.run(
+      "resolve-upcoming-period",
+      getUpcomingContributionPeriodForNotification
+    )
+    const organizationId = await step.run(
+      "resolve-organization",
+      resolveOrganizationId
+    )
+    const label = periodLabel(period)
+    const { windowStart, windowEnd } = getWindowDates(period)
+    const members = await step.run("load-contribution-members", () =>
+      loadContributionMembers(organizationId)
+    )
+
+    if (members.length === 0) {
+      logger.info("No members found for upcoming window reminder", { period })
+      return { period, notified: 0 }
+    }
+
+    const memberIds = members.map((member) => member.userId)
+    const contributions = await step.run("load-contributions", () =>
+      loadContributionsForPeriod(period, memberIds)
+    )
+    const settledIds = new Set(
+      contributions
+        .filter((item) => SETTLED_STATUSES.includes(item.status))
+        .map((item) => item.memberId)
+    )
+    const unpaidMembers = members.filter(
+      (member) => !settledIds.has(member.userId)
+    )
+
+    if (unpaidMembers.length === 0) {
+      logger.info("All members already paid upcoming period", { period })
+      return { period, notified: 0 }
+    }
+
+    const eventType = EMAIL_EVENT.UPCOMING
+    const sendUpcomingEmail = async (member: MemberRow) => {
+      await ensureEmailLogRecord(member.userId, member.email, eventType, period)
+      if (
+        (await getEmailLogStatus(member.userId, eventType, period)) === "sent"
+      ) {
+        return
+      }
+
+      const html = await render(
+        ContributionWindowUpcomingMemberEmail({
+          memberName: member.name || "Member",
+          period,
+          periodLabel: label,
+          windowStart,
+          windowEnd,
+          amountDue: fmtAmount(monthlyContributionRwf),
+          currency: CURRENCY,
+          penaltyApplies: !isLateContributionPenaltyExempt(period),
+        })
+      )
+      const result = await sendEmail({
+        to: member.email,
+        subject: `${label} contribution window opens tomorrow`,
+        html,
+      })
+
+      if (result.success) {
+        await markEmailSent(member.userId, eventType, period)
+      } else {
+        await markEmailFailed(
+          member.userId,
+          eventType,
+          period,
+          String(result.error)
+        )
+      }
+    }
+
+    for (const member of unpaidMembers) {
+      await step.run(`send-upcoming-email-${member.userId}`, () =>
+        sendUpcomingEmail(member)
+      )
+    }
+
+    const failedUserIds = await step.run("find-failed-upcoming-emails", () =>
+      findFailedEmailLogs(eventType, period)
+    )
+    if (failedUserIds.length > 0) {
+      await step.sleep("wait-before-upcoming-email-retry", "5 minutes")
+      const memberById = new Map(
+        unpaidMembers.map((member) => [member.userId, member])
+      )
+      for (const userId of failedUserIds) {
+        const member = memberById.get(userId)
+        if (!member) continue
+        await step.run(`retry-upcoming-email-${userId}`, () =>
+          sendUpcomingEmail(member)
+        )
+      }
+    }
+
+    await step.run("create-upcoming-window-notifications", async () => {
+      const notifications = unpaidMembers.map((member) => ({
+        id: generateUUID(),
+        userId: member.userId,
+        type: "contribution" as const,
+        title: `${label} contribution window opens tomorrow`,
+        message: `Your ${label} contribution window opens ${windowStart}. The ${CURRENCY} ${fmtAmount(monthlyContributionRwf)} contribution is due by ${windowEnd}.`,
+        channel: "in_app" as const,
+        actionUrl: "/member/contributions",
+        actionLabel: "View Contributions",
+        relatedType: "contribution_window",
+        relatedId: period,
+        isRead: false,
+        isArchived: false,
+        priority: "normal" as const,
+      }))
+      if (notifications.length > 0) {
+        await notificationOperations.bulkCreate(notifications)
+      }
+    })
+
+    logger.info("Upcoming window reminders sent", {
+      period,
+      members: unpaidMembers.length,
+      retried: failedUserIds.length,
+    })
+    return { period, notified: unpaidMembers.length }
+  }
+)
+
+// ---------------------------------------------------------------------------
+// Function 2 - Window opened (cron: 25th of every month)
 // ---------------------------------------------------------------------------
 
 export const contributionWindowOpenedNotifier = inngest.createFunction(
@@ -1382,21 +1537,21 @@ export const contributionCatchupReminderNotifier = inngest.createFunction(
     }
 
     const memberIds = members.map((m) => m.userId)
+    const period = "2026-09"
     const periodContributions = await step.run(
-      "load-september-october-contributions",
-      async () =>
-        Promise.all(
-          ["2026-09", "2026-10"].map(async (period) => ({
-            period,
-            contributions: await loadContributionsForPeriod(period, memberIds),
-          }))
-        )
+      "load-september-contributions",
+      async () => [
+        {
+          period,
+          contributions: await loadContributionsForPeriod(period, memberIds),
+        },
+      ]
     )
 
     const outstandingByMember = new Map(
       members.map((m) => [m.userId, [] as string[]])
     )
-    for (const { period, contributions } of periodContributions) {
+    for (const { contributions } of periodContributions) {
       const settledIds = new Set(
         contributions
           .filter((c) => SETTLED_STATUSES.includes(c.status))
@@ -1404,9 +1559,7 @@ export const contributionCatchupReminderNotifier = inngest.createFunction(
       )
       for (const member of members) {
         if (!settledIds.has(member.userId)) {
-          outstandingByMember
-            .get(member.userId)
-            ?.push(period === "2026-09" ? "September" : "October")
+          outstandingByMember.get(member.userId)?.push("September")
         }
       }
     }
@@ -1415,14 +1568,14 @@ export const contributionCatchupReminderNotifier = inngest.createFunction(
       (m) => (outstandingByMember.get(m.userId)?.length ?? 0) > 0
     )
     if (recipients.length === 0) {
-      logger.info("All members have paid September and October contributions", {
+      logger.info("All members have paid September 2026 contributions", {
         waivedPenalties,
       })
       return { notified: 0, waivedPenalties }
     }
 
     const eventType = "contribution_catchup_reminder" as const
-    const refId = "2026-10"
+    const refId = "2026-09"
     const sendToMember = async (m: MemberRow) => {
       await ensureEmailLogRecord(m.userId, m.email, eventType, refId)
       if ((await getEmailLogStatus(m.userId, eventType, refId)) === "sent") {
@@ -1441,7 +1594,7 @@ export const contributionCatchupReminderNotifier = inngest.createFunction(
       )
       const result = await sendEmail({
         to: m.email,
-        subject: "Reminder: September and October 2026 contributions",
+        subject: "Reminder: September 2026 contribution",
         html,
       })
 

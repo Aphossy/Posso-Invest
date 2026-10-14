@@ -47,6 +47,16 @@ export interface CreateReceiptInput {
   status?: string
 }
 
+export interface IssueReceiptResponse {
+  data: {
+    receipt: Receipt
+    emailDelivery: {
+      status: "sent" | "failed" | "disabled"
+      message?: string
+    }
+  }
+}
+
 export interface UpdateReceiptInput extends Partial<CreateReceiptInput> {
   id: string
 }
@@ -94,7 +104,7 @@ export function useReceipts(params: UseReceiptsParams = {}) {
 export function useIssueReceiptMutation() {
   const qc = useQueryClient()
   return useMutation<
-    { data: { receipt: Receipt } },
+    IssueReceiptResponse,
     ApiErrorException,
     CreateReceiptInput
   >({

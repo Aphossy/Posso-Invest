@@ -22,16 +22,19 @@ The application uses the contribution month as the contribution period. For
 example, payments from October 25 through November 5 are recorded for October.
 Automated email and in-app notifications are scheduled for 08:00 Africa/Kigali:
 
-| Date                       | Notification                                          |
-| -------------------------- | ----------------------------------------------------- |
-| 25th                       | Contribution window opens                             |
-| 1st of the following month | Reminder to members with an unpaid contribution       |
-| 4th                        | Final reminder before the deadline                    |
-| 6th                        | Overdue notice and configured late-penalty processing |
+| Date                       | Notification                                                                                             |
+| -------------------------- | -------------------------------------------------------------------------------------------------------- |
+| 24th                       | Reminder that the next contribution window opens tomorrow                                                |
+| 25th                       | Contribution window opens                                                                                |
+| 1st of the following month | Reminder to members with an unpaid contribution                                                          |
+| 4th                        | Final reminder before the deadline                                                                       |
+| 6th                        | Overdue notice and a late penalty of 10% of the contribution (RWF 10,000 for a RWF 100,000 contribution) |
 
 Inngest must be running and the email provider must be configured for scheduled
 emails to be delivered. The application also records notification delivery
-status for retry handling.
+status for retry handling. October 2026 follows this regular schedule and is
+not penalty-exempt. Only the initial September 2026 contribution is exempt from
+the late penalty.
 
 ## Capital, ownership, and distributions
 

@@ -39,7 +39,7 @@ export function ContributionCatchupReminder({
     <Html lang="en">
       <Head />
       <Preview>
-        {`Reminder: your ${periodNames} 2026 contribution is due by November 5, 2026.`}
+        {`Reminder: your ${periodNames} 2026 contribution is outstanding.`}
       </Preview>
       <Body style={main}>
         <Container style={container}>
@@ -49,13 +49,16 @@ export function ContributionCatchupReminder({
           </Section>
 
           <Section style={content}>
-            <Heading style={heading}>September and October contributions</Heading>
+            <Heading style={heading}>
+              {periodNames} contribution reminder
+            </Heading>
             <Text style={paragraph}>Muraho {memberName},</Text>
             <Text style={paragraph}>
               Please remember to pay your contribution
               {periodsDue.length > 1 ? "s" : ""} for{" "}
-              <strong>{periodNames} 2026</strong>. The closing date for these
-              contributions is <strong>November 5, 2026</strong>.
+              <strong>{periodNames} 2026</strong>. The contribution window
+              closed on <strong>October 5, 2026</strong>. The late penalty is
+              waived for this initial September period.
             </Text>
 
             <Section style={detailsBox}>
@@ -70,7 +73,7 @@ export function ContributionCatchupReminder({
                 <strong>Total currently due:</strong> {currency} {totalDue}
               </Text>
               <Text style={detail}>
-                <strong>Closing date:</strong> November 5, 2026
+                <strong>Window closed:</strong> October 5, 2026
               </Text>
             </Section>
 

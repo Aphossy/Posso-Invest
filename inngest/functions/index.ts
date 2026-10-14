@@ -1,9 +1,12 @@
+import { systemDataCleanup } from "@/inngest/functions/system-cleanup"
+import { systemFunctionFailureAlert } from "@/inngest/functions/system-function-failure-alert"
 import {
-  contributionDeadlinePassedNotifier,
   contributionCatchupReminderNotifier,
+  contributionDeadlinePassedNotifier,
   contributionWindowLastDayNotifier,
   contributionWindowOpenedNotifier,
   contributionWindowReminderNotifier,
+  contributionWindowUpcomingNotifier,
 } from "@/inngest/functions/ventures-contribution-window"
 import {
   actionItemCreatedEmailNotifier,
@@ -23,8 +26,6 @@ import {
   loanRequestedEmailNotifier,
   penaltyRecordedEmailNotifier,
 } from "@/inngest/functions/ventures-transaction-email-notifier"
-import { systemDataCleanup } from "@/inngest/functions/system-cleanup"
-import { systemFunctionFailureAlert } from "@/inngest/functions/system-function-failure-alert"
 
 export const inngestFunctions = [
   organizationMemberJoinedEmailNotifier,
@@ -39,6 +40,7 @@ export const inngestFunctions = [
   actionItemStatusChangedEmailNotifier,
   monthlyComplianceDispatcher,
   monthlyMemberSummaryEmailSender,
+  contributionWindowUpcomingNotifier,
   contributionWindowOpenedNotifier,
   contributionWindowReminderNotifier,
   contributionWindowLastDayNotifier,

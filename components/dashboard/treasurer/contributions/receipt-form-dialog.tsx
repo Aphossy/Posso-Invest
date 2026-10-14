@@ -4,10 +4,6 @@ import { useEffect, useMemo, useState } from "react"
 import { isMemberOrLeadershipRole } from "@/utils/role-utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
-  isValidReceiptReferenceId,
-  normalizeReceiptReferenceId,
-} from "@/lib/receipt-validation"
-import {
   Banknote,
   Check,
   ChevronsUpDown,
@@ -22,6 +18,10 @@ import { toast } from "sonner"
 import * as z from "zod"
 
 import { organizationClient } from "@/lib/organization-client"
+import {
+  isValidReceiptReferenceId,
+  normalizeReceiptReferenceId,
+} from "@/lib/receipt-validation"
 import { cn } from "@/lib/utils"
 import {
   useIssueReceiptMutation,
@@ -43,7 +43,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
@@ -139,25 +138,34 @@ const schema = z.object({
     .trim()
     .optional()
     .transform((value) => normalizeReceiptReferenceId(value))
-    .refine((value) => value === undefined || isValidReceiptReferenceId(value), {
-      message: "Contribution ID must be a valid UUID when provided.",
-    }),
+    .refine(
+      (value) => value === undefined || isValidReceiptReferenceId(value),
+      {
+        message: "Contribution ID must be a valid UUID when provided.",
+      }
+    ),
   loanId: z
     .string()
     .trim()
     .optional()
     .transform((value) => normalizeReceiptReferenceId(value))
-    .refine((value) => value === undefined || isValidReceiptReferenceId(value), {
-      message: "Loan ID must be a valid UUID when provided.",
-    }),
+    .refine(
+      (value) => value === undefined || isValidReceiptReferenceId(value),
+      {
+        message: "Loan ID must be a valid UUID when provided.",
+      }
+    ),
   penaltyId: z
     .string()
     .trim()
     .optional()
     .transform((value) => normalizeReceiptReferenceId(value))
-    .refine((value) => value === undefined || isValidReceiptReferenceId(value), {
-      message: "Penalty ID must be a valid UUID when provided.",
-    }),
+    .refine(
+      (value) => value === undefined || isValidReceiptReferenceId(value),
+      {
+        message: "Penalty ID must be a valid UUID when provided.",
+      }
+    ),
   notes: z.string().optional(),
   fileUrl: z.string().optional(),
   fileKey: z.string().optional(),
@@ -382,11 +390,18 @@ export function ReceiptFormDialog({
         })
         toast.success("Receipt updated")
       } else {
-        await issueMutation.mutateAsync({
+        const result = await issueMutation.mutateAsync({
           ...values,
           memberId: resolvedMemberId,
         })
-        toast.success("Receipt issued successfully")
+        if (result.data.emailDelivery.status === "sent") {
+          toast.success("Receipt issued and emailed to the member")
+        } else {
+          toast.error(
+            result.data.emailDelivery.message ??
+              "Receipt issued, but its email could not be delivered."
+          )
+        }
       }
       onSuccess?.()
       onOpenChange(false)

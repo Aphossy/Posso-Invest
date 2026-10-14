@@ -5,15 +5,20 @@ import { receiptOperations } from "@/db/operations/receipt-operations"
 import { userOperations } from "@/db/operations/user-operations"
 import { member } from "@/db/schemas"
 import { insertReceiptSchema } from "@/db/schemas/receipt-schema"
+import { ReceiptIssuedEmail } from "@/emails/receipt-issued"
+import logger from "@/utils/logger"
 import { extractRoleValue } from "@/utils/role-utils"
+import { render } from "@react-email/components"
 import { and, eq } from "drizzle-orm"
 import { z } from "zod"
 
 import { auth } from "@/lib/auth"
+import { generateReceiptPdf } from "@/lib/receipt-pdf"
 import {
   isValidReceiptReferenceId,
   normalizeReceiptReferenceId,
 } from "@/lib/receipt-validation"
+import sendEmail from "@/lib/send-email"
 
 const listSchema = z.object({
   search: z.string().optional(),
@@ -39,25 +44,34 @@ const createSchema = insertReceiptSchema
       .trim()
       .optional()
       .transform((value) => normalizeReceiptReferenceId(value))
-      .refine((value) => value === undefined || isValidReceiptReferenceId(value), {
-        message: "Contribution ID must be a valid UUID when provided.",
-      }),
+      .refine(
+        (value) => value === undefined || isValidReceiptReferenceId(value),
+        {
+          message: "Contribution ID must be a valid UUID when provided.",
+        }
+      ),
     loanId: z
       .string()
       .trim()
       .optional()
       .transform((value) => normalizeReceiptReferenceId(value))
-      .refine((value) => value === undefined || isValidReceiptReferenceId(value), {
-        message: "Loan ID must be a valid UUID when provided.",
-      }),
+      .refine(
+        (value) => value === undefined || isValidReceiptReferenceId(value),
+        {
+          message: "Loan ID must be a valid UUID when provided.",
+        }
+      ),
     penaltyId: z
       .string()
       .trim()
       .optional()
       .transform((value) => normalizeReceiptReferenceId(value))
-      .refine((value) => value === undefined || isValidReceiptReferenceId(value), {
-        message: "Penalty ID must be a valid UUID when provided.",
-      }),
+      .refine(
+        (value) => value === undefined || isValidReceiptReferenceId(value),
+        {
+          message: "Penalty ID must be a valid UUID when provided.",
+        }
+      ),
   })
 
 async function getResolvedRole() {
@@ -218,8 +232,93 @@ export async function POST(request: Request) {
     issuedBy: user.id,
   })
 
+  let emailDelivery: {
+    status: "sent" | "failed" | "disabled"
+    message?: string
+  }
+
+  if (process.env.EMAIL_NOTIFICATIONS_ENABLED !== "true") {
+    emailDelivery = {
+      status: "disabled",
+      message: "Email notifications are disabled; the receipt was not emailed.",
+    }
+  } else {
+    try {
+      const recipient = await userOperations.findById(created.memberId)
+      if (!recipient?.email) {
+        emailDelivery = {
+          status: "failed",
+          message:
+            "The receipt was issued, but the member has no email address.",
+        }
+        logger.warn("Receipt issued without a member email address", {
+          receiptId: created.id,
+          memberId: created.memberId,
+        })
+      } else {
+        const pdf = generateReceiptPdf({
+          ...created,
+          memberName: recipient.name,
+          issuedByName: user.name,
+        })
+        const html = await render(
+          ReceiptIssuedEmail({
+            memberName: recipient.name,
+            receiptNumber: created.receiptNumber ?? receiptNumber,
+            amount: Number(created.amount).toLocaleString("en-RW"),
+            currency: created.currency,
+          })
+        )
+        const result = await sendEmail({
+          to: recipient.email,
+          subject: `Your receipt ${created.receiptNumber ?? receiptNumber}`,
+          html,
+          attachments: [
+            {
+              filename: `${created.receiptNumber ?? receiptNumber}.pdf`,
+              content: Buffer.from(pdf).toString("base64"),
+              contentType: "application/pdf",
+            },
+          ],
+        })
+        emailDelivery = result.success
+          ? { status: "sent" }
+          : {
+              status: "failed",
+              message:
+                "The receipt was issued, but the email could not be sent.",
+            }
+
+        if (!result.success) {
+          logger.error("Receipt issued but member email delivery failed", {
+            receiptId: created.id,
+            memberId: created.memberId,
+            error: result.error,
+          })
+        }
+      }
+    } catch (error) {
+      emailDelivery = {
+        status: "failed",
+        message: "The receipt was issued, but the email could not be prepared.",
+      }
+      logger.error("Receipt issued but member email could not be prepared", {
+        receiptId: created.id,
+        memberId: created.memberId,
+        error,
+      })
+    }
+  }
+
   return NextResponse.json(
-    { success: true, data: { receipt: created }, message: "Receipt issued." },
+    {
+      success: true,
+      data: { receipt: created, emailDelivery },
+      message:
+        emailDelivery.status === "sent"
+          ? "Receipt issued and emailed to the member."
+          : `Receipt issued. ${emailDelivery.message}`,
+    },
     { status: 201 }
   )
 }
