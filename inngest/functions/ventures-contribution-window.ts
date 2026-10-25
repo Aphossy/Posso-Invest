@@ -964,6 +964,203 @@ export const contributionWindowReminderNotifier = inngest.createFunction(
 )
 
 // ---------------------------------------------------------------------------
+// One-time October 2026 reminder test (cron: October 25 at 23:00 Kigali time)
+// ---------------------------------------------------------------------------
+
+export const octoberContributionReminderTestNotifier = inngest.createFunction(
+  {
+    id: "ventures-october-2026-contribution-reminder-test",
+    retries: 3,
+    concurrency: 1,
+    triggers: [{ cron: "TZ=Africa/Kigali 0 23 25 10 *" }],
+  },
+  async ({ step, logger }) => {
+    const dateParts = new Intl.DateTimeFormat("en", {
+      timeZone: "Africa/Kigali",
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+    }).formatToParts(new Date())
+    const getPart = (type: string) =>
+      Number(dateParts.find((part) => part.type === type)?.value)
+    if (
+      getPart("year") !== 2026 ||
+      getPart("month") !== 10 ||
+      getPart("day") !== 25
+    ) {
+      logger.info("Skipping October reminder test outside October 25, 2026")
+      return { notifiedSeptember: 0, notifiedOctober: 0, skipped: true }
+    }
+
+    const organizationId = await step.run(
+      "resolve-organization",
+      resolveOrganizationId
+    )
+    const members = await step.run("load-contribution-members", () =>
+      loadContributionMembers(organizationId)
+    )
+    if (members.length === 0) {
+      logger.info("No members found for October reminder test")
+      return { notifiedSeptember: 0, notifiedOctober: 0 }
+    }
+
+    const memberIds = members.map((m) => m.userId)
+    const [septemberContributions, octoberContributions] = await step.run(
+      "load-september-and-october-contributions",
+      async () =>
+        Promise.all([
+          loadContributionsForPeriod("2026-09", memberIds),
+          loadContributionsForPeriod("2026-10", memberIds),
+        ])
+    )
+    const unpaidForPeriod = (contributions: ContributionStatusRow[]) => {
+      const settledIds = new Set(
+        contributions
+          .filter((c) => SETTLED_STATUSES.includes(c.status))
+          .map((c) => c.memberId)
+      )
+      return members.filter((m) => !settledIds.has(m.userId))
+    }
+    const septemberUnpaid = unpaidForPeriod(septemberContributions)
+    const octoberUnpaid = unpaidForPeriod(octoberContributions)
+    const septemberEventType = "contribution_catchup_reminder" as const
+    const octoberEventType = EMAIL_EVENT.REMINDER
+
+    const sendSeptemberReminder = async (m: MemberRow) => {
+      await ensureEmailLogRecord(
+        m.userId,
+        m.email,
+        septemberEventType,
+        "2026-09"
+      )
+      if (
+        (await getEmailLogStatus(m.userId, septemberEventType, "2026-09")) ===
+        "sent"
+      ) {
+        return
+      }
+      const html = await render(
+        ContributionCatchupReminder({
+          memberName: m.name || "Member",
+          periodsDue: ["September"],
+          amountPerMonth: fmtAmount(monthlyContributionRwf),
+          totalDue: fmtAmount(monthlyContributionRwf),
+          currency: CURRENCY,
+        })
+      )
+      const result = await sendEmail({
+        to: m.email,
+        subject: "Reminder: September 2026 contribution",
+        html,
+      })
+      if (result.success) {
+        await markEmailSent(m.userId, septemberEventType, "2026-09")
+      } else {
+        await markEmailFailed(
+          m.userId,
+          septemberEventType,
+          "2026-09",
+          String(result.error)
+        )
+      }
+    }
+
+    const octoberLabel = periodLabel("2026-10")
+    const { windowEnd, daysRemainingFromNow } = getWindowDates("2026-10")
+    const penaltyApplies = !isLateContributionPenaltyExempt("2026-10")
+    const sendOctoberReminder = async (m: MemberRow) => {
+      await ensureEmailLogRecord(m.userId, m.email, octoberEventType, "2026-10")
+      if (
+        (await getEmailLogStatus(m.userId, octoberEventType, "2026-10")) ===
+        "sent"
+      ) {
+        return
+      }
+      const html = await render(
+        ContributionWindowReminderMemberEmail({
+          memberName: m.name || "Member",
+          period: "2026-10",
+          periodLabel: octoberLabel,
+          windowEnd,
+          daysRemaining: daysRemainingFromNow,
+          amountDue: fmtAmount(monthlyContributionRwf),
+          penaltyAmount: fmtAmount(PENALTY_AMOUNT),
+          currency: CURRENCY,
+          penaltyApplies,
+        })
+      )
+      const result = await sendEmail({
+        to: m.email,
+        subject: `Reminder: ${daysRemainingFromNow} days left to pay your ${octoberLabel} contribution`,
+        html,
+      })
+      if (result.success) {
+        await markEmailSent(m.userId, octoberEventType, "2026-10")
+      } else {
+        await markEmailFailed(
+          m.userId,
+          octoberEventType,
+          "2026-10",
+          String(result.error)
+        )
+      }
+    }
+
+    for (const m of septemberUnpaid) {
+      await step.run(`send-september-reminder-${m.userId}`, () =>
+        sendSeptemberReminder(m)
+      )
+    }
+    for (const m of octoberUnpaid) {
+      await step.run(`send-october-reminder-${m.userId}`, () =>
+        sendOctoberReminder(m)
+      )
+    }
+
+    const failedSeptemberIds = await step.run(
+      "find-failed-september-reminders",
+      () => findFailedEmailLogs(septemberEventType, "2026-09")
+    )
+    const failedOctoberIds = await step.run(
+      "find-failed-october-reminders",
+      () => findFailedEmailLogs(octoberEventType, "2026-10")
+    )
+    if (failedSeptemberIds.length > 0 || failedOctoberIds.length > 0) {
+      await step.sleep("wait-before-reminder-retry", "5 minutes")
+      const septemberById = new Map(septemberUnpaid.map((m) => [m.userId, m]))
+      const octoberById = new Map(octoberUnpaid.map((m) => [m.userId, m]))
+      for (const userId of failedSeptemberIds) {
+        const m = septemberById.get(userId)
+        if (m) {
+          await step.run(`retry-september-reminder-${userId}`, () =>
+            sendSeptemberReminder(m)
+          )
+        }
+      }
+      for (const userId of failedOctoberIds) {
+        const m = octoberById.get(userId)
+        if (m) {
+          await step.run(`retry-october-reminder-${userId}`, () =>
+            sendOctoberReminder(m)
+          )
+        }
+      }
+    }
+
+    logger.info("October contribution reminder test completed", {
+      notifiedSeptember: septemberUnpaid.length,
+      notifiedOctober: octoberUnpaid.length,
+      retriedSeptember: failedSeptemberIds.length,
+      retriedOctober: failedOctoberIds.length,
+    })
+    return {
+      notifiedSeptember: septemberUnpaid.length,
+      notifiedOctober: octoberUnpaid.length,
+    }
+  }
+)
+
+// ---------------------------------------------------------------------------
 // Function 3 - Final reminder (cron: 4th of every month)
 // ---------------------------------------------------------------------------
 

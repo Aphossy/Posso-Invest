@@ -7,6 +7,7 @@ import {
   contributionWindowOpenedNotifier,
   contributionWindowReminderNotifier,
   contributionWindowUpcomingNotifier,
+  octoberContributionReminderTestNotifier,
 } from "@/inngest/functions/ventures-contribution-window"
 import {
   actionItemCreatedEmailNotifier,
@@ -43,6 +44,7 @@ export const inngestFunctions = [
   contributionWindowUpcomingNotifier,
   contributionWindowOpenedNotifier,
   contributionWindowReminderNotifier,
+  octoberContributionReminderTestNotifier,
   contributionWindowLastDayNotifier,
   contributionDeadlinePassedNotifier,
   contributionCatchupReminderNotifier,
