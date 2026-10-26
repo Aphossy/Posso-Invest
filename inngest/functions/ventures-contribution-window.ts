@@ -964,7 +964,7 @@ export const contributionWindowReminderNotifier = inngest.createFunction(
 )
 
 // ---------------------------------------------------------------------------
-// One-time October 2026 reminder test (cron: October 25 at 23:45 Kigali time)
+// One-time October 2026 reminder test (cron: October 26 at 22:00 Kigali time)
 // ---------------------------------------------------------------------------
 
 export const octoberContributionReminderTestNotifier = inngest.createFunction(
@@ -972,7 +972,7 @@ export const octoberContributionReminderTestNotifier = inngest.createFunction(
     id: "ventures-october-2026-contribution-reminder-test",
     retries: 3,
     concurrency: 1,
-    triggers: [{ cron: "TZ=Africa/Kigali 45 23 25 10 *" }],
+    triggers: [{ cron: "TZ=Africa/Kigali 0 22 26 10 *" }],
   },
   async ({ step, logger }) => {
     const dateParts = new Intl.DateTimeFormat("en", {
@@ -986,9 +986,9 @@ export const octoberContributionReminderTestNotifier = inngest.createFunction(
     if (
       getPart("year") !== 2026 ||
       getPart("month") !== 10 ||
-      getPart("day") !== 25
+      getPart("day") !== 26
     ) {
-      logger.info("Skipping October reminder test outside October 25, 2026")
+      logger.info("Skipping October reminder test outside October 26, 2026")
       return { notifiedSeptember: 0, notifiedOctober: 0, skipped: true }
     }
 
